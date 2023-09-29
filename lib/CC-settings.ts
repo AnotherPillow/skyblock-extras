@@ -1,0 +1,158 @@
+class _Settings {
+    threadTitleEnabled = true;
+    hideShopTab = true;
+    developerToolsEnabled = true;
+    strikethroughBannedUsers = true;
+    betterNewSB = true;
+    fontAwesomeUpdate = true;
+    SBonlIntegration = true;
+    actualDateOnFrontpage = true;
+    fixBedrockPlayersImages = true;
+
+    _modal: HTMLDialogElement | null;
+
+    addSettingToModal(name: string, value: keyof this) {
+        const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`
+
+        const label = document.createElement('label')
+        label.innerHTML = `${name}: `
+        label.setAttribute('for', id)
+
+        const input = document.createElement('input')
+        input.name = id
+        input.id = id
+        input.type = 'checkbox'
+        //@ts-ignore
+        input.checked = this[value] ?? false
+        
+        input.addEventListener('click', (ev: Event) => {
+            const checked = //@ts-ignore
+                ev.target.checked
+            
+            this[value] = checked
+        })
+
+        this._modal?.appendChild(label)
+        this._modal?.appendChild(input)
+        this.br()
+    }
+
+    br() { this._modal?.appendChild(document.createElement('br')) }
+    
+    constructor() {
+        this.deserialise()
+
+        this._modal = document.createElement('dialog')
+        
+        const _h1 = document.createElement('h1')
+        _h1.innerHTML = 'Skyblock Extras Settings'
+        _h1.style.fontSize = '2em'
+
+        this._modal.appendChild(_h1)
+        this.br()
+
+        this._modal.style.width = '640px'
+        this._modal.style.height = '480px'
+        this._modal.style.borderRadius = '1em'
+        this._modal.style.border = 'none'
+        this._modal.style.outline = 'none'
+        this._modal.style.textAlign = 'center'
+
+        this.addSettingToModal('Thread Title as Browser Title', 'threadTitleEnabled')
+        this.addSettingToModal('Remove the shop tab.', 'hideShopTab')
+        this.addSettingToModal('Tools for interacting with authentication.', 'developerToolsEnabled')
+        this.addSettingToModal("Strike through banned users' names.", 'strikethroughBannedUsers')
+        this.addSettingToModal('Better New Style Theme', 'betterNewSB')
+        this.addSettingToModal('Update Font Awesome', 'fontAwesomeUpdate')
+        this.addSettingToModal('Skyblock.onl Integration', 'SBonlIntegration')
+        this.addSettingToModal('Show actual date on threads on the frontpage', 'actualDateOnFrontpage')
+        this.addSettingToModal("Fix bedrock players' images", 'fixBedrockPlayersImages')
+
+        const saveBtn = document.createElement('button')
+
+        saveBtn.innerHTML = 'Save'
+        saveBtn.style.width = '6em'
+        saveBtn.style.height = '2.5em'
+        
+        saveBtn.addEventListener('click', e => {
+            this.serialise()
+            window.location.reload()
+        })
+
+        this.br()
+        this.br()
+        this._modal.appendChild(saveBtn)
+        
+        const closeBtn = document.createElement('button')
+
+        closeBtn.innerHTML = 'Close'
+        closeBtn.style.width = '6em'
+        closeBtn.style.height = '2.5em'
+        
+        closeBtn.addEventListener('click', e => {
+            this.close()
+        })
+
+        this.br()
+        this.br()
+        this.br()
+        this.br()
+        this._modal.appendChild(closeBtn)
+
+
+
+        document.body.appendChild(this._modal)
+
+        const opener = document.createElement('img')
+
+        opener.src = ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADdUAAA3VAT3WWPEAAAEZSURBVEhLxZVBEsIgDEXRe7jphbyIm3qQuvEU7ryQG4/QA2B+aFpAEphprW/mj4TGRPgUnfe+RT0pB3Ol3ERHV6cjncIwAXN4ZnJAlwh84RyGzJOEeODomytJcgTErzAkouV0pIEUgzifiyk9R4xaXNcqvobZH/EAS+zDcFukAfbtFobbEpsMgy8kbSX4Ae8w5BNk5d1Jwehpr+BBP47jgz5LJMZNY80zzMMDzkcyAsvgvHhLE8CNkGihFRfVmvjam4w9X16ab/BMfCnSclWsotagdt9o99QCbdPPTZZkq1HexCrOhUmcv9uLBqHrVqAW1/37KVqPLIVUMg6xZiYoPUc8H4hd/zI1aUcy+aWaWjzQ7pvaPUU49wFpm9dvoGBF4QAAAABJRU5ErkJggg=='
+        opener.id = 'sbe-settings-opener-img'
+
+        opener.style.marginLeft = '9em'
+        opener.style.marginTop = '2px'
+        
+        opener.height = 20
+        opener.width = 20
+
+        opener.addEventListener('click', (e) => {
+            this.open()
+        })
+
+        document.querySelector('[class="navTabs"]')?.insertBefore(opener, document.querySelector('.visitorTabs'))
+
+    }
+
+    open() {
+        this._modal?.showModal()
+    }
+    
+    close() {
+        this._modal?.close()
+    }
+
+    serialise() {
+        const ls = localStorage
+
+        ls.setItem('sbe-settings', JSON.stringify({
+            threadTitleEnabled: this.threadTitleEnabled,
+            hideShopTab: this.hideShopTab,
+            developerToolsEnabled: this.developerToolsEnabled,
+            strikethroughBannedUsers: this.strikethroughBannedUsers,
+            betterNewSB: this.betterNewSB,
+            fontAwesomeUpdate: this.fontAwesomeUpdate,
+            SBonlIntegration: this.SBonlIntegration,
+            actualDateOnFrontpage: this.actualDateOnFrontpage,
+            fixBedrockPlayersImages: this.fixBedrockPlayersImages,
+        }))
+    }
+
+    deserialise() {
+        let settings = JSON.parse(localStorage.getItem('sbe-settings') ?? '{}')
+        for (const key of Object.keys(settings)) {
+            //@ts-ignore
+            this[key] = settings[key]
+        }
+    }
+}
+
+const settings = new _Settings()

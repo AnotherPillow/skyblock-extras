@@ -1,0 +1,28 @@
+{
+  "name": "skyblock-extras",
+  "version": "1.0.0",
+  "description": "A userscript to improve the skyblock.net forums experience!",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "ugly": "uglifyjs build/sbe.js --comments all -c -m --mangle-props > build/sbe.min.js",
+    "$builddir": "mkdir build || true",
+    "$build": "npm run --silent builddir && tsc && babel _build -d lib && npm run ugly",
+    "copy_loader": "cp lib/loader.js build/sbe.loader.js",
+    "build": "tsc && npm run ugly",
+    "dev": "npm run build && npx serve -p 13451 build/"
+  },
+  "author": "anotherpillow",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.22.15",
+    "@babel/core": "^7.22.20",
+    "typescript": "^5.2.2",
+    "uglify-js": "^3.17.4",
+    "uglifyjs-folder": "^3.3.0"
+  },
+  "dependencies": {
+    "@violentmonkey/types": "^0.1.6",
+    "walk": "^2.3.15"
+  }
+}
