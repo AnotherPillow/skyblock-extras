@@ -8,6 +8,7 @@ class _Settings {
     SBonlIntegration = true;
     actualDateOnFrontpage = true;
     fixBedrockPlayersImages = true;
+    responsiveModals = true;
 
     _modal: HTMLDialogElement | null;
 
@@ -67,6 +68,7 @@ class _Settings {
         this.addSettingToModal('Skyblock.onl Integration', 'SBonlIntegration')
         this.addSettingToModal('Show actual date on threads on the frontpage', 'actualDateOnFrontpage')
         this.addSettingToModal("Fix bedrock players' images", 'fixBedrockPlayersImages')
+        this.addSettingToModal("Responsive Modals", 'responsiveModals')
 
         const saveBtn = document.createElement('button')
 
@@ -143,6 +145,7 @@ class _Settings {
             SBonlIntegration: this.SBonlIntegration,
             actualDateOnFrontpage: this.actualDateOnFrontpage,
             fixBedrockPlayersImages: this.fixBedrockPlayersImages,
+            responsiveModals: this.responsiveModals,
         }))
     }
 

@@ -1,4 +1,4 @@
-function waitForElm(selector: string) {
+function waitForElm(selector: string): Promise<Element | null> {
     return new Promise(resolve => {
         if (document.querySelector(selector)) {
             return resolve(document.querySelector(selector));
@@ -20,7 +20,7 @@ function waitForElm(selector: string) {
 
 var _listenForChildUpdateObservers = {}
 
-function listenForChildUpdate(selector: string, callback: (elm: Element | null) => void) {
+function listenForChildUpdate(selector: string, callback: (elm: ReturnType<Document['querySelector']>) => void) {
     var target = document.querySelector(selector);
 
     //@ts-ignore
@@ -39,4 +39,8 @@ function listenForChildUpdate(selector: string, callback: (elm: Element | null) 
 
     // later, you can stop observing
     // _listenForChildUpdateObservers[selector].disconnect();
+}
+
+function between(x: number, min: number, max: number) {
+    return x >= min && x <= max;
 }

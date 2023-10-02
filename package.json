@@ -17,6 +17,7 @@
   "devDependencies": {
     "@babel/cli": "^7.22.15",
     "@babel/core": "^7.22.20",
+    "@types/jquery": "^3.5.20",
     "typescript": "^5.2.2",
     "uglify-js": "^3.17.4",
     "uglifyjs-folder": "^3.3.0"

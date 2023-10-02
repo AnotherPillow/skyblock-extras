@@ -194,3 +194,40 @@ if (settings.fixBedrockPlayersImages) {
         })
     })
 }
+
+if (settings.responsiveModals) {
+    (async function () {
+        // (el as any).style.color = 'red'
+        await waitForElm('.memberCard');
+
+        let prevWidth = 0;
+        
+        //window.addEventListener("resize", (event) => {
+        setInterval(() => {
+            const width = document.body.clientWidth
+            // if (width !== prevWidth) {
+            console.log(width, prevWidth)
+            if (between(width, width - 10, width + 10)) {
+                const el = document.querySelector('.memberCard')
+                
+                console.log('width: ' + width)
+                console.log('height: ' + window.screen.height)
+    
+                const nw = ((width / 2) - ((el?.clientWidth ?? 1) / 2)).toString() + 'px'
+    
+                console.log('nw: ' + nw)
+                // console.log('nh: ' + nh)
+    
+                console.log(el);
+    
+                (el as any).style.left = nw;
+                // (el as any).style.top = nh;
+
+                prevWidth = width
+            }
+        // }, true);
+        }, 500);
+
+
+    })()
+}
