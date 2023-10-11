@@ -9,6 +9,7 @@ class _Settings {
     actualDateOnFrontpage = true;
     fixBedrockPlayersImages = true;
     responsiveModals = true;
+    movePoke = true;
 
     _modal: HTMLDialogElement | null;
 
@@ -69,6 +70,7 @@ class _Settings {
         this.addSettingToModal('Show actual date on threads on the frontpage', 'actualDateOnFrontpage')
         this.addSettingToModal("Fix bedrock players' images", 'fixBedrockPlayersImages')
         this.addSettingToModal("Responsive Modals", 'responsiveModals')
+        this.addSettingToModal("Move poking out of moderator tools.", 'movePoke')
 
         const saveBtn = document.createElement('button')
 
@@ -146,6 +148,7 @@ class _Settings {
             actualDateOnFrontpage: this.actualDateOnFrontpage,
             fixBedrockPlayersImages: this.fixBedrockPlayersImages,
             responsiveModals: this.responsiveModals,
+            movePoke: this.movePoke,
         }))
     }
 

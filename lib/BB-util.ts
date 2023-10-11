@@ -44,3 +44,5 @@ function listenForChildUpdate(selector: string, callback: (elm: ReturnType<Docum
 function between(x: number, min: number, max: number) {
     return x >= min && x <= max;
 }
+
+const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false

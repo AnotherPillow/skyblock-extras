@@ -152,13 +152,13 @@ if (settings.betterNewSB) {
 }
 
 if (settings.SBonlIntegration) {
-    const matches = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/);
-    console.log(matches)
-    if (matches) {
+    // const matches = ;
+    // console.log(matches)
+    if (isOnUserProfile) {
         const quickNav = document.querySelector('[href="misc/quick-navigation-menu"]')
         const embedBtn = quickNav?.cloneNode(true);
 
-        (embedBtn as any).href = `http://skyblock.onl/@${matches[1]}`;
+        (embedBtn as any).href = `http://skyblock.onl/@${isOnUserProfile[1]}`;
         (embedBtn as any).style.background = `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAMUExURR4wUHzP/ycwUAAAABYcaeAAAAAEdFJOU////wBAKqn0AAAACXBIWXMAAA7CAAAOwgEVKEqAAAAAOElEQVQYV3VKSRIAIAii+P+fC7DtkKOyghqgMB9oW80k4acZLHE3D9j1ibukNXsy9kelollmBDkAflsBQjtoK8kAAAAASUVORK5CYII=')`
         // (embedBtn as any).style.background = 'transparent';
 
@@ -230,4 +230,21 @@ if (settings.responsiveModals) {
 
 
     })()
+}
+
+if (settings.movePoke && isOnUserProfile) {
+    const moderatorActions = document.querySelector('div[id="XenForoUniq1"].Menu > ul.secondaryContent.blockLinksList')
+    const pokeBtn = moderatorActions?.querySelector('li > a.OverlayTrigger[href^="pokes/"]')
+    const clone = pokeBtn?.cloneNode(true)
+    
+    pokeBtn?.parentElement?.remove()
+
+    let linkElement = document.createElement('li')
+    linkElement.appendChild(clone as Node)
+
+    document.querySelector('.followBlock > ul')?.appendChild(linkElement)
+    
+    if (moderatorActions?.children.length === 0) {
+        document.querySelector('.Popup.moderatorToolsPopup')?.remove()
+    }
 }
