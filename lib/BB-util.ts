@@ -46,3 +46,18 @@ function between(x: number, min: number, max: number) {
 }
 
 const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false
+
+
+// https://www.codespeedy.com/get-the-ratio-of-two-numbers-in-javascript/
+function calculateRatio(num_1: number, num_2: number){
+    for(var num=num_2; num>1; num--) {
+        if((num_1 % num) == 0 && (num_2 % num) == 0) {
+            num_1=num_1/num;
+            num_2=num_2/num;
+        }
+    }
+    var ratio = num_1+":"+num_2;
+    return ratio;
+}
+
+const AF = Array.from

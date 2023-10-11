@@ -4,12 +4,15 @@ class _Settings {
     developerToolsEnabled = true;
     strikethroughBannedUsers = true;
     betterNewSB = true;
-    fontAwesomeUpdate = true;
+    fontAwesomeUpdate = false;
     SBonlIntegration = true;
     actualDateOnFrontpage = true;
     fixBedrockPlayersImages = true;
     responsiveModals = true;
     movePoke = true;
+    ratingRatio = true;
+    removeRatingCommas = true;
+    avatarOnProfileStats = false;
 
     _modal: HTMLDialogElement | null;
 
@@ -61,16 +64,20 @@ class _Settings {
         this._modal.style.textAlign = 'center'
 
         this.addSettingToModal('Thread Title as Browser Title', 'threadTitleEnabled')
-        this.addSettingToModal('Remove the shop tab.', 'hideShopTab')
-        this.addSettingToModal('Tools for interacting with authentication.', 'developerToolsEnabled')
-        this.addSettingToModal("Strike through banned users' names.", 'strikethroughBannedUsers')
+        this.addSettingToModal('Remove the shop tab', 'hideShopTab')
+        this.addSettingToModal('Tools for interacting with authentication', 'developerToolsEnabled')
+        this.addSettingToModal("Strike through banned users' names", 'strikethroughBannedUsers')
         this.addSettingToModal('Better New Style Theme', 'betterNewSB')
         this.addSettingToModal('Update Font Awesome', 'fontAwesomeUpdate')
         this.addSettingToModal('Skyblock.onl Integration', 'SBonlIntegration')
         this.addSettingToModal('Show actual date on threads on the frontpage', 'actualDateOnFrontpage')
         this.addSettingToModal("Fix bedrock players' images", 'fixBedrockPlayersImages')
         this.addSettingToModal("Responsive Modals", 'responsiveModals')
-        this.addSettingToModal("Move poking out of moderator tools.", 'movePoke')
+        this.addSettingToModal("Move poking out of moderator tools", 'movePoke')
+        this.addSettingToModal("Add given:received ratio for reactions on profile", 'ratingRatio')
+        this.addSettingToModal("Remove commas from ratings", 'removeRatingCommas')
+        this.addSettingToModal("On profiles, place the avatar on top of the stats", 'avatarOnProfileStats')
+
 
         const saveBtn = document.createElement('button')
 
@@ -149,6 +156,9 @@ class _Settings {
             fixBedrockPlayersImages: this.fixBedrockPlayersImages,
             responsiveModals: this.responsiveModals,
             movePoke: this.movePoke,
+            ratingRatio: this.ratingRatio,
+            removeRatingCommas: this.removeRatingCommas,
+            avatarOnProfileStats: this.avatarOnProfileStats
         }))
     }
 

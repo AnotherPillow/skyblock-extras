@@ -152,19 +152,12 @@ if (settings.betterNewSB) {
 }
 
 if (settings.SBonlIntegration) {
-    // const matches = ;
-    // console.log(matches)
     if (isOnUserProfile) {
         const quickNav = document.querySelector('[href="misc/quick-navigation-menu"]')
         const embedBtn = quickNav?.cloneNode(true);
 
         (embedBtn as any).href = `http://skyblock.onl/@${isOnUserProfile[1]}`;
         (embedBtn as any).style.background = `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAMUExURR4wUHzP/ycwUAAAABYcaeAAAAAEdFJOU////wBAKqn0AAAACXBIWXMAAA7CAAAOwgEVKEqAAAAAOElEQVQYV3VKSRIAIAii+P+fC7DtkKOyghqgMB9oW80k4acZLHE3D9j1ibukNXsy9kelollmBDkAflsBQjtoK8kAAAAASUVORK5CYII=')`
-        // (embedBtn as any).style.background = 'transparent';
-
-        // (embedBtn as any).innerHTML = '<i class="fa-solid fa-anchor fa-2xs"></i>'
-
-        console.log(embedBtn)
 
         quickNav?.parentElement?.appendChild(embedBtn as any)
     }
@@ -197,35 +190,24 @@ if (settings.fixBedrockPlayersImages) {
 
 if (settings.responsiveModals) {
     (async function () {
-        // (el as any).style.color = 'red'
         await waitForElm('.memberCard');
 
         let prevWidth = 0;
         
-        //window.addEventListener("resize", (event) => {
         setInterval(() => {
             const width = document.body.clientWidth
-            // if (width !== prevWidth) {
-            console.log(width, prevWidth)
+
             if (between(width, width - 10, width + 10)) {
                 const el = document.querySelector('.memberCard')
-                
-                console.log('width: ' + width)
-                console.log('height: ' + window.screen.height)
     
                 const nw = ((width / 2) - ((el?.clientWidth ?? 1) / 2)).toString() + 'px'
-    
-                console.log('nw: ' + nw)
-                // console.log('nh: ' + nh)
     
                 console.log(el);
     
                 (el as any).style.left = nw;
-                // (el as any).style.top = nh;
 
                 prevWidth = width
             }
-        // }, true);
         }, 500);
 
 
@@ -247,4 +229,59 @@ if (settings.movePoke && isOnUserProfile) {
     if (moderatorActions?.children.length === 0) {
         document.querySelector('.Popup.moderatorToolsPopup')?.remove()
     }
+}
+
+if (settings.ratingRatio && isOnUserProfile) {
+    (document.querySelector('div[class="mast"]') as HTMLElement).style.width = '230px';
+    (document.querySelector('div[class="mainProfileColumn"]') as HTMLElement).style.marginLeft = '240px'
+
+    const table = document.querySelector('div.section > div.primaryContent[style="padding:0"] > table.dark_postrating_member')
+    const tbody = table?.querySelector('tbody');
+    
+    (table as HTMLElement).style.padding = '5px 20px'
+
+    console.log(tbody)
+
+    Array.from(tbody?.children ?? []).forEach(tr => {
+        console.log(tr)
+        if (tr.querySelector('th')) {
+            const new_th = document.createElement('th')
+            new_th.innerHTML = 'Ratio:'
+            tr.appendChild(new_th)
+        } else {
+            const given = tr.children[1]
+            const received = tr.children[2]
+
+            console.log(given, received)
+
+            const ratio = document.createElement('td');
+
+            ratio.setAttribute('class', received.getAttribute('class') ?? 'dark_postrating_neutral')
+            ratio.innerHTML = calculateRatio(
+                parseInt(given.innerHTML.replace(/,/g, '')),
+                parseInt(received.innerHTML.replace(/,/g, '')),
+            )
+
+            tr.appendChild(ratio)
+        }
+    })
+}
+
+if (settings.removeRatingCommas) {
+    [
+        ...AF(document.querySelectorAll('.dark_postrating_positive')),
+        ...AF(document.querySelectorAll('.dark_postrating_neutral')),
+        ...AF(document.querySelectorAll('.dark_postrating_negative')),
+    ].forEach(x=>{
+        x.innerHTML.replace(/,/g, '')
+    })
+}
+
+if (settings.avatarOnProfileStats && isOnUserProfile) {
+    let avatara = document.querySelector('a[class^="Av"].OverlayTrigger[href="account/avatar"]') as HTMLElement
+    
+    avatara.style.position = 'relative';
+    
+    (avatara.children[0] as HTMLElement).style.position = 'absolute'
+    
 }
