@@ -132,7 +132,7 @@ if (settings.betterNewSB) {
 
         GM_addStyle(style)
     
-        document.querySelector('[class="pageContent"]')?.classList.add('sbe-mg-top')
+        // document.querySelector('[class="pageContent"]')?.classList.add('sbe-mg-top')
     }
     
 }
