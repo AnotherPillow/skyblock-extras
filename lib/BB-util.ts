@@ -61,3 +61,7 @@ function calculateRatio(num_1: number, num_2: number){
 }
 
 const AF = Array.from
+
+const colonNumber = (array: any[], number: number) => array.filter((_val, index) => index < number).filter(x=>x!=='')
+
+const getMonthFromString = (month: string) => new Date(Date.parse(month +" 1, 2012")).getMonth()+1

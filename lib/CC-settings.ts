@@ -1,7 +1,6 @@
 class _Settings {
     threadTitleEnabled = true;
     hideShopTab = true;
-    developerToolsEnabled = true;
     strikethroughBannedUsers = true;
     betterNewSB = true;
     fontAwesomeUpdate = false;
@@ -13,6 +12,7 @@ class _Settings {
     ratingRatio = true;
     removeRatingCommas = true;
     avatarOnProfileStats = false;
+    birthdayHatOnPFP = true;
 
     _modal: HTMLDialogElement | null;
 
@@ -65,7 +65,6 @@ class _Settings {
 
         this.addSettingToModal('Thread Title as Browser Title', 'threadTitleEnabled')
         this.addSettingToModal('Remove the shop tab', 'hideShopTab')
-        this.addSettingToModal('Tools for interacting with authentication', 'developerToolsEnabled')
         this.addSettingToModal("Strike through banned users' names", 'strikethroughBannedUsers')
         this.addSettingToModal('Better New Style Theme', 'betterNewSB')
         this.addSettingToModal('Update Font Awesome', 'fontAwesomeUpdate')
@@ -76,7 +75,8 @@ class _Settings {
         this.addSettingToModal("Move poking out of moderator tools", 'movePoke')
         this.addSettingToModal("Add given:received ratio for reactions on profile", 'ratingRatio')
         this.addSettingToModal("Remove commas from ratings", 'removeRatingCommas')
-        this.addSettingToModal("On profiles, place the avatar on top of the stats", 'avatarOnProfileStats')
+        this.addSettingToModal("Avatar on profile stats.", 'avatarOnProfileStats')
+        this.addSettingToModal("Place birthday hats on birthday peoples' PFPs", 'birthdayHatOnPFP')
 
 
         const saveBtn = document.createElement('button')
@@ -147,7 +147,6 @@ class _Settings {
         ls.setItem('sbe-settings', JSON.stringify({
             threadTitleEnabled: this.threadTitleEnabled,
             hideShopTab: this.hideShopTab,
-            developerToolsEnabled: this.developerToolsEnabled,
             strikethroughBannedUsers: this.strikethroughBannedUsers,
             betterNewSB: this.betterNewSB,
             fontAwesomeUpdate: this.fontAwesomeUpdate,
@@ -158,7 +157,8 @@ class _Settings {
             movePoke: this.movePoke,
             ratingRatio: this.ratingRatio,
             removeRatingCommas: this.removeRatingCommas,
-            avatarOnProfileStats: this.avatarOnProfileStats
+            avatarOnProfileStats: this.avatarOnProfileStats,
+            birthdayHatOnPFP: this.birthdayHatOnPFP,
         }))
     }
 
