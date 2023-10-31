@@ -28,23 +28,6 @@ function waitForElm(selector) {
         });
     });
 }
-var _listenForChildUpdateObservers = {};
-function listenForChildUpdate(selector, callback) {
-    var target = document.querySelector(selector);
-    //@ts-ignore
-    _listenForChildUpdateObservers[selector] = new MutationObserver(function (mutations) {
-        mutations.forEach(function (mutation) {
-            callback(target);
-        });
-    });
-    // configuration of the observer:
-    var config = { attributes: true, childList: true, characterData: true };
-    // pass in the target node, as well as the observer options
-    //@ts-ignore
-    _listenForChildUpdateObservers[selector].observe(target, config);
-    // later, you can stop observing
-    // _listenForChildUpdateObservers[selector].disconnect();
-}
 function between(x, min, max) {
     return x >= min && x <= max;
 }
@@ -301,7 +284,6 @@ if (settings.SBonlIntegration) {
         const href = `http://skyblock.onl/@${isOnUserProfile[1]}`;
         embedBtn.href = href;
         embedBtn.style.background = `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAMUExURR4wUHzP/ycwUAAAABYcaeAAAAAEdFJOU////wBAKqn0AAAACXBIWXMAAA7CAAAOwgEVKEqAAAAAOElEQVQYV3VKSRIAIAii+P+fC7DtkKOyghqgMB9oW80k4acZLHE3D9j1ibukNXsy9kelollmBDkAflsBQjtoK8kAAAAASUVORK5CYII=')`;
-        embedBtn.onclick = () => { navigator.clipboard.writeText(href); };
         quickNav?.parentElement?.appendChild(embedBtn);
     }
 }
