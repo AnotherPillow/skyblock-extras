@@ -10,8 +10,8 @@
 // @require     https://raw.githubusercontent.com/thdoan/strftime/master/strftime.js
 // @grant       GM_addStyle
 // ==/UserScript==
-"use strict";
 
+"use strict";
 
 function waitForElm(selector) {
     return new Promise(resolve => {
