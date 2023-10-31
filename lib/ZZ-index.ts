@@ -117,9 +117,10 @@ if (settings.SBonlIntegration) {
     if (isOnUserProfile) {
         const quickNav = document.querySelector('[href="misc/quick-navigation-menu"]')
         const embedBtn = quickNav?.cloneNode(true);
+        const href = `http://skyblock.onl/@${isOnUserProfile[1]}`;
 
-        (embedBtn as any).href = `http://skyblock.onl/@${isOnUserProfile[1]}`;
-        (embedBtn as any).style.background = `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAMUExURR4wUHzP/ycwUAAAABYcaeAAAAAEdFJOU////wBAKqn0AAAACXBIWXMAAA7CAAAOwgEVKEqAAAAAOElEQVQYV3VKSRIAIAii+P+fC7DtkKOyghqgMB9oW80k4acZLHE3D9j1ibukNXsy9kelollmBDkAflsBQjtoK8kAAAAASUVORK5CYII=')`
+        (embedBtn as any).href = href;
+        (embedBtn as any).style.background = `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAMUExURR4wUHzP/ycwUAAAABYcaeAAAAAEdFJOU////wBAKqn0AAAACXBIWXMAAA7CAAAOwgEVKEqAAAAAOElEQVQYV3VKSRIAIAii+P+fC7DtkKOyghqgMB9oW80k4acZLHE3D9j1ibukNXsy9kelollmBDkAflsBQjtoK8kAAAAASUVORK5CYII=')`;
 
         quickNav?.parentElement?.appendChild(embedBtn as any)
     }

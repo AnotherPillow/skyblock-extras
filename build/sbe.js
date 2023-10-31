@@ -1,6 +1,7 @@
 // ==UserScript==
 // @name        Skyblock Extras
 // @namespace   anotherpillow
+// @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
 // @version     1.0
@@ -8,9 +9,9 @@
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
 // @require     https://raw.githubusercontent.com/thdoan/strftime/master/strftime.js
 // @grant       GM_addStyle
-// @description A userscript to improve the skyblock.net forums experience!
 // ==/UserScript==
 "use strict";
+
 
 function waitForElm(selector) {
     return new Promise(resolve => {
@@ -69,7 +70,6 @@ class _Settings {
     hideShopTab = true;
     strikethroughBannedUsers = true;
     betterNewSB = true;
-    fontAwesomeUpdate = false;
     SBonlIntegration = true;
     actualDateOnFrontpage = true;
     fixBedrockPlayersImages = true;
@@ -119,7 +119,6 @@ class _Settings {
         this.addSettingToModal('Remove the shop tab', 'hideShopTab');
         this.addSettingToModal("Strike through banned users' names", 'strikethroughBannedUsers');
         this.addSettingToModal('Better New Style Theme', 'betterNewSB');
-        this.addSettingToModal('Update Font Awesome', 'fontAwesomeUpdate');
         this.addSettingToModal('Skyblock.onl Integration', 'SBonlIntegration');
         this.addSettingToModal('Show actual date on threads on the frontpage', 'actualDateOnFrontpage');
         this.addSettingToModal("Fix bedrock players' images", 'fixBedrockPlayersImages');
@@ -178,7 +177,6 @@ class _Settings {
             hideShopTab: this.hideShopTab,
             strikethroughBannedUsers: this.strikethroughBannedUsers,
             betterNewSB: this.betterNewSB,
-            fontAwesomeUpdate: this.fontAwesomeUpdate,
             SBonlIntegration: this.SBonlIntegration,
             actualDateOnFrontpage: this.actualDateOnFrontpage,
             fixBedrockPlayersImages: this.fixBedrockPlayersImages,
@@ -199,24 +197,6 @@ class _Settings {
     }
 }
 const settings = new _Settings();
-if (settings.fontAwesomeUpdate) {
-    const newURL = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css';
-    const old = document.querySelector('link[href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"]');
-    old.disabled = true;
-    console.log(old);
-    old?.remove();
-    const newEl = document.createElement('link');
-    newEl.rel = 'stylesheet';
-    newEl.href = newURL;
-    document.head.appendChild(newEl);
-    const outdatedFAs = document.querySelectorAll('[class*="fa"');
-    outdatedFAs.forEach(x => {
-        x.classList.remove('fa');
-        x.classList.add('fa-solid');
-        if (x.classList.contains('fa-heart'))
-            x.outerHTML = '❤️';
-    });
-}
 if (document.querySelector('.navTabs')) {
     const style = `
         .navTabs {
@@ -320,8 +300,10 @@ if (settings.SBonlIntegration) {
     if (isOnUserProfile) {
         const quickNav = document.querySelector('[href="misc/quick-navigation-menu"]');
         const embedBtn = quickNav?.cloneNode(true);
-        embedBtn.href = `http://skyblock.onl/@${isOnUserProfile[1]}`;
+        const href = `http://skyblock.onl/@${isOnUserProfile[1]}`;
+        embedBtn.href = href;
         embedBtn.style.background = `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAMUExURR4wUHzP/ycwUAAAABYcaeAAAAAEdFJOU////wBAKqn0AAAACXBIWXMAAA7CAAAOwgEVKEqAAAAAOElEQVQYV3VKSRIAIAii+P+fC7DtkKOyghqgMB9oW80k4acZLHE3D9j1ibukNXsy9kelollmBDkAflsBQjtoK8kAAAAASUVORK5CYII=')`;
+        embedBtn.onclick = () => { navigator.clipboard.writeText(href); };
         quickNav?.parentElement?.appendChild(embedBtn);
     }
 }
