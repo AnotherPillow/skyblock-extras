@@ -8,8 +8,8 @@
     "ugly": "uglifyjs build/sbe.js --comments all -c -m --mangle-props > build/sbe.min.js",
     "$builddir": "mkdir build || true",
     "$build": "npm run --silent builddir && tsc && babel _build -d lib && npm run ugly",
-    "copy_loader": "cp lib/loader.js build/sbe.loader.js",
-    "build": "tsc && npm run ugly",
+    "fix-strict": "node move-use-strict.js",
+    "build": "tsc && npm run ugly && npm run fix-strict",
     "dev": "npm run build && npx serve -p 13451 build/"
   },
   "author": "anotherpillow",

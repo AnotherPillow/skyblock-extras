@@ -13,7 +13,7 @@
         "target": "es2022",
 
         // "outDir": "_build/",
-        "outFile": "./build/sbe.js",
+        "outFile": "./build/sbe-unpatched.js",
         "rootDir": "lib",
 
         "allowSyntheticDefaultImports": true,
