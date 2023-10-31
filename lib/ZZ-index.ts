@@ -1,27 +1,3 @@
-if (settings.fontAwesomeUpdate) {
-    const newURL = 'https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.1/css/fontawesome.min.css'
-    const old = document.querySelector('link[href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"]');
-    
-    (old as any).disabled = true
-    console.log(old)
-    old?.remove()
-
-    const newEl = document.createElement('link')
-    newEl.rel = 'stylesheet'
-    newEl.href = newURL
-
-    document.head.appendChild(newEl)
-
-    const outdatedFAs = document.querySelectorAll('[class*="fa"')
-    outdatedFAs.forEach(x => {
-        x.classList.remove('fa')
-        x.classList.add('fa-solid')
-
-        if (x.classList.contains('fa-heart')) x.outerHTML = '❤️'
-    })
-
-}
-
 if (document.querySelector('.navTabs')) {
     const style = `
         .navTabs {

@@ -3,7 +3,6 @@ class _Settings {
     hideShopTab = true;
     strikethroughBannedUsers = true;
     betterNewSB = true;
-    fontAwesomeUpdate = false;
     SBonlIntegration = true;
     actualDateOnFrontpage = true;
     fixBedrockPlayersImages = true;
@@ -67,7 +66,6 @@ class _Settings {
         this.addSettingToModal('Remove the shop tab', 'hideShopTab')
         this.addSettingToModal("Strike through banned users' names", 'strikethroughBannedUsers')
         this.addSettingToModal('Better New Style Theme', 'betterNewSB')
-        this.addSettingToModal('Update Font Awesome', 'fontAwesomeUpdate')
         this.addSettingToModal('Skyblock.onl Integration', 'SBonlIntegration')
         this.addSettingToModal('Show actual date on threads on the frontpage', 'actualDateOnFrontpage')
         this.addSettingToModal("Fix bedrock players' images", 'fixBedrockPlayersImages')
@@ -149,7 +147,6 @@ class _Settings {
             hideShopTab: this.hideShopTab,
             strikethroughBannedUsers: this.strikethroughBannedUsers,
             betterNewSB: this.betterNewSB,
-            fontAwesomeUpdate: this.fontAwesomeUpdate,
             SBonlIntegration: this.SBonlIntegration,
             actualDateOnFrontpage: this.actualDateOnFrontpage,
             fixBedrockPlayersImages: this.fixBedrockPlayersImages,
