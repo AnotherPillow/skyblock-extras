@@ -296,3 +296,9 @@ if (settings.birthdayHatOnPFP) {
 
     }
 }
+
+if (settings.roundedFriendsOnProfile && isOnUserProfile) {
+    GM_addStyle(`
+        .friend>.friend-head>img { border-radius: 7px; };
+    `)
+}

@@ -12,6 +12,7 @@ class _Settings {
     removeRatingCommas = true;
     avatarOnProfileStats = false;
     birthdayHatOnPFP = true;
+    roundedFriendsOnProfile = true;
 
     _modal: HTMLDialogElement | null;
 
@@ -75,6 +76,7 @@ class _Settings {
         this.addSettingToModal("Remove commas from ratings", 'removeRatingCommas')
         this.addSettingToModal("Avatar on profile stats.", 'avatarOnProfileStats')
         this.addSettingToModal("Place birthday hats on birthday peoples' PFPs", 'birthdayHatOnPFP')
+        this.addSettingToModal("Round friends' names on profile.", 'roundedFriendsOnProfile')
 
 
         const saveBtn = document.createElement('button')
@@ -140,31 +142,84 @@ class _Settings {
     }
 
     serialise() {
-        const ls = localStorage
-
-        ls.setItem('sbe-settings', JSON.stringify({
-            threadTitleEnabled: this.threadTitleEnabled,
-            hideShopTab: this.hideShopTab,
-            strikethroughBannedUsers: this.strikethroughBannedUsers,
-            betterNewSB: this.betterNewSB,
-            SBonlIntegration: this.SBonlIntegration,
-            actualDateOnFrontpage: this.actualDateOnFrontpage,
-            fixBedrockPlayersImages: this.fixBedrockPlayersImages,
-            responsiveModals: this.responsiveModals,
-            movePoke: this.movePoke,
-            ratingRatio: this.ratingRatio,
-            removeRatingCommas: this.removeRatingCommas,
-            avatarOnProfileStats: this.avatarOnProfileStats,
-            birthdayHatOnPFP: this.birthdayHatOnPFP,
+        localStorage.setItem('sbe-settings', JSON.stringify({
+            'threadTitleEnabled': this.threadTitleEnabled,
+            'hideShopTab': this.hideShopTab,
+            'strikethroughBannedUsers': this.strikethroughBannedUsers,
+            'betterNewSB': this.betterNewSB,
+            'SBonlIntegration': this.SBonlIntegration,
+            'actualDateOnFrontpage': this.actualDateOnFrontpage,
+            'fixBedrockPlayersImages': this.fixBedrockPlayersImages,
+            'responsiveModals': this.responsiveModals,
+            'movePoke': this.movePoke,
+            'ratingRatio': this.ratingRatio,
+            'removeRatingCommas': this.removeRatingCommas,
+            'avatarOnProfileStats': this.avatarOnProfileStats,
+            'birthdayHatOnPFP': this.birthdayHatOnPFP,
+            'roundedFriendsOnProfile': this.roundedFriendsOnProfile,
         }))
+
+        // alert(localStorage)
+        // debugger
     }
 
     deserialise() {
         let settings = JSON.parse(localStorage.getItem('sbe-settings') ?? '{}')
+        // alert(localStorage.getItem('sbe-settings'))
         for (const key of Object.keys(settings)) {
-            //@ts-ignore
-            this[key] = settings[key]
+            switch (key) {
+                case 'threadTitleEnabled':
+                    this.threadTitleEnabled = settings[key]
+                    break;
+                case 'hideShopTab':
+                    this.hideShopTab = settings[key]
+                    break;
+                case 'strikethroughBannedUsers':
+                    this.strikethroughBannedUsers = settings[key]
+                    break;
+                case 'betterNewSB':
+                    this.betterNewSB = settings[key]
+                    break;
+                case 'SBonlIntegration':
+                    this.SBonlIntegration = settings[key]
+                    break;
+                case 'actualDateOnFrontpage':
+                    this.actualDateOnFrontpage = settings[key]
+                    break;
+                case 'fixBedrockPlayersImages':
+                    this.fixBedrockPlayersImages = settings[key]
+                    break;
+                case 'responsiveModals':
+                    this.responsiveModals = settings[key]
+                    break;
+                case 'threadTitleEnabled':
+                    this.threadTitleEnabled = settings[key]
+                    break;
+                case 'responsiveModals':
+                    this.responsiveModals = settings[key]
+                    break;
+                case 'movePoke':
+                    this.movePoke = settings[key]
+                    break;
+                case 'ratingRatio':
+                    this.ratingRatio = settings[key]
+                    break;
+                case 'removeRatingCommas':
+                    this.removeRatingCommas = settings[key]
+                    break;
+                case 'avatarOnProfileStats':
+                    this.avatarOnProfileStats = settings[key]
+                    break;
+                case 'birthdayHatOnPFP':
+                    this.birthdayHatOnPFP = settings[key]
+                    break;
+                case 'roundedFriendsOnProfile':
+                    this.roundedFriendsOnProfile = settings[key]
+                    break;
+            }
+
         }
+        // debugger
     }
 }
 
