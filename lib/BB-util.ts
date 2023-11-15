@@ -22,8 +22,6 @@ function between(x: number, min: number, max: number) {
     return x >= min && x <= max;
 }
 
-const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false
-
 // https://www.codespeedy.com/get-the-ratio-of-two-numbers-in-javascript/
 function calculateRatio(num_1: number, num_2: number){
     for(var num=num_2; num>1; num--) {
@@ -41,3 +39,9 @@ const AF = Array.from
 const colonNumber = (array: any[], number: number) => array.filter((_val, index) => index < number).filter(x=>x!=='')
 
 const getMonthFromString = (month: string) => new Date(Date.parse(month +" 1, 2012")).getMonth()+1
+
+const getHrefWithoutAnchor = () => window.location.href.replace(new RegExp(`${window.location.hash}$`), '')
+
+const isOnThread = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/threads\/.+\.\d+\/?/)
+
+const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false

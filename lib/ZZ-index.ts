@@ -302,3 +302,21 @@ if (settings.roundedFriendsOnProfile && isOnUserProfile) {
         .friend>.friend-head>img { border-radius: 7px; };
     `)
 }
+
+if (settings.postLinkButton && isOnThread) {
+    AF(document.querySelectorAll(`li[id^="post-"].message[data-author]`))
+        .forEach(post => {
+            const { id } = post
+
+            const publicControls = post.querySelector('.publicControls')
+            
+            const a= document.createElement('a')
+            a.href = `${isOnThread}#${id}`
+            a.setAttribute('class', "ReplyQuote item control reply")
+            a.title = "Copy link to this message."
+            a.innerHTML = `<span></span>Copy Link`
+            a.onclick = () => window.navigator.clipboard.writeText(a.href)
+
+            publicControls?.appendChild(a)
+        })
+}

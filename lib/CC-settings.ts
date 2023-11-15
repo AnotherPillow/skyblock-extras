@@ -13,6 +13,7 @@ class _Settings {
     avatarOnProfileStats = false;
     birthdayHatOnPFP = true;
     roundedFriendsOnProfile = true;
+    postLinkButton = true;
 
     _modal: HTMLDialogElement | null;
 
@@ -74,9 +75,10 @@ class _Settings {
         this.addSettingToModal("Move poking out of moderator tools", 'movePoke')
         this.addSettingToModal("Add given:received ratio for reactions on profile", 'ratingRatio')
         this.addSettingToModal("Remove commas from ratings", 'removeRatingCommas')
-        this.addSettingToModal("Avatar on profile stats.", 'avatarOnProfileStats')
+        this.addSettingToModal("Avatar on profile stats", 'avatarOnProfileStats')
         this.addSettingToModal("Place birthday hats on birthday peoples' PFPs", 'birthdayHatOnPFP')
         this.addSettingToModal("Round friends' names on profile.", 'roundedFriendsOnProfile')
+        this.addSettingToModal("Add button to copy link to post on posts.", 'postLinkButton')
 
 
         const saveBtn = document.createElement('button')
@@ -157,6 +159,7 @@ class _Settings {
             'avatarOnProfileStats': this.avatarOnProfileStats,
             'birthdayHatOnPFP': this.birthdayHatOnPFP,
             'roundedFriendsOnProfile': this.roundedFriendsOnProfile,
+            'postLinkButton': this.postLinkButton,
         }))
 
         // alert(localStorage)
@@ -167,57 +170,7 @@ class _Settings {
         let settings = JSON.parse(localStorage.getItem('sbe-settings') ?? '{}')
         // alert(localStorage.getItem('sbe-settings'))
         for (const key of Object.keys(settings)) {
-            switch (key) {
-                case 'threadTitleEnabled':
-                    this.threadTitleEnabled = settings[key]
-                    break;
-                case 'hideShopTab':
-                    this.hideShopTab = settings[key]
-                    break;
-                case 'strikethroughBannedUsers':
-                    this.strikethroughBannedUsers = settings[key]
-                    break;
-                case 'betterNewSB':
-                    this.betterNewSB = settings[key]
-                    break;
-                case 'SBonlIntegration':
-                    this.SBonlIntegration = settings[key]
-                    break;
-                case 'actualDateOnFrontpage':
-                    this.actualDateOnFrontpage = settings[key]
-                    break;
-                case 'fixBedrockPlayersImages':
-                    this.fixBedrockPlayersImages = settings[key]
-                    break;
-                case 'responsiveModals':
-                    this.responsiveModals = settings[key]
-                    break;
-                case 'threadTitleEnabled':
-                    this.threadTitleEnabled = settings[key]
-                    break;
-                case 'responsiveModals':
-                    this.responsiveModals = settings[key]
-                    break;
-                case 'movePoke':
-                    this.movePoke = settings[key]
-                    break;
-                case 'ratingRatio':
-                    this.ratingRatio = settings[key]
-                    break;
-                case 'removeRatingCommas':
-                    this.removeRatingCommas = settings[key]
-                    break;
-                case 'avatarOnProfileStats':
-                    this.avatarOnProfileStats = settings[key]
-                    break;
-                case 'birthdayHatOnPFP':
-                    this.birthdayHatOnPFP = settings[key]
-                    break;
-                case 'roundedFriendsOnProfile':
-                    this.roundedFriendsOnProfile = settings[key]
-                    break;
-            }
-
+            this[key as keyof typeof this] = settings[key]
         }
         // debugger
     }
