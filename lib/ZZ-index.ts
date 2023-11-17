@@ -198,10 +198,10 @@ if (settings.ratingRatio && isOnUserProfile) {
     (document.querySelector('div[class="mast"]') as HTMLElement).style.width = '230px';
     (document.querySelector('div[class="mainProfileColumn"]') as HTMLElement).style.marginLeft = '240px'
 
-    const table = document.querySelector('div.section > div.primaryContent[style="padding:0"] > table.dark_postrating_member')
+    const table = document.querySelector('div.section > div.primaryContent[style="padding:0"] > table.dark_postrating_member') as HTMLElement
     const tbody = table?.querySelector('tbody');
     
-    (table as HTMLElement).style.padding = '5px 20px'
+    table.style.padding = '5px 20px'
 
     console.log(tbody)
 
