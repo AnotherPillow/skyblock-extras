@@ -77,7 +77,7 @@ class _Settings {
         this.addSettingToModal("Remove commas from ratings", 'removeRatingCommas')
         this.addSettingToModal("Avatar on profile stats", 'avatarOnProfileStats')
         this.addSettingToModal("Place birthday hats on birthday peoples' PFPs", 'birthdayHatOnPFP')
-        this.addSettingToModal("Round friends' names on profile.", 'roundedFriendsOnProfile')
+        this.addSettingToModal("Round friends' names on profile", 'roundedFriendsOnProfile')
         this.addSettingToModal("Add button to copy link to post on posts.", 'postLinkButton')
 
 

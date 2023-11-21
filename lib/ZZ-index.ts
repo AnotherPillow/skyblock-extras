@@ -161,13 +161,11 @@ if (settings.responsiveModals) {
             const width = document.body.clientWidth
 
             if (between(width, width - 10, width + 10)) {
-                const el = document.querySelector('.memberCard')
+                const el = document.querySelector('.memberCard') as HTMLElement
     
                 const nw = ((width / 2) - ((el?.clientWidth ?? 1) / 2)).toString() + 'px'
     
-                console.log(el);
-    
-                (el as any).style.left = nw;
+                el.style.left = nw;
 
                 prevWidth = width
             }
@@ -203,10 +201,7 @@ if (settings.ratingRatio && isOnUserProfile) {
     
     table.style.padding = '5px 20px'
 
-    console.log(tbody)
-
     Array.from(tbody?.children ?? []).forEach(tr => {
-        console.log(tr)
         if (tr.querySelector('th')) {
             const new_th = document.createElement('th')
             new_th.innerHTML = 'Ratio:'
@@ -214,8 +209,6 @@ if (settings.ratingRatio && isOnUserProfile) {
         } else {
             const given = tr.children[1]
             const received = tr.children[2]
-
-            console.log(given, received)
 
             const ratio = document.createElement('td');
 
