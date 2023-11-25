@@ -313,3 +313,16 @@ if (settings.postLinkButton && isOnThread) {
             publicControls?.appendChild(a)
         })
 }
+
+if (settings.minotarNotCrafatar) {
+    setTimeout(() => {
+        AF(document.querySelectorAll('img[src^="https://crafatar.com/avatars"]')).forEach(x => {
+            console.log(x)
+            x.setAttribute('src', 
+                (x.getAttribute('src') ?? '')
+                .replace(/https\:\/\/crafatar.com\/avatars\/([a-fA-F0-9\-]{32,36})\?size=(\d+)&overlay=true/g, 
+                    'https://minotar.net/avatar/$1/$2')
+            )
+        })
+    }, 1000)
+}

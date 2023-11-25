@@ -5,11 +5,11 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "ugly": "uglifyjs build/sbe.js --comments all -c -m --mangle-props reserved=[threadTitleEnabled,hideShopTab,strikethroughBannedUsers,betterNewSB,SBonlIntegration,actualDateOnFrontpage,fixBedrockPlayersImages,responsiveModals,movePoke,ratingRatio,removeRatingCommas,avatarOnProfileStats,birthdayHatOnPFP,roundedFriendsOnProfile,postLinkButton] > build/sbe.min.js",
+    "ugly": "uglifyjs build/sbe.js --comments all -c -m --mangle-props reserved=[threadTitleEnabled,hideShopTab,strikethroughBannedUsers,betterNewSB,SBonlIntegration,actualDateOnFrontpage,fixBedrockPlayersImages,responsiveModals,movePoke,ratingRatio,removeRatingCommas,avatarOnProfileStats,birthdayHatOnPFP,roundedFriendsOnProfile,postLinkButton,minotarNotCrafatar] > build/sbe.min.js",
     "$builddir": "mkdir build || true",
     "$build": "npm run --silent builddir && tsc && babel _build -d lib && npm run ugly",
     "fix-strict": "node move-use-strict.js",
-    "build": "tsc && npm run ugly && npm run fix-strict",
+    "build": "tsc && npm run fix-strict && npm run ugly",
     "dev": "npm run build && npx serve -p 13451 build/"
   },
   "author": "anotherpillow",

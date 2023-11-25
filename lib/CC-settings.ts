@@ -14,6 +14,7 @@ class _Settings {
     birthdayHatOnPFP = true;
     roundedFriendsOnProfile = true;
     postLinkButton = true;
+    minotarNotCrafatar = true;
 
     _modal: HTMLDialogElement | null;
 
@@ -78,7 +79,8 @@ class _Settings {
         this.addSettingToModal("Avatar on profile stats", 'avatarOnProfileStats')
         this.addSettingToModal("Place birthday hats on birthday peoples' PFPs", 'birthdayHatOnPFP')
         this.addSettingToModal("Round friends' names on profile", 'roundedFriendsOnProfile')
-        this.addSettingToModal("Add button to copy link to post on posts.", 'postLinkButton')
+        this.addSettingToModal("Add button to copy link to post on posts", 'postLinkButton')
+        this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar')
 
 
         const saveBtn = document.createElement('button')
@@ -160,6 +162,7 @@ class _Settings {
             'birthdayHatOnPFP': this.birthdayHatOnPFP,
             'roundedFriendsOnProfile': this.roundedFriendsOnProfile,
             'postLinkButton': this.postLinkButton,
+            'minotarNotCrafatar': this.minotarNotCrafatar,
         }))
 
         // alert(localStorage)

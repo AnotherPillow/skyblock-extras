@@ -65,6 +65,7 @@ class _Settings {
     birthdayHatOnPFP = true;
     roundedFriendsOnProfile = true;
     postLinkButton = true;
+    minotarNotCrafatar = true;
     _modal;
     addSettingToModal(name, value) {
         const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`;
@@ -114,8 +115,9 @@ class _Settings {
         this.addSettingToModal("Remove commas from ratings", 'removeRatingCommas');
         this.addSettingToModal("Avatar on profile stats", 'avatarOnProfileStats');
         this.addSettingToModal("Place birthday hats on birthday peoples' PFPs", 'birthdayHatOnPFP');
-        this.addSettingToModal("Round friends' names on profile.", 'roundedFriendsOnProfile');
-        this.addSettingToModal("Add button to copy link to post on posts.", 'postLinkButton');
+        this.addSettingToModal("Round friends' names on profile", 'roundedFriendsOnProfile');
+        this.addSettingToModal("Add button to copy link to post on posts", 'postLinkButton');
+        this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar');
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = 'Save';
         saveBtn.style.width = '6em';
@@ -175,6 +177,7 @@ class _Settings {
             'birthdayHatOnPFP': this.birthdayHatOnPFP,
             'roundedFriendsOnProfile': this.roundedFriendsOnProfile,
             'postLinkButton': this.postLinkButton,
+            'minotarNotCrafatar': this.minotarNotCrafatar,
         }));
         // alert(localStorage)
         // debugger
@@ -435,4 +438,13 @@ if (settings.postLinkButton && isOnThread) {
         a.onclick = () => window.navigator.clipboard.writeText(a.href);
         publicControls?.appendChild(a);
     });
+}
+if (settings.minotarNotCrafatar) {
+    setTimeout(() => {
+        AF(document.querySelectorAll('img[src^="https://crafatar.com/avatars"]')).forEach(x => {
+            console.log(x);
+            x.setAttribute('src', (x.getAttribute('src') ?? '')
+                .replace(/https\:\/\/crafatar.com\/avatars\/([a-fA-F0-9\-]{32,36})\?size=(\d+)&overlay=true/g, 'https://minotar.net/avatar/$1/$2'));
+        });
+    }, 1000);
 }
