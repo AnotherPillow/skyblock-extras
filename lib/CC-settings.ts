@@ -30,8 +30,7 @@ class _Settings {
         input.name = id
         input.id = id
         input.type = 'checkbox'
-        //@ts-ignore
-        input.checked = this[value] ?? false
+        input.checked = (this[value] ?? false) as boolean
         
         input.addEventListener('click', (ev: Event) => {
             const checked = //@ts-ignore
@@ -167,18 +166,13 @@ class _Settings {
             'minotarNotCrafatar': this.minotarNotCrafatar,
             'noMoreCamo': this.noMoreCamo,
         }))
-
-        // alert(localStorage)
-        // debugger
     }
 
     deserialise() {
         let settings = JSON.parse(localStorage.getItem('sbe-settings') ?? '{}')
-        // alert(localStorage.getItem('sbe-settings'))
         for (const key of Object.keys(settings)) {
             this[key as keyof typeof this] = settings[key]
         }
-        // debugger
     }
 }
 
