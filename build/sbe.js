@@ -68,6 +68,7 @@ class _Settings {
     roundedFriendsOnProfile = true;
     postLinkButton = true;
     minotarNotCrafatar = true;
+    noMoreCamo = false;
     _modal;
     addSettingToModal(name, value) {
         const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`;
@@ -120,6 +121,7 @@ class _Settings {
         this.addSettingToModal("Round friends' names on profile", 'roundedFriendsOnProfile');
         this.addSettingToModal("Add button to copy link to post on posts", 'postLinkButton');
         this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar');
+        this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo');
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = 'Save';
         saveBtn.style.width = '6em';
@@ -180,6 +182,7 @@ class _Settings {
             'roundedFriendsOnProfile': this.roundedFriendsOnProfile,
             'postLinkButton': this.postLinkButton,
             'minotarNotCrafatar': this.minotarNotCrafatar,
+            'noMoreCamo': this.noMoreCamo,
         }));
         // alert(localStorage)
         // debugger
@@ -447,6 +450,16 @@ if (settings.minotarNotCrafatar) {
             console.log(x);
             x.setAttribute('src', (x.getAttribute('src') ?? '')
                 .replace(/https\:\/\/crafatar.com\/avatars\/([a-fA-F0-9\-]{32,36})\?size=(\d+)&overlay=true/g, 'https://minotar.net/avatar/$1/$2'));
+        });
+    }, 1000);
+}
+if (settings.noMoreCamo) {
+    setTimeout(() => {
+        AF(document.querySelectorAll('[src*="camo.skyblock.net/"]')).forEach(img => {
+            let one = decodeURIComponent(img.getAttribute('src') ?? '').split('?url');
+            let two = decodeURIComponent(one.length == 2 ? one[1] : one[2]);
+            let three = two.startsWith('=') ? two.slice(1) : two;
+            img.setAttribute('src', three);
         });
     }, 1000);
 }

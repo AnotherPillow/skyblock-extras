@@ -15,6 +15,7 @@ class _Settings {
     roundedFriendsOnProfile = true;
     postLinkButton = true;
     minotarNotCrafatar = true;
+    noMoreCamo = false;
 
     _modal: HTMLDialogElement | null;
 
@@ -81,6 +82,7 @@ class _Settings {
         this.addSettingToModal("Round friends' names on profile", 'roundedFriendsOnProfile')
         this.addSettingToModal("Add button to copy link to post on posts", 'postLinkButton')
         this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar')
+        this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo')
 
 
         const saveBtn = document.createElement('button')
@@ -163,6 +165,7 @@ class _Settings {
             'roundedFriendsOnProfile': this.roundedFriendsOnProfile,
             'postLinkButton': this.postLinkButton,
             'minotarNotCrafatar': this.minotarNotCrafatar,
+            'noMoreCamo': this.noMoreCamo,
         }))
 
         // alert(localStorage)

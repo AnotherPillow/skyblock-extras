@@ -326,3 +326,14 @@ if (settings.minotarNotCrafatar) {
         })
     }, 1000)
 }
+
+if (settings.noMoreCamo) {
+    setTimeout(() => {
+        AF(document.querySelectorAll('[src*="camo.skyblock.net/"]')).forEach(img => {
+            let one = decodeURIComponent(img.getAttribute('src') ?? '').split('?url')
+            let two = decodeURIComponent(one.length == 2 ? one[1] : one[2])
+            let three = two.startsWith('=') ? two.slice(1) : two
+            img.setAttribute('src', three)
+        })
+    }, 1000)
+}
