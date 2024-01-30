@@ -69,6 +69,7 @@ class _Settings {
     postLinkButton = true;
     minotarNotCrafatar = true;
     noMoreCamo = false;
+    fadeInReactions = true;
     _modal;
     addSettingToModal(name, value) {
         const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`;
@@ -79,8 +80,7 @@ class _Settings {
         input.name = id;
         input.id = id;
         input.type = 'checkbox';
-        //@ts-ignore
-        input.checked = this[value] ?? false;
+        input.checked = (this[value] ?? false);
         input.addEventListener('click', (ev) => {
             const checked = //@ts-ignore
              ev.target.checked;
@@ -122,6 +122,7 @@ class _Settings {
         this.addSettingToModal("Add button to copy link to post on posts", 'postLinkButton');
         this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar');
         this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo');
+        this.addSettingToModal("Fade in reaction opacity on hover", 'fadeInReactions');
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = 'Save';
         saveBtn.style.width = '6em';
@@ -183,40 +184,26 @@ class _Settings {
             'postLinkButton': this.postLinkButton,
             'minotarNotCrafatar': this.minotarNotCrafatar,
             'noMoreCamo': this.noMoreCamo,
+            'fadeInReactions': this.fadeInReactions,
         }));
-        // alert(localStorage)
-        // debugger
     }
     deserialise() {
         let settings = JSON.parse(localStorage.getItem('sbe-settings') ?? '{}');
-        // alert(localStorage.getItem('sbe-settings'))
         for (const key of Object.keys(settings)) {
             this[key] = settings[key];
         }
-        // debugger
     }
 }
 const settings = new _Settings();
 if (document.querySelector('.navTabs')) {
-    const style = `
-        .navTabs {
-            position: relative;
-        }
-
-        .navTabs::before {
-            content: "+";
-            position: absolute;
-            z-index: 20;
-            color: white;
-            top: -0.7rem;
-            left: 5px;
-            font-size: 3em;
-        }
-    `;
-    GM_addStyle(style);
+    GM_addStyle(`.navTabs {position: relative;}.navTabs::before {content: "+";position: absolute;z-index: 20;color: white;top: -0.7rem;left: 5px;font-size: 3em;}`);
 }
-if (settings.threadTitleEnabled)
-    document.title = (document.querySelector(".titleBar>h1") ?? document.querySelector('h1.username[itemprop="name"]'))?.textContent + " | Skyblock Forums";
+if (settings.threadTitleEnabled) {
+    const thTitle = (document.querySelector(".titleBar>h1")
+        ?? document.querySelector('h1.username[itemprop="name"]'));
+    if (thTitle?.textContent)
+        document.title = thTitle.textContent + " | Skyblock Forums";
+}
 if (settings.hideShopTab) {
     const publicTabs = document.querySelector('ul.publicTabs');
     const downloads = publicTabs?.children[7];
@@ -227,74 +214,13 @@ if (settings.hideShopTab) {
 if (settings.strikethroughBannedUsers) {
     const users = document.querySelectorAll('.messageUserBlock');
     const bannedUsers = Array.from(users).filter(x => x.querySelector('[src="styles/default/xenforo/avatars/avatar_banned_m.png"]'));
-    const style = `
-        .sbe-strikethrough {
-            text-decoration: line-through !important;
-            text-decoration-thickness: 2px !important;
-        }
-    `;
-    GM_addStyle(style);
+    GM_addStyle(`.sbe-strikethrough {text-decoration: line-through !important;text-decoration-thickness: 2px !important;}`);
     bannedUsers.forEach(x => {
         x.querySelector('.userText > .username')?.classList.add('sbe-strikethrough');
     });
 }
-if (settings.betterNewSB) {
-    const style = `
-    div.navTabs {
-        background:#2b485c;
-        border-radius: 0 !important;
-    }
-    #landingHero>* {
-        display:none !important;
-        background: none !important;
-    }
-    #landingHero {
-        height:25px;
-        padding:0 !important;
-    }
-    #content .sidebar .section {
-        border-radius: 0px !important;
-    }
-    #content .section {
-        -webkit-box-shadow:none !important;
-        box-shadow:none !important;
-    }
-    .avatar img, .avatarWrap .img.s {
-        border-radius: 5px !important;
-    }
-    .visitorTabs, .navTabs .visitorTabs {
-        display: block !important;    
-    }
-    div#navigation {
-        border-bottom: none;
-    }
-    #content .sidebar .section .secondaryContent {
-        padding: 15px !important;
-    }
-    #footer>.top {
-        padding:25px;
-    }
-    #content {
-        background: #d1eef5 !important;
-    }
-    .newsText {
-        color: #113240
-    }
-    li[id^="thread"]>.title {
-        font-size: 12px;
-    }
-    .sbe-mg-top {
-        margin-top: 20px
-    }
-
-    a.PreviewTooltip>.prefix {
-        margin: 0 !important;
-    }
-    `;
-    if (document.querySelector('[data-clipboard-text="play.skyblock.net"]')) {
-        GM_addStyle(style);
-        // document.querySelector('[class="pageContent"]')?.classList.add('sbe-mg-top')
-    }
+if (settings.betterNewSB && document.querySelector('[data-clipboard-text="play.skyblock.net"]')) {
+    GM_addStyle(`div.navTabs {background:#2b485c;border-radius: 0 !important;}#landingHero>* {display:none !important;background: none !important;}#landingHero {height:25px;padding:0 !important;}#content .sidebar .section {border-radius: 0px !important;}#content .section {-webkit-box-shadow:none !important;box-shadow:none !important;}.avatar img, .avatarWrap .img.s {border-radius: 5px !important;}.visitorTabs, .navTabs .visitorTabs {display: block !important;}div#navigation {border-bottom: none;}#content .sidebar .section .secondaryContent {padding: 15px !important;}#footer>.top {padding:25px;}#content {background: #d1eef5 !important;}.newsText {color: #113240}li[id^="thread"]>.title {font-size: 12px;}.sbe-mg-top {margin-top: 20px}a.PreviewTooltip>.prefix {margin: 0 !important;}`);
 }
 if (settings.SBonlIntegration) {
     if (isOnUserProfile) {
@@ -426,9 +352,7 @@ if (settings.birthdayHatOnPFP) {
     }
 }
 if (settings.roundedFriendsOnProfile && isOnUserProfile) {
-    GM_addStyle(`
-        .friend>.friend-head>img { border-radius: 7px; };
-    `);
+    GM_addStyle(`.friend>.friend-head>img { border-radius: 7px; };`);
 }
 if (settings.postLinkButton && isOnThread) {
     AF(document.querySelectorAll(`li[id^="post-"].message[data-author]`))
@@ -462,4 +386,7 @@ if (settings.noMoreCamo) {
             img.setAttribute('src', three);
         });
     }, 1000);
+}
+if (settings.fadeInReactions) {
+    GM_addStyle(`.dark_postrating_inputlist {transition: opacity 0.5s;}.dark_postrating_inputlist:not(:hover) {opacity: 0.1 !important;}`);
 }
