@@ -1,5 +1,5 @@
 if (document.querySelector('.navTabs')) {
-    const style = `
+    GM_addStyle(`
         .navTabs {
             position: relative;
         }
@@ -13,13 +13,19 @@ if (document.querySelector('.navTabs')) {
             left: 5px;
             font-size: 3em;
         }
-    `
-    GM_addStyle(style)
+    `)
 
 }
 
-if (settings.threadTitleEnabled) 
-    document.title = (document.querySelector(".titleBar>h1") ?? document.querySelector('h1.username[itemprop="name"]'))?.textContent + " | Skyblock Forums"
+if (settings.threadTitleEnabled)  {
+    const thTitle = (
+        document.querySelector(".titleBar>h1") 
+            ?? document.querySelector('h1.username[itemprop="name"]')
+    )
+    if (thTitle?.textContent)
+        document.title = thTitle.textContent + " | Skyblock Forums"
+
+}
 
 if (settings.hideShopTab) {
     const publicTabs = document.querySelector('ul.publicTabs')
@@ -37,22 +43,20 @@ if (settings.strikethroughBannedUsers) {
     const bannedUsers = Array.from(users).filter(x => 
         x.querySelector('[src="styles/default/xenforo/avatars/avatar_banned_m.png"]'))
 
-    const style = `
+    GM_addStyle(`
         .sbe-strikethrough {
             text-decoration: line-through !important;
             text-decoration-thickness: 2px !important;
         }
-    `
-
-    GM_addStyle(style)
+    `)
 
     bannedUsers.forEach(x=>{
         x.querySelector('.userText > .username')?.classList.add('sbe-strikethrough')
     })
 }
 
-if (settings.betterNewSB) {
-    const style = `
+if (settings.betterNewSB && document.querySelector('[data-clipboard-text="play.skyblock.net"]')) {
+    GM_addStyle(`
     div.navTabs {
         background:#2b485c;
         border-radius: 0 !important;
@@ -103,14 +107,7 @@ if (settings.betterNewSB) {
     a.PreviewTooltip>.prefix {
         margin: 0 !important;
     }
-    `
-    if (document.querySelector('[data-clipboard-text="play.skyblock.net"]')) {
-
-        GM_addStyle(style)
-    
-        // document.querySelector('[class="pageContent"]')?.classList.add('sbe-mg-top')
-    }
-    
+    `);
 }
 
 if (settings.SBonlIntegration) {
@@ -305,7 +302,7 @@ if (settings.postLinkButton && isOnThread) {
             
             const a= document.createElement('a')
             a.href = `${isOnThread}#${id}`
-            a.setAttribute('class', "ReplyQuote item control reply")
+                a.setAttribute('class', "ReplyQuote item control reply")
             a.title = "Copy link to this message."
             a.innerHTML = `<span></span>Copy Link`
             a.onclick = () => window.navigator.clipboard.writeText(a.href)
@@ -336,4 +333,15 @@ if (settings.noMoreCamo) {
             img.setAttribute('src', three)
         })
     }, 1000)
+}
+
+if (settings.fadeInReactions) {
+    GM_addStyle(`
+        .dark_postrating_inputlist {
+            transition: opacity 0.5s;
+        }
+        .dark_postrating_inputlist:not(:hover) {
+            opacity: 0.1 !important;
+        }
+    `)
 }

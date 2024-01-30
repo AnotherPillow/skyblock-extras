@@ -16,6 +16,7 @@ class _Settings {
     postLinkButton = true;
     minotarNotCrafatar = true;
     noMoreCamo = false;
+    fadeInReactions = true;
 
     _modal: HTMLDialogElement | null;
 
@@ -82,6 +83,7 @@ class _Settings {
         this.addSettingToModal("Add button to copy link to post on posts", 'postLinkButton')
         this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar')
         this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo')
+        this.addSettingToModal("Fade in reaction opacity on hover", 'fadeInReactions')
 
 
         const saveBtn = document.createElement('button')
@@ -165,6 +167,7 @@ class _Settings {
             'postLinkButton': this.postLinkButton,
             'minotarNotCrafatar': this.minotarNotCrafatar,
             'noMoreCamo': this.noMoreCamo,
+            'fadeInReactions': this.fadeInReactions,
         }))
     }
 

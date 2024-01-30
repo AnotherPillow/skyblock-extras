@@ -5,5 +5,9 @@ fs.writeFileSync('build/sbe.js', (
         .replace(/^"use strict";/, '')
         .replace(/(\/\/ ==\/UserScript==)/, '$1\n\n"use strict";\n')
         .replace(/^\n/, '')
+        .replace(/GM_addStyle\(`([^`]*)`\)/gm, (match, styleContent) => {
+            console.log(styleContent)
+            return `GM_addStyle(\`${styleContent.replace(/(\n|\s{4,})*/gm, '')}\`)`;
+        })
     )   
 )
