@@ -8,8 +8,8 @@
     "ugly": "uglifyjs build/sbe.js --comments all -c -m --mangle-props reserved=[threadTitleEnabled,hideShopTab,strikethroughBannedUsers,betterNewSB,SBonlIntegration,actualDateOnFrontpage,fixBedrockPlayersImages,responsiveModals,movePoke,ratingRatio,removeRatingCommas,avatarOnProfileStats,birthdayHatOnPFP,roundedFriendsOnProfile,postLinkButton,minotarNotCrafatar,noMoreCamo,fadeInReactions] > build/sbe.min.js",
     "$builddir": "mkdir build || true",
     "$build": "npm run --silent builddir && tsc && babel _build -d lib && npm run ugly",
-    "fix-strict": "node move-use-strict.js",
-    "build": "tsc && npm run fix-strict && npm run ugly",
+    "js-patches": "node patches.js",
+    "build": "tsc && npm run js-patches && npm run ugly",
     "dev": "npm run build && npx serve -p 13451 build/"
   },
   "author": "anotherpillow",

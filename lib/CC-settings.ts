@@ -17,6 +17,7 @@ class _Settings {
     minotarNotCrafatar = true;
     noMoreCamo = false;
     fadeInReactions = true;
+    darkMode = false;
 
     _modal: HTMLDialogElement | null;
 
@@ -51,6 +52,7 @@ class _Settings {
         this.deserialise()
 
         this._modal = document.createElement('dialog')
+        this._modal.id = 'sbe-settings-modal'
         
         const _h1 = document.createElement('h1')
         _h1.innerHTML = 'Skyblock Extras Settings'
@@ -59,12 +61,17 @@ class _Settings {
         this._modal.appendChild(_h1)
         this.br()
 
-        this._modal.style.width = '640px'
-        this._modal.style.height = '480px'
-        this._modal.style.borderRadius = '1em'
-        this._modal.style.border = 'none'
-        this._modal.style.outline = 'none'
-        this._modal.style.textAlign = 'center'
+        GM_addStyle(`
+            #sbe-settings-modal {
+                width: 640px;
+                height: 560px;
+                border-radius: 1em;
+                border: medium;
+                outline: none;
+                text-align: center;
+                scrollbar-width: none;
+            }
+        `)
 
         this.addSettingToModal('Thread Title as Browser Title', 'threadTitleEnabled')
         this.addSettingToModal('Remove the shop tab', 'hideShopTab')
@@ -84,6 +91,7 @@ class _Settings {
         this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar')
         this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo')
         this.addSettingToModal("Fade in reaction opacity on hover", 'fadeInReactions')
+        this.addSettingToModal("Dark Mode (Pink Accent)", 'darkMode')
 
 
         const saveBtn = document.createElement('button')
@@ -126,8 +134,9 @@ class _Settings {
         opener.src = ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADdUAAA3VAT3WWPEAAAEZSURBVEhLxZVBEsIgDEXRe7jphbyIm3qQuvEU7ryQG4/QA2B+aFpAEphprW/mj4TGRPgUnfe+RT0pB3Ol3ERHV6cjncIwAXN4ZnJAlwh84RyGzJOEeODomytJcgTErzAkouV0pIEUgzifiyk9R4xaXNcqvobZH/EAS+zDcFukAfbtFobbEpsMgy8kbSX4Ae8w5BNk5d1Jwehpr+BBP47jgz5LJMZNY80zzMMDzkcyAsvgvHhLE8CNkGihFRfVmvjam4w9X16ab/BMfCnSclWsotagdt9o99QCbdPPTZZkq1HexCrOhUmcv9uLBqHrVqAW1/37KVqPLIVUMg6xZiYoPUc8H4hd/zI1aUcy+aWaWjzQ7pvaPUU49wFpm9dvoGBF4QAAAABJRU5ErkJggg=='
         opener.id = 'sbe-settings-opener-img'
 
-        opener.style.marginLeft = '9em'
+        /* opener.style.marginLeft = '9em' */
         opener.style.marginTop = '2px'
+        opener.style.marginLeft = '2em';
         
         opener.height = 20
         opener.width = 20
@@ -168,6 +177,7 @@ class _Settings {
             'minotarNotCrafatar': this.minotarNotCrafatar,
             'noMoreCamo': this.noMoreCamo,
             'fadeInReactions': this.fadeInReactions,
+            'darkMode': this.darkMode,
         }))
     }
 

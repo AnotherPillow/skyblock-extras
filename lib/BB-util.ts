@@ -45,3 +45,16 @@ const getHrefWithoutAnchor = () => window.location.href.replace(new RegExp(`${wi
 const isOnThread = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/threads\/.+\.\d+\/?/)
 
 const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false
+
+const isOnNewTheme = (
+    document.querySelector('[data-clipboard-text="play.skyblock.net"]') ||
+    document.querySelector('a[href="https://benjdzn.com"]') 
+)
+
+/* DEBUGGING FUNCTION - NOT ACTUALLY USED */
+const $import = (fn: string): string => {
+    alert('If you are seeing this, something has gone very wrong.')
+    return ''
+}
+
+const xfToken = (document.querySelector('[name="_xfToken"') as HTMLInputElement).value

@@ -345,3 +345,13 @@ if (settings.fadeInReactions) {
         }
     `)
 }
+
+if (settings.darkMode) {
+    if (isOnNewTheme) {
+        const theme_link = `https://skyblock.net/misc/style?style_id=6&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`
+        window.location.href = theme_link
+    }
+    
+
+    GM_addStyle($import('darkmode.css'))
+}

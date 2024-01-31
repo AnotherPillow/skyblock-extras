@@ -51,6 +51,14 @@ const getMonthFromString = (month) => new Date(Date.parse(month + " 1, 2012")).g
 const getHrefWithoutAnchor = () => window.location.href.replace(new RegExp(`${window.location.hash}$`), '');
 const isOnThread = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/threads\/.+\.\d+\/?/);
 const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false;
+const isOnNewTheme = (document.querySelector('[data-clipboard-text="play.skyblock.net"]') ||
+    document.querySelector('a[href="https://benjdzn.com"]'));
+/* DEBUGGING FUNCTION - NOT ACTUALLY USED */
+const $import = (fn) => {
+    alert('If you are seeing this, something has gone very wrong.');
+    return '';
+};
+const xfToken = document.querySelector('[name="_xfToken"').value;
 class _Settings {
     threadTitleEnabled = true;
     hideShopTab = true;
@@ -70,6 +78,7 @@ class _Settings {
     minotarNotCrafatar = true;
     noMoreCamo = false;
     fadeInReactions = true;
+    darkMode = false;
     _modal;
     addSettingToModal(name, value) {
         const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`;
@@ -94,17 +103,13 @@ class _Settings {
     constructor() {
         this.deserialise();
         this._modal = document.createElement('dialog');
+        this._modal.id = 'sbe-settings-modal';
         const _h1 = document.createElement('h1');
         _h1.innerHTML = 'Skyblock Extras Settings';
         _h1.style.fontSize = '2em';
         this._modal.appendChild(_h1);
         this.br();
-        this._modal.style.width = '640px';
-        this._modal.style.height = '480px';
-        this._modal.style.borderRadius = '1em';
-        this._modal.style.border = 'none';
-        this._modal.style.outline = 'none';
-        this._modal.style.textAlign = 'center';
+        GM_addStyle(`#sbe-settings-modal {width: 640px;height: 560px;border-radius: 1em;border: medium;outline: none;text-align: center;scrollbar-width: none;}`);
         this.addSettingToModal('Thread Title as Browser Title', 'threadTitleEnabled');
         this.addSettingToModal('Remove the shop tab', 'hideShopTab');
         this.addSettingToModal("Strike through banned users' names", 'strikethroughBannedUsers');
@@ -123,6 +128,7 @@ class _Settings {
         this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar');
         this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo');
         this.addSettingToModal("Fade in reaction opacity on hover", 'fadeInReactions');
+        this.addSettingToModal("Dark Mode (Pink Accent)", 'darkMode');
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = 'Save';
         saveBtn.style.width = '6em';
@@ -150,8 +156,9 @@ class _Settings {
         const opener = document.createElement('img');
         opener.src = ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADdUAAA3VAT3WWPEAAAEZSURBVEhLxZVBEsIgDEXRe7jphbyIm3qQuvEU7ryQG4/QA2B+aFpAEphprW/mj4TGRPgUnfe+RT0pB3Ol3ERHV6cjncIwAXN4ZnJAlwh84RyGzJOEeODomytJcgTErzAkouV0pIEUgzifiyk9R4xaXNcqvobZH/EAS+zDcFukAfbtFobbEpsMgy8kbSX4Ae8w5BNk5d1Jwehpr+BBP47jgz5LJMZNY80zzMMDzkcyAsvgvHhLE8CNkGihFRfVmvjam4w9X16ab/BMfCnSclWsotagdt9o99QCbdPPTZZkq1HexCrOhUmcv9uLBqHrVqAW1/37KVqPLIVUMg6xZiYoPUc8H4hd/zI1aUcy+aWaWjzQ7pvaPUU49wFpm9dvoGBF4QAAAABJRU5ErkJggg==';
         opener.id = 'sbe-settings-opener-img';
-        opener.style.marginLeft = '9em';
+        /* opener.style.marginLeft = '9em' */
         opener.style.marginTop = '2px';
+        opener.style.marginLeft = '2em';
         opener.height = 20;
         opener.width = 20;
         opener.addEventListener('click', (e) => {
@@ -185,6 +192,7 @@ class _Settings {
             'minotarNotCrafatar': this.minotarNotCrafatar,
             'noMoreCamo': this.noMoreCamo,
             'fadeInReactions': this.fadeInReactions,
+            'darkMode': this.darkMode,
         }));
     }
     deserialise() {
@@ -389,4 +397,11 @@ if (settings.noMoreCamo) {
 }
 if (settings.fadeInReactions) {
     GM_addStyle(`.dark_postrating_inputlist {transition: opacity 0.5s;}.dark_postrating_inputlist:not(:hover) {opacity: 0.1 !important;}`);
+}
+if (settings.darkMode) {
+    if (isOnNewTheme) {
+        const theme_link = `https://skyblock.net/misc/style?style_id=6&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`;
+        window.location.href = theme_link;
+    }
+    GM_addStyle(`#content .pageContent {    background-color: #414141;}    .secondaryContent,    .avatar img,    .avatarCropper,    .recentNews,    .breadBoxTop>nav>fieldset.breadcrumb,    .breadBoxBottom>nav>fieldset.breadcrumb,    .breadcrumb .crust a.crumb,    #searchBar,    .messageUserBlock,    div.section.sectionMain,    div.messageUserBlock>.avatarHolder,    ul.tabs.mainTabs.Tabs li{    background: #2D2D2DBB !important;    color: #c5c5c5;    /* outline: 1px solid lime; */}    .messageContent,    .section.sectionMain.recentNews,    .recentNews>div.primaryContent.leftDate,    fieldset#QuickSearch,    fieldset#QuickSearch>formPopup,    .footer .pageContent,    .navTabs,    div.primaryControls,    input#QuickSearchQuery,    ul.tabs.mainTabs.Tabs,    ul.tabs.mainTabs.Tabs>li,    ul.tabs.mainTabs.Tabs>li>a,    form#ProfilePoster,    li[id^="profile-post-"],    .primaryContent,    #AccountMenu,    .mainContent>ul.tabs{    background: #323232;}.messageInfo>textarea.textCtrl:focus {    background-image: none !important;    background: #665766;}    .messageInfo>textarea.textCtrl ,    #AccountMenu>.menuHeader,    ol#forums,    ol.nodeList,    .mainContent>ul.tabs>li:not(.active)>a{    background-color: #2b2b2b;}    li.node>ol.nodeList>li.node>div.nodeInfo,    div.extraUserInfo{    background-color: #1a1a1a !important;}    .titleBar,    #serverstatus,    .visitorText,    .dark_postrating_neutral,    .sectionFooter>div.continue>a.iconKey.button,    footer>.footerLegal,    footer>.footerLegal>a,    input#QuickSearchQuery,    article>blockquote.ugc.baseHtml,    .tabs>li:not(.active)>a,    div.primaryContent.menuHeader>h3>a.concealed[href^="members/"],    ol.nodeList>li.node>div.nodeInfo,    div#pageNodeContent{    color: white !important;}    a,    .PageNavNext,    [class="PageNavNext "],    a.PreviewTooltip,    .primaryContent a,    ul.Tabs.tabs.mainTabs>li.active>a,    #AccountMenu a,    #AccountMenu .secondaryContent a,    #AccountMenu .AutoValidator label{    color: #c450c6;}    .navTabs .navTab.selected .tabLinks,    .subHeading,    .sectionFooter,    .PageNav>nav a[href^="articles/"],    li.navTab.selected,    li.node.category > div.nodeInfo,    .discord-widget > p.discord-join > a,    .mainContent>ul.tabs>li.active>a,    ul[id^="premium-"].staffTitle{    background-color: #d38fb9;}    #header,     #headerMover #headerProxy,     #content,    .sectionFooter>div.continue>a.iconKey.button,    footer    /* nav span.scrollable>span.items a[href] */{    background: #7d4f77;}    .subHeading,    li.node.category > div.nodeInfo{    border-bottom: none !important;    border-top: none !important;}.PageNav>nav a[href^="articles/"] {    color: black;}a.avatar>img[alt][src^="data/avatars/"] {    filter: brightness(0.8);}    span.arrow,    span.arrow>span{    border-left-color: thistle !important;}`);
 }
