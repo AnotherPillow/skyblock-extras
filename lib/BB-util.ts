@@ -1,4 +1,4 @@
-function waitForElm(selector: string): Promise<Element | null> {
+function waitForElm<T>(selector: string): Promise<Element | null | T> {
     return new Promise(resolve => {
         if (document.querySelector(selector)) {
             return resolve(document.querySelector(selector));
@@ -7,7 +7,7 @@ function waitForElm(selector: string): Promise<Element | null> {
         const observer = new MutationObserver(mutations => {
             if (document.querySelector(selector)) {
                 observer.disconnect();
-                resolve(document.querySelector(selector));
+                resolve(document.querySelector(selector) as T);
             }
         });
 
@@ -58,3 +58,5 @@ const $import = (fn: string): string => {
 }
 
 const xfToken = (document.querySelector('[name="_xfToken"') as HTMLInputElement).value
+
+const ls = localStorage

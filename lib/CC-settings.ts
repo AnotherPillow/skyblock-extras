@@ -2,7 +2,6 @@ class _Settings {
     threadTitleEnabled = true;
     hideShopTab = true;
     strikethroughBannedUsers = true;
-    betterNewSB = true;
     SBonlIntegration = true;
     actualDateOnFrontpage = true;
     fixBedrockPlayersImages = true;
@@ -17,7 +16,6 @@ class _Settings {
     minotarNotCrafatar = true;
     noMoreCamo = false;
     fadeInReactions = true;
-    darkMode = false;
 
     _modal: HTMLDialogElement | null;
 
@@ -62,6 +60,9 @@ class _Settings {
         this.br()
 
         GM_addStyle(`
+            .sbe-pointer { /*for themes*/
+                cursor: pointer;
+            }
             #sbe-settings-modal {
                 width: 640px;
                 height: 560px;
@@ -76,7 +77,6 @@ class _Settings {
         this.addSettingToModal('Thread Title as Browser Title', 'threadTitleEnabled')
         this.addSettingToModal('Remove the shop tab', 'hideShopTab')
         this.addSettingToModal("Strike through banned users' names", 'strikethroughBannedUsers')
-        this.addSettingToModal('Better New Style Theme', 'betterNewSB')
         this.addSettingToModal('Skyblock.onl Integration', 'SBonlIntegration')
         this.addSettingToModal('Show actual date on threads on the frontpage', 'actualDateOnFrontpage')
         this.addSettingToModal("Fix bedrock players' images", 'fixBedrockPlayersImages')
@@ -86,12 +86,11 @@ class _Settings {
         this.addSettingToModal("Remove commas from ratings", 'removeRatingCommas')
         this.addSettingToModal("Avatar on profile stats", 'avatarOnProfileStats')
         this.addSettingToModal("Place birthday hats on birthday peoples' PFPs", 'birthdayHatOnPFP')
-        this.addSettingToModal("Round friends' names on profile", 'roundedFriendsOnProfile')
+        this.addSettingToModal("Round friends' icons on profile", 'roundedFriendsOnProfile')
         this.addSettingToModal("Add button to copy link to post on posts", 'postLinkButton')
         this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar')
         this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo')
         this.addSettingToModal("Fade in reaction opacity on hover", 'fadeInReactions')
-        this.addSettingToModal("Dark Mode (Pink Accent)", 'darkMode')
 
 
         const saveBtn = document.createElement('button')
@@ -162,7 +161,6 @@ class _Settings {
             'threadTitleEnabled': this.threadTitleEnabled,
             'hideShopTab': this.hideShopTab,
             'strikethroughBannedUsers': this.strikethroughBannedUsers,
-            'betterNewSB': this.betterNewSB,
             'SBonlIntegration': this.SBonlIntegration,
             'actualDateOnFrontpage': this.actualDateOnFrontpage,
             'fixBedrockPlayersImages': this.fixBedrockPlayersImages,
@@ -177,7 +175,6 @@ class _Settings {
             'minotarNotCrafatar': this.minotarNotCrafatar,
             'noMoreCamo': this.noMoreCamo,
             'fadeInReactions': this.fadeInReactions,
-            'darkMode': this.darkMode,
         }))
     }
 

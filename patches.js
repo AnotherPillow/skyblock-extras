@@ -11,7 +11,7 @@ fs.writeFileSync('build/sbe.js', (
         .replace(/\$import\([`'"](.+)[`'"]\)/g, (match, src) => {
             let imported = fs.readFileSync(`./lib/${src}`).toString()
             // console.log(imported)
-            return '`' + 
+            return '/*$import*/`' + 
                 imported.replace(/[\n\r]/gm, '')
                 + '`'
         })

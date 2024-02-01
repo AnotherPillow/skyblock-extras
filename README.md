@@ -19,7 +19,6 @@ Each of thes ecan be indivually toggled in the settings menu now beside your use
 - Thread title as browser title - makes the tab title more respectful of what you're doing.
 - Remove the shop tab - self explanatory.
 - Strike through banned users' names - also self explanatory.
-- Better new style theme - An edit of the 2023/New theme that I personally prefer (also shows your inbox, details and alerts which aren't present by default).
 - Skyblock.onl integration - adds a button to copy peoples' fancy <https://skyblock.onl/@Noobcrew> link on their profiles.
 - Show actual date on threads on the front page - instead of showing "Today at 12:34" or "Yesterday at 56:78", it'll show "56:78 12/34/56"
 - Fix bedrock players' images - makes bedrock players be steves instead of broken on the user list area.
@@ -34,4 +33,12 @@ Each of thes ecan be indivually toggled in the settings menu now beside your use
 - Replace Craftar with Minotar - self explanatory
 - Remove Skyblock's image proxy - removes <https://camo.skyblock.net> **this should be off unless there is an issue**
 - Fade in reaction opacity on hover - when hovering on a message's reactions to react to it, it'll now transition in the opacity.
+- Custom themes added to theme changer (see [Themes](#Themes))
+
+## Themes
+
+These can be accessed the normal way you change themes, at the bottom of the main region with the theme name. (Usually `Skyblock` or `Skyblock Original`).
+
+- Better New SB - An edit of the 2023/New theme that I personally prefer (also shows your inbox, details and alerts which aren't present by default).
 - Dark Mode (Pink Accent) - a custom dark mode theme with a pink accent (only over the **old theme**).
+- Custom ones & more to come soon.

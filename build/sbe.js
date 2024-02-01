@@ -59,11 +59,11 @@ const $import = (fn) => {
     return '';
 };
 const xfToken = document.querySelector('[name="_xfToken"').value;
+const ls = localStorage;
 class _Settings {
     threadTitleEnabled = true;
     hideShopTab = true;
     strikethroughBannedUsers = true;
-    betterNewSB = true;
     SBonlIntegration = true;
     actualDateOnFrontpage = true;
     fixBedrockPlayersImages = true;
@@ -78,7 +78,6 @@ class _Settings {
     minotarNotCrafatar = true;
     noMoreCamo = false;
     fadeInReactions = true;
-    darkMode = false;
     _modal;
     addSettingToModal(name, value) {
         const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`;
@@ -109,11 +108,10 @@ class _Settings {
         _h1.style.fontSize = '2em';
         this._modal.appendChild(_h1);
         this.br();
-        GM_addStyle(`#sbe-settings-modal {width: 640px;height: 560px;border-radius: 1em;border: medium;outline: none;text-align: center;scrollbar-width: none;}`);
+        GM_addStyle(`.sbe-pointer { /*for themes*/cursor: pointer;}#sbe-settings-modal {width: 640px;height: 560px;border-radius: 1em;border: medium;outline: none;text-align: center;scrollbar-width: none;}`);
         this.addSettingToModal('Thread Title as Browser Title', 'threadTitleEnabled');
         this.addSettingToModal('Remove the shop tab', 'hideShopTab');
         this.addSettingToModal("Strike through banned users' names", 'strikethroughBannedUsers');
-        this.addSettingToModal('Better New Style Theme', 'betterNewSB');
         this.addSettingToModal('Skyblock.onl Integration', 'SBonlIntegration');
         this.addSettingToModal('Show actual date on threads on the frontpage', 'actualDateOnFrontpage');
         this.addSettingToModal("Fix bedrock players' images", 'fixBedrockPlayersImages');
@@ -128,7 +126,6 @@ class _Settings {
         this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar');
         this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo');
         this.addSettingToModal("Fade in reaction opacity on hover", 'fadeInReactions');
-        this.addSettingToModal("Dark Mode (Pink Accent)", 'darkMode');
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = 'Save';
         saveBtn.style.width = '6em';
@@ -177,7 +174,6 @@ class _Settings {
             'threadTitleEnabled': this.threadTitleEnabled,
             'hideShopTab': this.hideShopTab,
             'strikethroughBannedUsers': this.strikethroughBannedUsers,
-            'betterNewSB': this.betterNewSB,
             'SBonlIntegration': this.SBonlIntegration,
             'actualDateOnFrontpage': this.actualDateOnFrontpage,
             'fixBedrockPlayersImages': this.fixBedrockPlayersImages,
@@ -192,7 +188,6 @@ class _Settings {
             'minotarNotCrafatar': this.minotarNotCrafatar,
             'noMoreCamo': this.noMoreCamo,
             'fadeInReactions': this.fadeInReactions,
-            'darkMode': this.darkMode,
         }));
     }
     deserialise() {
@@ -203,6 +198,74 @@ class _Settings {
     }
 }
 const settings = new _Settings();
+let themes = [
+    {
+        name: 'Dark Mode (Pink Accent)',
+        description: 'A dark mode & pink accented theme',
+        css: /*$import*/`#content .pageContent {    background-color: #414141;}    .secondaryContent,    .avatar img,    .avatarCropper,    .recentNews,    .breadBoxTop>nav>fieldset.breadcrumb,    .breadBoxBottom>nav>fieldset.breadcrumb,    .breadcrumb .crust a.crumb,    #searchBar,    .messageUserBlock,    div.section.sectionMain,    div.messageUserBlock>.avatarHolder,    ul.tabs.mainTabs.Tabs li{    background: #2D2D2DBB !important;    color: #c5c5c5;    /* outline: 1px solid lime; */}    .messageContent,    .section.sectionMain.recentNews,    .recentNews>div.primaryContent.leftDate,    fieldset#QuickSearch,    fieldset#QuickSearch>formPopup,    .footer .pageContent,    .navTabs,    div.primaryControls,    input#QuickSearchQuery,    ul.tabs.mainTabs.Tabs,    ul.tabs.mainTabs.Tabs>li,    ul.tabs.mainTabs.Tabs>li>a,    form#ProfilePoster,    li[id^="profile-post-"],    .primaryContent,    #AccountMenu,    .mainContent>ul.tabs{    background: #323232;}.messageInfo>textarea.textCtrl:focus {    background-image: none !important;    background: #665766;}    .messageInfo>textarea.textCtrl ,    #AccountMenu>.menuHeader,    ol#forums,    ol.nodeList,    .mainContent>ul.tabs>li:not(.active)>a{    background-color: #2b2b2b;}    li.node>ol.nodeList>li.node>div.nodeInfo,    div.extraUserInfo{    background-color: #1a1a1a !important;}    .titleBar,    #serverstatus,    .visitorText,    .dark_postrating_neutral,    .sectionFooter>div.continue>a.iconKey.button,    footer>.footerLegal,    footer>.footerLegal>a,    input#QuickSearchQuery,    article>blockquote.ugc.baseHtml,    .tabs>li:not(.active)>a,    div.primaryContent.menuHeader>h3>a.concealed[href^="members/"],    ol.nodeList>li.node>div.nodeInfo,    div#pageNodeContent{    color: white !important;}    a,    .PageNavNext,    [class="PageNavNext "],    a.PreviewTooltip,    .primaryContent a,    ul.Tabs.tabs.mainTabs>li.active>a,    #AccountMenu a,    #AccountMenu .secondaryContent a,    #AccountMenu .AutoValidator label{    color: #c450c6;}    .navTabs .navTab.selected .tabLinks,    .subHeading,    .sectionFooter,    .PageNav>nav a[href^="articles/"],    li.navTab.selected,    li.node.category > div.nodeInfo,    .discord-widget > p.discord-join > a,    .mainContent>ul.tabs>li.active>a,    ul[id^="premium-"].staffTitle{    background-color: #d38fb9;}    #header,     #headerMover #headerProxy,     #content,    .sectionFooter>div.continue>a.iconKey.button,    footer    /* nav span.scrollable>span.items a[href] */{    background: #7d4f77;}    .subHeading,    li.node.category > div.nodeInfo{    border-bottom: none !important;    border-top: none !important;}.PageNav>nav a[href^="articles/"] {    color: black;}a.avatar>img[alt][src^="data/avatars/"] {    filter: brightness(0.8);}    span.arrow,    span.arrow>span{    border-left-color: thistle !important;}`,
+        basedOnOld: true,
+    },
+    {
+        name: 'Better New SB',
+        description: 'A better version of the new Skyblock theme',
+        css: /*$import*/`div.navTabs {    background:#2b485c;    border-radius: 0 !important;}#landingHero>* {    display:none !important;    background: none !important;}#landingHero {    height:25px;    padding:0 !important;}#content .sidebar .section {    border-radius: 0px !important;}#content .section {    -webkit-box-shadow:none !important;    box-shadow:none !important;}.avatar img, .avatarWrap .img.s {    border-radius: 5px !important;}.visitorTabs, .navTabs .visitorTabs {    display: block !important;    }div#navigation {    border-bottom: none;}#content .sidebar .section .secondaryContent {    padding: 15px !important;}#footer>.top {    padding:25px;}#content {    background: #d1eef5 !important;}.newsText {    color: #113240}li[id^="thread"]>.title {    font-size: 12px;}.sbe-mg-top {    margin-top: 20px}a.PreviewTooltip>.prefix {    margin: 0 !important;}`,
+        basedOnOld: false,
+    }
+];
+if (ls.getItem('customThemes')) {
+    const ct = JSON.parse(ls.getItem('customThemes') ?? '[]');
+    if (ct.length > 0) {
+        ct.map((theme) => {
+            theme.addCSS = () => GM_addStyle(theme.css ?? '');
+        });
+        themes = [...themes, ...ct];
+    }
+}
+if (localStorage.getItem('customThemeMode') == 'true' && localStorage.getItem('customTheme-SBE')) {
+    const theme = JSON.parse(localStorage.getItem('customTheme-SBE') ?? '[]');
+    if (theme.css)
+        GM_addStyle(theme.css ?? '');
+    else if (theme.addCSS)
+        theme.addCSS();
+    document.querySelector('[title="Style Chooser"]')
+        .innerHTML = theme.name;
+}
+waitForElm('.xenOverlay.chooserOverlay').then((_overlay) => {
+    console.log('Overlay found!');
+    const overlay = _overlay;
+    const ol = overlay.querySelector('ol.twoColumns.primaryContent.chooserColumns');
+    for (const li of AF(ol.querySelectorAll('li'))) {
+        const a = li.querySelector('a');
+        if (/style_id=(6|22)/.test(a?.href ?? ''))
+            a?.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.setItem('customThemeMode', 'false');
+                window.location.href = a?.href;
+            });
+    }
+    for (const theme of themes) {
+        const li = ol.querySelector('li')?.cloneNode(true);
+        const a = li.querySelector('a');
+        a?.removeAttribute('href');
+        a?.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.setItem('customThemeMode', 'true');
+            localStorage.setItem('customTheme-SBE', JSON.stringify(theme));
+            if (isOnNewTheme && theme.basedOnOld)
+                window.location.href = `https://skyblock.net/misc/style?style_id=6&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`;
+            else if (!isOnNewTheme && !theme.basedOnOld)
+                window.location.href = `https://skyblock.net/misc/style?style_id=22&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`;
+            else
+                window.location.reload();
+        });
+        const title = li.querySelector('.title');
+        const desc = li.querySelector('.description');
+        title.innerHTML = theme.name;
+        desc.innerHTML = theme.description;
+        li.classList.add('sbe-pointer');
+        ol.appendChild(li);
+    }
+});
 if (document.querySelector('.navTabs')) {
     GM_addStyle(`.navTabs {position: relative;}.navTabs::before {content: "+";position: absolute;z-index: 20;color: white;top: -0.7rem;left: 5px;font-size: 3em;}`);
 }
@@ -226,9 +289,6 @@ if (settings.strikethroughBannedUsers) {
     bannedUsers.forEach(x => {
         x.querySelector('.userText > .username')?.classList.add('sbe-strikethrough');
     });
-}
-if (settings.betterNewSB && document.querySelector('[data-clipboard-text="play.skyblock.net"]')) {
-    GM_addStyle(`div.navTabs {background:#2b485c;border-radius: 0 !important;}#landingHero>* {display:none !important;background: none !important;}#landingHero {height:25px;padding:0 !important;}#content .sidebar .section {border-radius: 0px !important;}#content .section {-webkit-box-shadow:none !important;box-shadow:none !important;}.avatar img, .avatarWrap .img.s {border-radius: 5px !important;}.visitorTabs, .navTabs .visitorTabs {display: block !important;}div#navigation {border-bottom: none;}#content .sidebar .section .secondaryContent {padding: 15px !important;}#footer>.top {padding:25px;}#content {background: #d1eef5 !important;}.newsText {color: #113240}li[id^="thread"]>.title {font-size: 12px;}.sbe-mg-top {margin-top: 20px}a.PreviewTooltip>.prefix {margin: 0 !important;}`);
 }
 if (settings.SBonlIntegration) {
     if (isOnUserProfile) {
@@ -397,11 +457,4 @@ if (settings.noMoreCamo) {
 }
 if (settings.fadeInReactions) {
     GM_addStyle(`.dark_postrating_inputlist {transition: opacity 0.5s;}.dark_postrating_inputlist:not(:hover) {opacity: 0.1 !important;}`);
-}
-if (settings.darkMode) {
-    if (isOnNewTheme) {
-        const theme_link = `https://skyblock.net/misc/style?style_id=6&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`;
-        window.location.href = theme_link;
-    }
-    GM_addStyle(`#content .pageContent {    background-color: #414141;}    .secondaryContent,    .avatar img,    .avatarCropper,    .recentNews,    .breadBoxTop>nav>fieldset.breadcrumb,    .breadBoxBottom>nav>fieldset.breadcrumb,    .breadcrumb .crust a.crumb,    #searchBar,    .messageUserBlock,    div.section.sectionMain,    div.messageUserBlock>.avatarHolder,    ul.tabs.mainTabs.Tabs li{    background: #2D2D2DBB !important;    color: #c5c5c5;    /* outline: 1px solid lime; */}    .messageContent,    .section.sectionMain.recentNews,    .recentNews>div.primaryContent.leftDate,    fieldset#QuickSearch,    fieldset#QuickSearch>formPopup,    .footer .pageContent,    .navTabs,    div.primaryControls,    input#QuickSearchQuery,    ul.tabs.mainTabs.Tabs,    ul.tabs.mainTabs.Tabs>li,    ul.tabs.mainTabs.Tabs>li>a,    form#ProfilePoster,    li[id^="profile-post-"],    .primaryContent,    #AccountMenu,    .mainContent>ul.tabs{    background: #323232;}.messageInfo>textarea.textCtrl:focus {    background-image: none !important;    background: #665766;}    .messageInfo>textarea.textCtrl ,    #AccountMenu>.menuHeader,    ol#forums,    ol.nodeList,    .mainContent>ul.tabs>li:not(.active)>a{    background-color: #2b2b2b;}    li.node>ol.nodeList>li.node>div.nodeInfo,    div.extraUserInfo{    background-color: #1a1a1a !important;}    .titleBar,    #serverstatus,    .visitorText,    .dark_postrating_neutral,    .sectionFooter>div.continue>a.iconKey.button,    footer>.footerLegal,    footer>.footerLegal>a,    input#QuickSearchQuery,    article>blockquote.ugc.baseHtml,    .tabs>li:not(.active)>a,    div.primaryContent.menuHeader>h3>a.concealed[href^="members/"],    ol.nodeList>li.node>div.nodeInfo,    div#pageNodeContent{    color: white !important;}    a,    .PageNavNext,    [class="PageNavNext "],    a.PreviewTooltip,    .primaryContent a,    ul.Tabs.tabs.mainTabs>li.active>a,    #AccountMenu a,    #AccountMenu .secondaryContent a,    #AccountMenu .AutoValidator label{    color: #c450c6;}    .navTabs .navTab.selected .tabLinks,    .subHeading,    .sectionFooter,    .PageNav>nav a[href^="articles/"],    li.navTab.selected,    li.node.category > div.nodeInfo,    .discord-widget > p.discord-join > a,    .mainContent>ul.tabs>li.active>a,    ul[id^="premium-"].staffTitle{    background-color: #d38fb9;}    #header,     #headerMover #headerProxy,     #content,    .sectionFooter>div.continue>a.iconKey.button,    footer    /* nav span.scrollable>span.items a[href] */{    background: #7d4f77;}    .subHeading,    li.node.category > div.nodeInfo{    border-bottom: none !important;    border-top: none !important;}.PageNav>nav a[href^="articles/"] {    color: black;}a.avatar>img[alt][src^="data/avatars/"] {    filter: brightness(0.8);}    span.arrow,    span.arrow>span{    border-left-color: thistle !important;}`);
 }

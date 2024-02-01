@@ -55,61 +55,6 @@ if (settings.strikethroughBannedUsers) {
     })
 }
 
-if (settings.betterNewSB && document.querySelector('[data-clipboard-text="play.skyblock.net"]')) {
-    GM_addStyle(`
-    div.navTabs {
-        background:#2b485c;
-        border-radius: 0 !important;
-    }
-    #landingHero>* {
-        display:none !important;
-        background: none !important;
-    }
-    #landingHero {
-        height:25px;
-        padding:0 !important;
-    }
-    #content .sidebar .section {
-        border-radius: 0px !important;
-    }
-    #content .section {
-        -webkit-box-shadow:none !important;
-        box-shadow:none !important;
-    }
-    .avatar img, .avatarWrap .img.s {
-        border-radius: 5px !important;
-    }
-    .visitorTabs, .navTabs .visitorTabs {
-        display: block !important;    
-    }
-    div#navigation {
-        border-bottom: none;
-    }
-    #content .sidebar .section .secondaryContent {
-        padding: 15px !important;
-    }
-    #footer>.top {
-        padding:25px;
-    }
-    #content {
-        background: #d1eef5 !important;
-    }
-    .newsText {
-        color: #113240
-    }
-    li[id^="thread"]>.title {
-        font-size: 12px;
-    }
-    .sbe-mg-top {
-        margin-top: 20px
-    }
-
-    a.PreviewTooltip>.prefix {
-        margin: 0 !important;
-    }
-    `);
-}
-
 if (settings.SBonlIntegration) {
     if (isOnUserProfile) {
         const quickNav = document.querySelector('[href="misc/quick-navigation-menu"]')
@@ -344,14 +289,4 @@ if (settings.fadeInReactions) {
             opacity: 0.1 !important;
         }
     `)
-}
-
-if (settings.darkMode) {
-    if (isOnNewTheme) {
-        const theme_link = `https://skyblock.net/misc/style?style_id=6&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`
-        window.location.href = theme_link
-    }
-    
-
-    GM_addStyle($import('darkmode.css'))
 }

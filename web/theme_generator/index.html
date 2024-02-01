@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Custom SB Theme Maker</title>
+        <style>
+            @import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+            body {
+                font-family: 'Open Sans', sans-serif;
+                text-align: center;
+                background-color: darkgray;
+            }
+            p {
+                margin:0;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Custom SB Theme Maker</h1>
+        <p>CSS</p>
+        <textarea id="css" cols="30" rows="10"></textarea>
+        <br>
+        <label for="defaultBased">Based on original theme</label>
+        <input type="checkbox" id="defaultBased" checked>
+
+        <p>Name</p>
+        <input type="text" id="name">
+        <p>Description</p>
+        <input type="text" id="description">
+        <br>
+        <button id="generate">Generate</button>
+
+        <p>Output</p>
+        <textarea id="output" cols="40" rows="15"></textarea>
+
+        <script>
+            const generate = document.getElementById('generate');
+            const output = document.getElementById('output');
+            generate.addEventListener('click', () => {
+                const css = document.getElementById('css').value;
+                const name = document.getElementById('name').value;
+                const description = document.getElementById('description').value;
+                const defaultBased = document.getElementById('defaultBased').checked;
+                const output = document.getElementById('output');
+                let outputText = {
+                    name: name,
+                    description: description,
+                    css: css,
+                    basedOnOld: defaultBased
+                }
+                output.value = JSON.stringify(outputText);
+            })
+
+        </script>
+
+    </body>
+</html>
