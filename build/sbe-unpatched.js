@@ -50,7 +50,7 @@ const getHrefWithoutAnchor = () => window.location.href.replace(new RegExp(`${wi
 const isOnThread = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/threads\/.+\.\d+\/?/);
 const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false;
 const isOnNewTheme = (document.querySelector('[data-clipboard-text="play.skyblock.net"]') ||
-    document.querySelector('a[href="https://benjdzn.com"]'));
+    document.querySelector('a[href="https://benjdzn.com"]')) && window.location.pathname === '/'; // Why? Because it's  the only way to actually check to my knowledge
 /* DEBUGGING FUNCTION - NOT ACTUALLY USED */
 const $import = (fn) => {
     alert('If you are seeing this, something has gone very wrong.');
@@ -132,7 +132,7 @@ class _Settings {
         this.addSettingToModal("Remove commas from ratings", 'removeRatingCommas');
         this.addSettingToModal("Avatar on profile stats", 'avatarOnProfileStats');
         this.addSettingToModal("Place birthday hats on birthday peoples' PFPs", 'birthdayHatOnPFP');
-        this.addSettingToModal("Round friends' names on profile", 'roundedFriendsOnProfile');
+        this.addSettingToModal("Round friends' icons on profile", 'roundedFriendsOnProfile');
         this.addSettingToModal("Add button to copy link to post on posts", 'postLinkButton');
         this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar');
         this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo');
@@ -262,12 +262,7 @@ waitForElm('.xenOverlay.chooserOverlay').then((_overlay) => {
             e.preventDefault();
             localStorage.setItem('customThemeMode', 'true');
             localStorage.setItem('customTheme-SBE', JSON.stringify(theme));
-            if (isOnNewTheme && theme.basedOnOld)
-                window.location.href = `https://skyblock.net/misc/style?style_id=6&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`;
-            else if (!isOnNewTheme && !theme.basedOnOld)
-                window.location.href = `https://skyblock.net/misc/style?style_id=22&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`;
-            else
-                window.location.reload();
+            window.location.href = `https://skyblock.net/misc/style?style_id=${theme.basedOnOld ? '6' : '22'}&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`;
         });
         const title = li.querySelector('.title');
         const desc = li.querySelector('.description');

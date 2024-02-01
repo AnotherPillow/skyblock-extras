@@ -48,8 +48,8 @@ const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/me
 
 const isOnNewTheme = (
     document.querySelector('[data-clipboard-text="play.skyblock.net"]') ||
-    document.querySelector('a[href="https://benjdzn.com"]') 
-)
+    document.querySelector('a[href="https://benjdzn.com"]')
+) && window.location.pathname === '/' // Why? Because it's  the only way to actually check to my knowledge
 
 /* DEBUGGING FUNCTION - NOT ACTUALLY USED */
 const $import = (fn: string): string => {

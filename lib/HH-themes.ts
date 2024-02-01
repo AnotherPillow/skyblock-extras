@@ -70,12 +70,10 @@ waitForElm('.xenOverlay.chooserOverlay').then((_overlay: any) => {
             localStorage.setItem('customThemeMode', 'true')
             localStorage.setItem('customTheme-SBE', JSON.stringify(theme))
 
-            if (isOnNewTheme && theme.basedOnOld)
-                window.location.href = `https://skyblock.net/misc/style?style_id=6&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`
-            else if (!isOnNewTheme && !theme.basedOnOld)
-                window.location.href = `https://skyblock.net/misc/style?style_id=22&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`
-            else
-                window.location.reload()
+            window.location.href = `https://skyblock.net/misc/style?style_id=${
+                theme.basedOnOld ? '6' : '22'
+            }&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`
+            
         })
 
         const title = li.querySelector('.title') as HTMLElement
