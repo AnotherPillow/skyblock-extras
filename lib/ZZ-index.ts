@@ -1,22 +1,3 @@
-if (document.querySelector('.navTabs')) {
-    GM_addStyle(`
-        .navTabs {
-            position: relative;
-        }
-
-        .navTabs::before {
-            content: "+";
-            position: absolute;
-            z-index: 20;
-            color: white;
-            top: -0.7rem;
-            left: 5px;
-            font-size: 3em;
-        }
-    `)
-
-}
-
 if (settings.threadTitleEnabled)  {
     const thTitle = (
         document.querySelector(".titleBar>h1") 
@@ -42,13 +23,6 @@ if (settings.strikethroughBannedUsers) {
 
     const bannedUsers = Array.from(users).filter(x => 
         x.querySelector('[src="styles/default/xenforo/avatars/avatar_banned_m.png"]'))
-
-    GM_addStyle(`
-        .sbe-strikethrough {
-            text-decoration: line-through !important;
-            text-decoration-thickness: 2px !important;
-        }
-    `)
 
     bannedUsers.forEach(x=>{
         x.querySelector('.userText > .username')?.classList.add('sbe-strikethrough')

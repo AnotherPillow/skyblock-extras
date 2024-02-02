@@ -58,6 +58,7 @@ const $import = (fn) => {
 };
 const xfToken = document.querySelector('[name="_xfToken"').value;
 const ls = localStorage;
+GM_addStyle($import('default.css'));
 class _Settings {
     threadTitleEnabled = true;
     hideShopTab = true;
@@ -106,20 +107,6 @@ class _Settings {
         _h1.style.fontSize = '2em';
         this._modal.appendChild(_h1);
         this.br();
-        GM_addStyle(`
-            .sbe-pointer { /*for themes*/
-                cursor: pointer;
-            }
-            #sbe-settings-modal {
-                width: 640px;
-                height: 560px;
-                border-radius: 1em;
-                border: medium;
-                outline: none;
-                text-align: center;
-                scrollbar-width: none;
-            }
-        `);
         this.addSettingToModal('Thread Title as Browser Title', 'threadTitleEnabled');
         this.addSettingToModal('Remove the shop tab', 'hideShopTab');
         this.addSettingToModal("Strike through banned users' names", 'strikethroughBannedUsers');
@@ -162,7 +149,7 @@ class _Settings {
         this._modal.appendChild(closeBtn);
         document.body.appendChild(this._modal);
         const opener = document.createElement('img');
-        opener.src = ' data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADdUAAA3VAT3WWPEAAAEZSURBVEhLxZVBEsIgDEXRe7jphbyIm3qQuvEU7ryQG4/QA2B+aFpAEphprW/mj4TGRPgUnfe+RT0pB3Ol3ERHV6cjncIwAXN4ZnJAlwh84RyGzJOEeODomytJcgTErzAkouV0pIEUgzifiyk9R4xaXNcqvobZH/EAS+zDcFukAfbtFobbEpsMgy8kbSX4Ae8w5BNk5d1Jwehpr+BBP47jgz5LJMZNY80zzMMDzkcyAsvgvHhLE8CNkGihFRfVmvjam4w9X16ab/BMfCnSclWsotagdt9o99QCbdPPTZZkq1HexCrOhUmcv9uLBqHrVqAW1/37KVqPLIVUMg6xZiYoPUc8H4hd/zI1aUcy+aWaWjzQ7pvaPUU49wFpm9dvoGBF4QAAAABJRU5ErkJggg==';
+        opener.src = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADdUAAA3VAT3WWPEAAAEZSURBVEhLxZVBEsIgDEXRe7jphbyIm3qQuvEU7ryQG4/QA2B+aFpAEphprW/mj4TGRPgUnfe+RT0pB3Ol3ERHV6cjncIwAXN4ZnJAlwh84RyGzJOEeODomytJcgTErzAkouV0pIEUgzifiyk9R4xaXNcqvobZH/EAS+zDcFukAfbtFobbEpsMgy8kbSX4Ae8w5BNk5d1Jwehpr+BBP47jgz5LJMZNY80zzMMDzkcyAsvgvHhLE8CNkGihFRfVmvjam4w9X16ab/BMfCnSclWsotagdt9o99QCbdPPTZZkq1HexCrOhUmcv9uLBqHrVqAW1/37KVqPLIVUMg6xZiYoPUc8H4hd/zI1aUcy+aWaWjzQ7pvaPUU49wFpm9dvoGBF4QAAAABJRU5ErkJggg==';
         opener.id = 'sbe-settings-opener-img';
         /* opener.style.marginLeft = '9em' */
         opener.style.marginTop = '2px';
@@ -272,23 +259,6 @@ waitForElm('.xenOverlay.chooserOverlay').then((_overlay) => {
         ol.appendChild(li);
     }
 });
-if (document.querySelector('.navTabs')) {
-    GM_addStyle(`
-        .navTabs {
-            position: relative;
-        }
-
-        .navTabs::before {
-            content: "+";
-            position: absolute;
-            z-index: 20;
-            color: white;
-            top: -0.7rem;
-            left: 5px;
-            font-size: 3em;
-        }
-    `);
-}
 if (settings.threadTitleEnabled) {
     const thTitle = (document.querySelector(".titleBar>h1")
         ?? document.querySelector('h1.username[itemprop="name"]'));

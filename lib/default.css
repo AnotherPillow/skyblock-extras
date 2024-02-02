@@ -1,0 +1,31 @@
+.sbe-pointer {
+    cursor: pointer;
+}
+#sbe-settings-modal {
+    width: 640px;
+    height: 560px;
+    border-radius: 1em;
+    border: medium;
+    outline: none;
+    text-align: center;
+    scrollbar-width: none;
+}
+
+.navTabs {
+    position: relative;
+}
+
+.navTabs::before {
+    content: "+";
+    position: absolute;
+    z-index: 20;
+    color: white;
+    top: -0.7rem;
+    left: 5px;
+    font-size: 3em;
+}
+
+.sbe-strikethrough {
+    text-decoration: line-through !important;
+    text-decoration-thickness: 2px !important;
+}

@@ -60,3 +60,5 @@ const $import = (fn: string): string => {
 const xfToken = (document.querySelector('[name="_xfToken"') as HTMLInputElement).value
 
 const ls = localStorage
+
+GM_addStyle($import('default.css'))
