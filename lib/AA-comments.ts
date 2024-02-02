@@ -10,4 +10,5 @@
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
 // @require     https://raw.githubusercontent.com/thdoan/strftime/master/strftime.js
 // @grant       GM_addStyle
+// @downloadURL https://anotherpillow.github.io/skyblock-extras/build/sbe.min.js
 // ==/UserScript==

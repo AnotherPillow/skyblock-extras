@@ -134,3 +134,6 @@ a.avatar>img[alt][src^="data/avatars/"] {
 {
     border-left-color: thistle !important;
 }
+.discussionListItems .unread .title a {
+    background: url(https://static.skyblock.net/sparkles/sparkle-7.gif);
+}

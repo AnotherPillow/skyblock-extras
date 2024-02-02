@@ -11,6 +11,7 @@
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
 // @require     https://raw.githubusercontent.com/thdoan/strftime/master/strftime.js
 // @grant       GM_addStyle
+// @downloadURL https://anotherpillow.github.io/skyblock-extras/build/sbe.min.js
 // ==/UserScript==
 function waitForElm(selector) {
     return new Promise(resolve => {
@@ -275,12 +276,6 @@ if (settings.hideShopTab) {
 if (settings.strikethroughBannedUsers) {
     const users = document.querySelectorAll('.messageUserBlock');
     const bannedUsers = Array.from(users).filter(x => x.querySelector('[src="styles/default/xenforo/avatars/avatar_banned_m.png"]'));
-    GM_addStyle(`
-        .sbe-strikethrough {
-            text-decoration: line-through !important;
-            text-decoration-thickness: 2px !important;
-        }
-    `);
     bannedUsers.forEach(x => {
         x.querySelector('.userText > .username')?.classList.add('sbe-strikethrough');
     });
