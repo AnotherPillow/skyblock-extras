@@ -73,7 +73,8 @@
     .tabs>li:not(.active)>a,
     div.primaryContent.menuHeader>h3>a.concealed[href^="members/"],
     ol.nodeList>li.node>div.nodeInfo,
-    div#pageNodeContent
+    div#pageNodeContent,
+    .searchResult.post>.listBlock.main>blockquote>a
 {
     color: white !important;
 }
