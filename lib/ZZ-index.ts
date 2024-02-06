@@ -215,12 +215,12 @@ if (settings.roundedFriendsOnProfile && isOnUserProfile) {
 if (settings.postLinkButton && isOnThread) {
     AF(document.querySelectorAll(`li[id^="post-"].message[data-author]`))
         .forEach(post => {
-            const { id } = post
+            const id = post.id.split('-')[1]
 
             const publicControls = post.querySelector('.publicControls')
             
             const a= document.createElement('a')
-            a.href = `${isOnThread}#${id}`
+            a.href = `https://skyblock.net/posts/${id}`
                 a.setAttribute('class', "ReplyQuote item control reply")
             a.title = "Copy link to this message."
             a.innerHTML = `<span></span>Copy Link`

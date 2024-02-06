@@ -61,7 +61,7 @@ const $import = (fn) => {
 };
 const xfToken = document.querySelector('[name="_xfToken"').value;
 const ls = localStorage;
-GM_addStyle(/*$import*/`.sbe-pointer {    cursor: pointer;}#sbe-settings-modal {    width: 640px;    height: 560px;    border-radius: 1em;    border: medium;    outline: none;    text-align: center;    scrollbar-width: none;}.navTabs {    position: relative;}.navTabs::before {    content: "+";    position: absolute;    z-index: 20;    color: white;    top: -0.7rem;    left: 5px;    font-size: 3em;}.sbe-strikethrough {    text-decoration: line-through !important;    text-decoration-thickness: 2px !important;}`);
+GM_addStyle(/*$import*/`.sbe-pointer {    cursor: pointer;}#sbe-settings-modal {    width: 640px;    height: 560px;    border-radius: 1em;    border: medium;    outline: none;    text-align: center;    scrollbar-width: none;}.navTabs {    position: relative;}.navTabs::before {    content: "+";    position: absolute;    z-index: 20;    color: white;    top: -0.7rem;    left: 5px;    font-size: 3em;}.sbe-strikethrough {    text-decoration: line-through !important;    text-decoration-thickness: 2px !important;}.message .messageMeta {    width: 95%;}`);
 class _Settings {
     threadTitleEnabled = true;
     hideShopTab = true;
@@ -417,10 +417,10 @@ if (settings.roundedFriendsOnProfile && isOnUserProfile) {
 if (settings.postLinkButton && isOnThread) {
     AF(document.querySelectorAll(`li[id^="post-"].message[data-author]`))
         .forEach(post => {
-        const { id } = post;
+        const id = post.id.split('-')[1];
         const publicControls = post.querySelector('.publicControls');
         const a = document.createElement('a');
-        a.href = `${isOnThread}#${id}`;
+        a.href = `https://skyblock.net/posts/${id}`;
         a.setAttribute('class', "ReplyQuote item control reply");
         a.title = "Copy link to this message.";
         a.innerHTML = `<span></span>Copy Link`;

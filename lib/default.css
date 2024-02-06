@@ -29,3 +29,7 @@
     text-decoration: line-through !important;
     text-decoration-thickness: 2px !important;
 }
+
+.message .messageMeta {
+    width: 95%;
+}
