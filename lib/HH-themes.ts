@@ -52,7 +52,7 @@ waitForElm('.xenOverlay.chooserOverlay').then((_overlay: any) => {
     for (const li of AF(ol.querySelectorAll('li'))) {
         const a = li.querySelector('a')
         
-        if (/style_id=(6|22)/.test(a?.href ?? ''))
+        if (/style_id=(6|22|30)/.test(a?.href ?? ''))
             a?.addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('customThemeMode', 'false')
@@ -71,7 +71,7 @@ waitForElm('.xenOverlay.chooserOverlay').then((_overlay: any) => {
             localStorage.setItem('customTheme-SBE', JSON.stringify(theme))
 
             window.location.href = `https://skyblock.net/misc/style?style_id=${
-                theme.basedOnOld ? '6' : '22'
+                theme.basedOnOld ? '22' : '30'
             }&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`
             
         })
