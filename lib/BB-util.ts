@@ -1,3 +1,5 @@
+let SELECTED_VANILLA_THEME = localStorage.getItem('sbe-vanilla-style')
+
 function waitForElm<T>(selector: string): Promise<Element | null | T> {
     return new Promise(resolve => {
         if (document.querySelector(selector)) {
@@ -46,9 +48,19 @@ const isOnThread = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/threa
 
 const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false
 
+const isOnOriginalTheme = (
+    !document.querySelector('.social-row>[href="https://www.reddit.com/r/SkyBlock"]') &&
+    document.querySelector('.pageContent>span>a[href="http://blackcaffeine.com/"]')
+)
+
+const isOnMiddleTheme = (
+    !document.querySelector('a[href="http://blackcaffeine.com/"]') &&
+    !document.querySelector('.social-row>[href="https://www.reddit.com/r/SkyBlock"]')
+)
+
 const isOnNewTheme = (
-    document.querySelector('#footer>.bottom>container>[title="Style Chooser"]') ||
-    document.querySelector('a[href="https://benjdzn.com"]')
+    document.querySelector('.link-row>a[href="/how-to-install-skyblock"]') &&
+    document.querySelector('#footer>.top>.container>.col>p')
 )
 
 /* DEBUGGING FUNCTION - NOT ACTUALLY USED */

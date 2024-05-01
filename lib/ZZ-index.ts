@@ -5,7 +5,6 @@ if (settings.threadTitleEnabled)  {
     )
     if (thTitle?.textContent)
         document.title = thTitle.textContent + " | Skyblock Forums"
-
 }
 
 if (settings.hideShopTab) {

@@ -129,7 +129,11 @@ class _Settings {
             this.open()
         })
 
-        document.querySelector('[class="navTabs"]')?.insertBefore(opener, document.querySelector('.visitorTabs'))
+        if (isOnMiddleTheme || isOnOriginalTheme)
+            document.querySelector('[class="navTabs"]')?.insertBefore(opener, document.querySelector('.visitorTabs'))
+        else
+            document.querySelector('#topbar>.p-nav-inner>.left')?.appendChild(opener)
+
 
     }
 

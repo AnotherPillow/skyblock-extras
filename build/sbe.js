@@ -15,6 +15,7 @@
 
 "use strict";
 
+let SELECTED_VANILLA_THEME = localStorage.getItem('sbe-vanilla-style');
 function waitForElm(selector) {
     return new Promise(resolve => {
         if (document.querySelector(selector)) {
@@ -52,8 +53,12 @@ const getMonthFromString = (month) => new Date(Date.parse(month + " 1, 2012")).g
 const getHrefWithoutAnchor = () => window.location.href.replace(new RegExp(`${window.location.hash}$`), '');
 const isOnThread = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/threads\/.+\.\d+\/?/);
 const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false;
-const isOnNewTheme = (document.querySelector('[data-clipboard-text="play.skyblock.net"]') ||
-    document.querySelector('a[href="https://benjdzn.com"]')) && window.location.pathname === '/'; // Why? Because it's  the only way to actually check to my knowledge
+const isOnOriginalTheme = (!document.querySelector('.social-row>[href="https://www.reddit.com/r/SkyBlock"]') &&
+    document.querySelector('.pageContent>span>a[href="http://blackcaffeine.com/"]'));
+const isOnMiddleTheme = (!document.querySelector('a[href="http://blackcaffeine.com/"]') &&
+    !document.querySelector('.social-row>[href="https://www.reddit.com/r/SkyBlock"]'));
+const isOnNewTheme = (document.querySelector('.link-row>a[href="/how-to-install-skyblock"]') &&
+    document.querySelector('#footer>.top>.container>.col>p'));
 /* DEBUGGING FUNCTION - NOT ACTUALLY USED */
 const $import = (fn) => {
     alert('If you are seeing this, something has gone very wrong.');
@@ -162,7 +167,10 @@ class _Settings {
         opener.addEventListener('click', (e) => {
             this.open();
         });
-        document.querySelector('[class="navTabs"]')?.insertBefore(opener, document.querySelector('.visitorTabs'));
+        if (isOnMiddleTheme || isOnOriginalTheme)
+            document.querySelector('[class="navTabs"]')?.insertBefore(opener, document.querySelector('.visitorTabs'));
+        else
+            document.querySelector('#topbar>.p-nav-inner>.left')?.appendChild(opener);
     }
     open() {
         this._modal?.showModal();
@@ -199,24 +207,33 @@ class _Settings {
     }
 }
 const settings = new _Settings();
+const THEMES = {
+    OLD: 6,
+    MIDDLE: 22,
+    NEW: 30,
+};
 let themes = [
     {
         name: 'Dark Mode (Pink Accent)',
         description: 'A dark mode & pink accented theme',
         css: /*$import*/`#content .pageContent {    background-color: #414141;}    .secondaryContent,    .avatar img,    .avatarCropper,    .recentNews,    .breadBoxTop>nav>fieldset.breadcrumb,    .breadBoxBottom>nav>fieldset.breadcrumb,    .breadcrumb .crust a.crumb,    #searchBar,    .messageUserBlock,    div.section.sectionMain,    div.messageUserBlock>.avatarHolder,    ul.tabs.mainTabs.Tabs li{    background: #2D2D2DBB !important;    color: #c5c5c5;    /* outline: 1px solid lime; */}    .messageContent,    .section.sectionMain.recentNews,    .recentNews>div.primaryContent.leftDate,    fieldset#QuickSearch,    fieldset#QuickSearch>formPopup,    .footer .pageContent,    .navTabs,    div.primaryControls,    input#QuickSearchQuery,    ul.tabs.mainTabs.Tabs,    ul.tabs.mainTabs.Tabs>li,    ul.tabs.mainTabs.Tabs>li>a,    form#ProfilePoster,    li[id^="profile-post-"],    .primaryContent,    #AccountMenu,    .mainContent>ul.tabs{    background: #323232;}.messageInfo>textarea.textCtrl:focus {    background-image: none !important;    background: #665766;}    .messageInfo>textarea.textCtrl ,    #AccountMenu>.menuHeader,    ol#forums,    ol.nodeList,    .mainContent>ul.tabs>li:not(.active)>a{    background-color: #2b2b2b;}    li.node>ol.nodeList>li.node>div.nodeInfo,    div.extraUserInfo{    background-color: #1a1a1a !important;}    .titleBar,    #serverstatus,    .visitorText,    .dark_postrating_neutral,    .sectionFooter>div.continue>a.iconKey.button,    footer>.footerLegal,    footer>.footerLegal>a,    input#QuickSearchQuery,    article>blockquote.ugc.baseHtml,    .tabs>li:not(.active)>a,    div.primaryContent.menuHeader>h3>a.concealed[href^="members/"],    ol.nodeList>li.node>div.nodeInfo,    div#pageNodeContent,    .searchResult.post>.listBlock.main>blockquote>a{    color: white !important;}    a,    .PageNavNext,    [class="PageNavNext "],    a.PreviewTooltip,    .primaryContent a,    ul.Tabs.tabs.mainTabs>li.active>a,    #AccountMenu a,    #AccountMenu .secondaryContent a,    #AccountMenu .AutoValidator label{    color: #c450c6;}    .navTabs .navTab.selected .tabLinks,    .subHeading,    .sectionFooter,    .PageNav>nav a[href^="articles/"],    li.navTab.selected,    li.node.category > div.nodeInfo,    .discord-widget > p.discord-join > a,    .mainContent>ul.tabs>li.active>a,    ul[id^="premium-"].staffTitle{    background-color: #d38fb9;}    #header,     #headerMover #headerProxy,     #content,    .sectionFooter>div.continue>a.iconKey.button,    footer    /* nav span.scrollable>span.items a[href] */{    background: #7d4f77;}    .subHeading,    li.node.category > div.nodeInfo{    border-bottom: none !important;    border-top: none !important;}.PageNav>nav a[href^="articles/"] {    color: black;}a.avatar>img[alt][src^="data/avatars/"] {    filter: brightness(0.8);}    span.arrow,    span.arrow>span{    border-left-color: thistle !important;}.discussionListItems .unread .title a {    background: url(https://static.skyblock.net/sparkles/sparkle-7.gif);}`,
-        basedOnOld: true,
+        basis: THEMES.OLD,
     },
     {
         name: 'Better New SB',
         description: 'A better version of the new Skyblock theme',
         css: /*$import*/`div.navTabs {    background:#2b485c;    border-radius: 0 !important;}#landingHero>* {    display:none !important;    background: none !important;}#landingHero {    height:25px;    padding:0 !important;}#content .sidebar .section {    border-radius: 0px !important;}#content .section {    -webkit-box-shadow:none !important;    box-shadow:none !important;}.avatar img, .avatarWrap .img.s {    border-radius: 5px !important;}.visitorTabs, .navTabs .visitorTabs {    display: block !important;    }div#navigation {    border-bottom: none;}#content .sidebar .section .secondaryContent {    padding: 15px !important;}#footer>.top {    padding:25px;}#content {    background: #d1eef5 !important;}.newsText {    color: #113240}li[id^="thread"]>.title {    font-size: 12px;}.sbe-mg-top {    margin-top: 20px}a.PreviewTooltip>.prefix {    margin: 0 !important;}`,
-        basedOnOld: false,
+        basis: THEMES.MIDDLE,
     }
 ];
 if (ls.getItem('customThemes')) {
     const ct = JSON.parse(ls.getItem('customThemes') ?? '[]');
     if (ct.length > 0) {
         ct.map((theme) => {
+            if (theme.basedOnOld != undefined) {
+                theme.basis = theme.basedOnOld ? THEMES.OLD : THEMES.MIDDLE;
+                delete theme.basedOnOld;
+            }
             theme.addCSS = () => GM_addStyle(theme.css ?? '');
         });
         themes = [...themes, ...ct];
@@ -231,13 +248,21 @@ if (localStorage.getItem('customThemeMode') == 'true' && localStorage.getItem('c
     document.querySelector('[title="Style Chooser"]')
         .innerHTML = theme.name;
 }
-waitForElm('.xenOverlay.chooserOverlay').then((_overlay) => {
+waitForElm('.section.styleChooser').then((_overlay) => {
+    console.log('Style chooser opened!');
+    document.querySelectorAll('a[href^="misc/style"]').forEach(_elm => {
+        const elm = _elm;
+        elm.addEventListener('click', function (event) {
+            const styleID = elm.href.match(/style_id=(\d+)/)[1];
+            localStorage.setItem('sbe-vanilla-style', styleID.toString());
+        });
+    });
     console.log('Overlay found!');
     const overlay = _overlay;
     const ol = overlay.querySelector('ol.twoColumns.primaryContent.chooserColumns');
     for (const li of AF(ol.querySelectorAll('li'))) {
         const a = li.querySelector('a');
-        if (/style_id=(6|22)/.test(a?.href ?? ''))
+        if (/style_id=(6|22|30)/.test(a?.href ?? ''))
             a?.addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('customThemeMode', 'false');
@@ -252,7 +277,7 @@ waitForElm('.xenOverlay.chooserOverlay').then((_overlay) => {
             e.preventDefault();
             localStorage.setItem('customThemeMode', 'true');
             localStorage.setItem('customTheme-SBE', JSON.stringify(theme));
-            window.location.href = `https://skyblock.net/misc/style?style_id=${theme.basedOnOld ? '6' : '22'}&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`;
+            window.location.href = `https://skyblock.net/misc/style?style_id=${theme.basis}&_xfToken=${xfToken}&redirect=${encodeURI(window.location.href)}`;
         });
         const title = li.querySelector('.title');
         const desc = li.querySelector('.description');
@@ -262,6 +287,10 @@ waitForElm('.xenOverlay.chooserOverlay').then((_overlay) => {
         ol.appendChild(li);
     }
 });
+if (isOnNewTheme) {
+    const container = document.querySelector('div#footer>div.bottom>div.container');
+    container.innerHTML += `<a href="misc/style?redirect${encodeURIComponent(location.pathname)}" class="changeTheme OverlayTrigger Tooltip" title="Style Chooser" rel="nofollow">Change Theme</a>`;
+}
 if (settings.threadTitleEnabled) {
     const thTitle = (document.querySelector(".titleBar>h1")
         ?? document.querySelector('h1.username[itemprop="name"]'));
