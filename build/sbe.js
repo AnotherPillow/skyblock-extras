@@ -85,6 +85,7 @@ class _Settings {
     minotarNotCrafatar = true;
     noMoreCamo = false;
     fadeInReactions = true;
+    adBlocker = true;
     _modal;
     addSettingToModal(name, value) {
         const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`;
@@ -132,6 +133,7 @@ class _Settings {
         this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar');
         this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo');
         this.addSettingToModal("Fade in reaction opacity on hover", 'fadeInReactions');
+        this.addSettingToModal("Block Ads", 'adBlocker');
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = 'Save';
         saveBtn.style.width = '6em';
@@ -197,6 +199,7 @@ class _Settings {
             'minotarNotCrafatar': this.minotarNotCrafatar,
             'noMoreCamo': this.noMoreCamo,
             'fadeInReactions': this.fadeInReactions,
+            'adBlocker': this.adBlocker,
         }));
     }
     deserialise() {
@@ -296,6 +299,11 @@ if (settings.threadTitleEnabled) {
         ?? document.querySelector('h1.username[itemprop="name"]'));
     if (thTitle?.textContent)
         document.title = thTitle.textContent + " | Skyblock Forums";
+}
+if (settings.adBlocker) {
+    document.querySelectorAll('.adsbygoogle').forEach(elm => {
+        elm.remove();
+    });
 }
 if (settings.hideShopTab) {
     const publicTabs = document.querySelector('ul.publicTabs');

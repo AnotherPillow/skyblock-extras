@@ -16,6 +16,7 @@ class _Settings {
     minotarNotCrafatar = true;
     noMoreCamo = false;
     fadeInReactions = true;
+    adBlocker = true;
 
     _modal: HTMLDialogElement | null;
 
@@ -76,6 +77,7 @@ class _Settings {
         this.addSettingToModal("Replace Craftar with Minotar", 'minotarNotCrafatar')
         this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo')
         this.addSettingToModal("Fade in reaction opacity on hover", 'fadeInReactions')
+        this.addSettingToModal("Block Ads", 'adBlocker')
 
 
         const saveBtn = document.createElement('button')
@@ -164,6 +166,7 @@ class _Settings {
             'minotarNotCrafatar': this.minotarNotCrafatar,
             'noMoreCamo': this.noMoreCamo,
             'fadeInReactions': this.fadeInReactions,
+            'adBlocker': this.adBlocker,
         }))
     }
 

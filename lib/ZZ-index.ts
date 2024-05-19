@@ -7,6 +7,12 @@ if (settings.threadTitleEnabled)  {
         document.title = thTitle.textContent + " | Skyblock Forums"
 }
 
+if (settings.adBlocker) {
+    document.querySelectorAll('.adsbygoogle').forEach(elm => {
+        elm.remove()
+    })
+}
+
 if (settings.hideShopTab) {
     const publicTabs = document.querySelector('ul.publicTabs')
 
