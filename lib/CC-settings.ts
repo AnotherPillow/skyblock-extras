@@ -17,7 +17,7 @@ class _Settings {
     noMoreCamo = false;
     fadeInReactions = true;
     adBlocker = true;
-
+    moreSearchOnCard = true;
     _modal: HTMLDialogElement | null;
 
     addSettingToModal(name: string, value: keyof this) {
@@ -78,7 +78,7 @@ class _Settings {
         this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo')
         this.addSettingToModal("Fade in reaction opacity on hover", 'fadeInReactions')
         this.addSettingToModal("Block Ads", 'adBlocker')
-
+        this.addSettingToModal("More search options on member card", 'moreSearchOnCard')
 
         const saveBtn = document.createElement('button')
 
@@ -166,6 +166,7 @@ class _Settings {
             'minotarNotCrafatar': this.minotarNotCrafatar,
             'noMoreCamo': this.noMoreCamo,
             'fadeInReactions': this.fadeInReactions,
+            'moreSearchOnCard': this.moreSearchOnCard,
             'adBlocker': this.adBlocker,
         }))
     }

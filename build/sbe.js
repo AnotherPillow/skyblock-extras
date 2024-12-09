@@ -86,6 +86,7 @@ class _Settings {
     noMoreCamo = false;
     fadeInReactions = true;
     adBlocker = true;
+    moreSearchOnCard = true;
     _modal;
     addSettingToModal(name, value) {
         const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`;
@@ -134,6 +135,7 @@ class _Settings {
         this.addSettingToModal("Remove Skyblock's image proxy", 'noMoreCamo');
         this.addSettingToModal("Fade in reaction opacity on hover", 'fadeInReactions');
         this.addSettingToModal("Block Ads", 'adBlocker');
+        this.addSettingToModal("More search options on member card", 'moreSearchOnCard');
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = 'Save';
         saveBtn.style.width = '6em';
@@ -199,6 +201,7 @@ class _Settings {
             'minotarNotCrafatar': this.minotarNotCrafatar,
             'noMoreCamo': this.noMoreCamo,
             'fadeInReactions': this.fadeInReactions,
+            'moreSearchOnCard': this.moreSearchOnCard,
             'adBlocker': this.adBlocker,
         }));
     }
@@ -487,3 +490,18 @@ if (settings.noMoreCamo) {
 if (settings.fadeInReactions) {
     GM_addStyle(`.dark_postrating_inputlist {transition: opacity 0.5s;}.dark_postrating_inputlist:not(:hover) {opacity: 0.1 !important;}`);
 }
+waitForElm(`.xenOverlay.memberCard>[data-overlayclass="memberCard"]`).then((elm) => {
+    console.log(elm);
+    const messagesDT = document.querySelector(`.userStats > dd:nth-child(4)`);
+    const userID = elm.querySelector(`a.username.NoOverlay`).href.split('.').at(-1);
+    console.log(messagesDT, userID);
+    // https://skyblock.net/search/member?user_id=103887&content=thread
+    const threadsDT = document.createElement('dt');
+    threadsDT.textContent = 'Threads: ';
+    const threadsDD = document.createElement('dd');
+    threadsDD.innerHTML = `<a href="search/member?user_id=${userID}" class="concealed" rel="nofollow">Search</a>`;
+    // messagesDT?.parentElement?.appendChild(threadsDT);
+    // messagesDT?.parentElement?.appendChild(threadsDD)
+    messagesDT?.insertAdjacentElement('afterend', threadsDT);
+    threadsDT?.insertAdjacentElement('afterend', threadsDD);
+});
