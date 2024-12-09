@@ -272,7 +272,7 @@ if (settings.fadeInReactions) {
 
 waitForElm(`.xenOverlay.memberCard>[data-overlayclass="memberCard"]`).then((elm: any) => {
     const messagesDT = document.querySelector(`.userStats > dd:nth-child(4)`)
-    const userID = (elm.querySelector(`a.username.NoOverlay`) as HTMLAnchorElement).href.split('.').at(-1)
+    const userID = (elm.querySelector(`a.username.NoOverlay`) as HTMLAnchorElement).href.split('.').at(-1)?.replaceAll('/', '')
 
     const threadsDT = document.createElement('dt')
     threadsDT.textContent = 'Threads: '

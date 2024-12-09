@@ -498,17 +498,12 @@ if (settings.fadeInReactions) {
     `);
 }
 waitForElm(`.xenOverlay.memberCard>[data-overlayclass="memberCard"]`).then((elm) => {
-    console.log(elm);
     const messagesDT = document.querySelector(`.userStats > dd:nth-child(4)`);
-    const userID = elm.querySelector(`a.username.NoOverlay`).href.split('.').at(-1);
-    console.log(messagesDT, userID);
-    // https://skyblock.net/search/member?user_id=103887&content=thread
+    const userID = elm.querySelector(`a.username.NoOverlay`).href.split('.').at(-1)?.replaceAll('/', '');
     const threadsDT = document.createElement('dt');
     threadsDT.textContent = 'Threads: ';
     const threadsDD = document.createElement('dd');
-    threadsDD.innerHTML = `<a href="search/member?user_id=${userID}" class="concealed" rel="nofollow">Search</a>`;
-    // messagesDT?.parentElement?.appendChild(threadsDT);
-    // messagesDT?.parentElement?.appendChild(threadsDD)
+    threadsDD.innerHTML = `<a href="search/member?user_id=${userID}&content=thread" class="concealed" rel="nofollow">Search</a>`;
     messagesDT?.insertAdjacentElement('afterend', threadsDT);
     threadsDT?.insertAdjacentElement('afterend', threadsDD);
 });
