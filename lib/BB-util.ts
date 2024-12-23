@@ -74,3 +74,18 @@ const xfToken = (document.querySelector('[name="_xfToken"') as HTMLInputElement)
 const ls = localStorage
 
 GM_addStyle($import('default.css'))
+
+function patchClass(obj: any, method: string, newImplementation: (original: Function, ...args: any) => void) {
+    const originalMethod = obj[method];
+    console.log(`Patching ${method}`, originalMethod)
+
+    obj[method] = function (...args: any) {
+        return newImplementation.call(this, originalMethod.bind(this), ...args);
+    };
+}
+
+
+// adapted from https://stackoverflow.com/a/9160869
+const insert = (fullString: string, index: number, subString: string) => 
+    index > 0 ? fullString.substring(0, index) + subString + fullString.substring(index, fullString.length)
+              : subString + fullString

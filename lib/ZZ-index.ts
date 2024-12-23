@@ -1,3 +1,5 @@
+console.log('skyblock extras loaded')
+
 if (settings.threadTitleEnabled)  {
     const thTitle = (
         document.querySelector(".titleBar>h1") 
@@ -270,15 +272,16 @@ if (settings.fadeInReactions) {
     `)
 }
 
-waitForElm(`.xenOverlay.memberCard>[data-overlayclass="memberCard"]`).then((elm: any) => {
-    const messagesDT = document.querySelector(`.userStats > dd:nth-child(4)`)
-    const userID = (elm.querySelector(`a.username.NoOverlay`) as HTMLAnchorElement).href.split('.').at(-1)?.replaceAll('/', '')
+if (settings.moreSearchOnCard) {
+    const threadsButtonHTML = `<dt>Threads: </dt><dd><a href="search/member?user_id=135692&content=thread" class="concealed" rel="nofollow">Search</a></dd>`
+    
+    patchClass(XenForo.OverlayLoader.prototype, 'createOverlay', (original: Function, data: {
+        templateHtml: string,
+        _visitor_conversationsUnread: string,
+        _visitor_alertsUnread: string
+    }) => {
+        data.templateHtml = insert(data.templateHtml, data.templateHtml.indexOf('<!-- slot: pre_likes'), threadsButtonHTML)
+        return original(data)
+    })
+}
 
-    const threadsDT = document.createElement('dt')
-    threadsDT.textContent = 'Threads: '
-    const threadsDD = document.createElement('dd')
-    threadsDD.innerHTML=`<a href="search/member?user_id=${userID}&content=thread" class="concealed" rel="nofollow">Search</a>`
-
-    messagesDT?.insertAdjacentElement('afterend', threadsDT)
-    threadsDT?.insertAdjacentElement('afterend', threadsDD)
-})

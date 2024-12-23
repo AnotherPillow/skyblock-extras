@@ -34,6 +34,8 @@ Each of thes ecan be indivually toggled in the settings menu now beside your use
 - Remove Skyblock's image proxy - removes <https://camo.skyblock.net> **this should be off unless there is an issue**
 - Fade in reaction opacity on hover - when hovering on a message's reactions to react to it, it'll now transition in the opacity.
 - Custom themes added to theme changer (see [Themes](#Themes))
+- Block ads - remove ads from your view.
+- More search options on member card - in the member info popup, add a button to search for threads.
 
 ## Themes
 

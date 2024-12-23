@@ -15,6 +15,8 @@
 
 "use strict";
 
+window.XenForo = XenForo || window.XenForo || {};
+globalThis.XenForo = XenForo || globalThis.XenForo || window.XenForo || {};
 let SELECTED_VANILLA_THEME = localStorage.getItem('sbe-vanilla-style');
 function waitForElm(selector) {
     return new Promise(resolve => {
@@ -67,6 +69,16 @@ const $import = (fn) => {
 const xfToken = document.querySelector('[name="_xfToken"').value;
 const ls = localStorage;
 GM_addStyle(/*$import*/`.sbe-pointer {    cursor: pointer;}#sbe-settings-modal {    width: 640px;    height: 560px;    border-radius: 1em;    border: medium;    outline: none;    text-align: center;    scrollbar-width: none;}.navTabs {    position: relative;}.navTabs::before {    content: "+";    position: absolute;    z-index: 20;    color: white;    top: -0.7rem;    left: 5px;    font-size: 3em;}.sbe-strikethrough {    text-decoration: line-through !important;    text-decoration-thickness: 2px !important;}.message .messageMeta {    width: 95%;}`);
+function patchClass(obj, method, newImplementation) {
+    const originalMethod = obj[method];
+    console.log(`Patching ${method}`, originalMethod);
+    obj[method] = function (...args) {
+        return newImplementation.call(this, originalMethod.bind(this), ...args);
+    };
+}
+// adapted from https://stackoverflow.com/a/9160869
+const insert = (fullString, index, subString) => index > 0 ? fullString.substring(0, index) + subString + fullString.substring(index, fullString.length)
+    : subString + fullString;
 class _Settings {
     threadTitleEnabled = true;
     hideShopTab = true;
@@ -142,7 +154,10 @@ class _Settings {
         saveBtn.style.height = '2.5em';
         saveBtn.addEventListener('click', e => {
             this.serialise();
-            window.location.reload();
+            XenForo.alert("Settings have been saved.", false, 5000, console.log);
+            setTimeout(() => {
+                window.location.reload();
+            }, 4500);
         });
         this.br();
         this.br();
@@ -297,6 +312,7 @@ if (isOnNewTheme) {
     const container = document.querySelector('div#footer>div.bottom>div.container');
     container.innerHTML += `<a href="misc/style?redirect${encodeURIComponent(location.pathname)}" class="changeTheme OverlayTrigger Tooltip" title="Style Chooser" rel="nofollow">Change Theme</a>`;
 }
+console.log('skyblock extras loaded');
 if (settings.threadTitleEnabled) {
     const thTitle = (document.querySelector(".titleBar>h1")
         ?? document.querySelector('h1.username[itemprop="name"]'));
@@ -490,13 +506,10 @@ if (settings.noMoreCamo) {
 if (settings.fadeInReactions) {
     GM_addStyle(`.dark_postrating_inputlist {transition: opacity 0.5s;}.dark_postrating_inputlist:not(:hover) {opacity: 0.1 !important;}`);
 }
-waitForElm(`.xenOverlay.memberCard>[data-overlayclass="memberCard"]`).then((elm) => {
-    const messagesDT = document.querySelector(`.userStats > dd:nth-child(4)`);
-    const userID = elm.querySelector(`a.username.NoOverlay`).href.split('.').at(-1)?.replaceAll('/', '');
-    const threadsDT = document.createElement('dt');
-    threadsDT.textContent = 'Threads: ';
-    const threadsDD = document.createElement('dd');
-    threadsDD.innerHTML = `<a href="search/member?user_id=${userID}&content=thread" class="concealed" rel="nofollow">Search</a>`;
-    messagesDT?.insertAdjacentElement('afterend', threadsDT);
-    threadsDT?.insertAdjacentElement('afterend', threadsDD);
-});
+if (settings.moreSearchOnCard) {
+    const threadsButtonHTML = `<dt>Threads: </dt><dd><a href="search/member?user_id=135692&content=thread" class="concealed" rel="nofollow">Search</a></dd>`;
+    patchClass(XenForo.OverlayLoader.prototype, 'createOverlay', (original, data) => {
+        data.templateHtml = insert(data.templateHtml, data.templateHtml.indexOf('<!-- slot: pre_likes'), threadsButtonHTML);
+        return original(data);
+    });
+}
