@@ -12,3 +12,6 @@
 // @grant       GM_addStyle
 // @downloadURL https://anotherpillow.github.io/skyblock-extras/build/sbe.min.js
 // ==/UserScript==
+
+window.XenForo = XenForo || window.XenForo || {};
+globalThis.XenForo = XenForo || globalThis.XenForo || window.XenForo || {};

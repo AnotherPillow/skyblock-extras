@@ -26,6 +26,10 @@
         "old/"
     ],
 
+    "files": [
+        "lib/globals.d.ts"
+    ],
+
     "include": [
         "lib",
         "node_modules/@violentmonkey/types"
