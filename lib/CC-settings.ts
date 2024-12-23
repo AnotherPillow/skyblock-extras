@@ -88,7 +88,10 @@ class _Settings {
         
         saveBtn.addEventListener('click', e => {
             this.serialise()
-            window.location.reload()
+            XenForo.alert("Settings have been saved.", false, 5000, console.log)
+            setTimeout(() => {
+                window.location.reload()
+            }, 4500)
         })
 
         this.br()
