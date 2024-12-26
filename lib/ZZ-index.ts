@@ -93,8 +93,6 @@ if (settings.responsiveModals) {
                 prevWidth = width
             }
         }, 500);
-
-
     })()
 }
 
@@ -273,13 +271,16 @@ if (settings.fadeInReactions) {
 }
 
 if (settings.moreSearchOnCard) {
-    const threadsButtonHTML = `<dt>Threads: </dt><dd><a href="search/member?user_id=135692&content=thread" class="concealed" rel="nofollow">Search</a></dd>`
     
     patchClass(XenForo.OverlayLoader.prototype, 'createOverlay', (original: Function, data: {
         templateHtml: string,
         _visitor_conversationsUnread: string,
         _visitor_alertsUnread: string
     }) => {
+        console.log(data.templateHtml)
+        const userID = (data.templateHtml.match(/<a href="members\/.+\.([0-9]+)\/"\>Profile Page<\/a>/)?.[1]) ?? '1'
+        const threadsButtonHTML = `<dt>Threads: </dt><dd><a href="search/member?user_id=${userID}&content=thread" class="concealed" rel="nofollow">Search</a></dd>`
+        
         data.templateHtml = insert(data.templateHtml, data.templateHtml.indexOf('<!-- slot: pre_likes'), threadsButtonHTML)
         return original(data)
     })
