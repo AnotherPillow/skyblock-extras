@@ -5,7 +5,7 @@ A userscript to improve the skyblock.net forums experience.
 ## Installation
 
 1. Install a userscript loader - [ViolentMonkey](https://violentmonkey.github.io/) was used in development of this.
-2. You should be able to just open [the built file](https://anotherpillow.github.io/skyblock-extras/build/sbe.min.js) and install it, but if not continue:
+2. You should be able to just open [the built file](https://anotherpillow.github.io/skyblock-extras/build/sbe.js) and install it, but if not continue:
    
    1. Click on the ViolentMonkey icon and open settings
    2. Click the `+` in the top left and then `Install from URL`.
