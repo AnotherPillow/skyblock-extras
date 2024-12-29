@@ -47,6 +47,7 @@ const getHrefWithoutAnchor = () => window.location.href.replace(new RegExp(`${wi
 const isOnThread = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/threads\/.+\.\d+\/?/)
 
 const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false
+const isOnIndex = window.location.href == 'https://skyblock.net/'
 
 const isOnOriginalTheme = (
     !document.querySelector('.social-row>[href="https://www.reddit.com/r/SkyBlock"]') &&

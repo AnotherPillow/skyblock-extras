@@ -53,6 +53,7 @@ const getMonthFromString = (month) => new Date(Date.parse(month + " 1, 2012")).g
 const getHrefWithoutAnchor = () => window.location.href.replace(new RegExp(`${window.location.hash}$`), '');
 const isOnThread = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/threads\/.+\.\d+\/?/);
 const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false;
+const isOnIndex = window.location.href == 'https://skyblock.net/';
 const isOnOriginalTheme = (!document.querySelector('.social-row>[href="https://www.reddit.com/r/SkyBlock"]') &&
     document.querySelector('.pageContent>span>a[href="http://blackcaffeine.com/"]'));
 const isOnMiddleTheme = (!document.querySelector('a[href="http://blackcaffeine.com/"]') &&
@@ -97,6 +98,7 @@ class _Settings {
     fadeInReactions = true;
     adBlocker = true;
     moreSearchOnCard = true;
+    unpinLawsuit = true;
     _modal;
     addSettingToModal(name, value) {
         const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`;
@@ -146,6 +148,7 @@ class _Settings {
         this.addSettingToModal("Fade in reaction opacity on hover", 'fadeInReactions');
         this.addSettingToModal("Block Ads", 'adBlocker');
         this.addSettingToModal("More search options on member card", 'moreSearchOnCard');
+        this.addSettingToModal("Unpin Lawsuit", 'unpinLawsuit');
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = 'Save';
         saveBtn.style.width = '6em';
@@ -216,6 +219,7 @@ class _Settings {
             'fadeInReactions': this.fadeInReactions,
             'moreSearchOnCard': this.moreSearchOnCard,
             'adBlocker': this.adBlocker,
+            'unpinLawsuit': this.unpinLawsuit,
         }));
     }
     deserialise() {
@@ -483,6 +487,7 @@ if (settings.postLinkButton && isOnThread) {
         a.onclick = () => window.navigator.clipboard.writeText(a.href);
         publicControls?.appendChild(a);
     });
+    // Fix copy link showing up in the selected text hover thing
     patchClass(XenForo.SelectQuotable.prototype, 'createButton', function (original, _) {
         const ret = original();
         const button = this.$button[0];
@@ -530,4 +535,7 @@ if (settings.moreSearchOnCard) {
         data.templateHtml = insert(data.templateHtml, data.templateHtml.indexOf('<!-- slot: pre_likes'), threadsButtonHTML);
         return original(data);
     });
+}
+if (settings.unpinLawsuit && isOnIndex) {
+    document.querySelector('[id="recentNews"]>[id="145369"]')?.remove();
 }

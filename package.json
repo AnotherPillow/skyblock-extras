@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "ugly": "uglifyjs build/sbe.js --comments all -c -m --mangle-props reserved=[threadTitleEnabled,hideShopTab,strikethroughBannedUsers,betterNewSB,SBonlIntegration,actualDateOnFrontpage,fixBedrockPlayersImages,responsiveModals,movePoke,ratingRatio,removeRatingCommas,avatarOnProfileStats,birthdayHatOnPFP,roundedFriendsOnProfile,postLinkButton,minotarNotCrafatar,noMoreCamo,fadeInReactions,name,description,css,basis] > build/sbe.min.js",
+    "ugly": "uglifyjs build/sbe.js --comments all -c -m --mangle-props reserved=[threadTitleEnabled,hideShopTab,strikethroughBannedUsers,betterNewSB,SBonlIntegration,actualDateOnFrontpage,fixBedrockPlayersImages,responsiveModals,movePoke,ratingRatio,removeRatingCommas,avatarOnProfileStats,birthdayHatOnPFP,roundedFriendsOnProfile,postLinkButton,minotarNotCrafatar,noMoreCamo,fadeInReactions,name,description,css,basis,unpinLawsuit] > build/sbe.min.js",
     "$builddir": "mkdir build || true",
     "$build": "npm run --silent builddir && tsc && babel _build -d lib && npm run ugly",
     "js-patches": "node patches.js",

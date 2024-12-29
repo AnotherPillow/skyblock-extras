@@ -18,6 +18,8 @@ class _Settings {
     fadeInReactions = true;
     adBlocker = true;
     moreSearchOnCard = true;
+    unpinLawsuit = true;
+
     _modal: HTMLDialogElement | null;
 
     addSettingToModal(name: string, value: keyof this) {
@@ -79,6 +81,7 @@ class _Settings {
         this.addSettingToModal("Fade in reaction opacity on hover", 'fadeInReactions')
         this.addSettingToModal("Block Ads", 'adBlocker')
         this.addSettingToModal("More search options on member card", 'moreSearchOnCard')
+        this.addSettingToModal("Unpin Lawsuit", 'unpinLawsuit')
 
         const saveBtn = document.createElement('button')
 
@@ -171,6 +174,7 @@ class _Settings {
             'fadeInReactions': this.fadeInReactions,
             'moreSearchOnCard': this.moreSearchOnCard,
             'adBlocker': this.adBlocker,
+            'unpinLawsuit': this.unpinLawsuit,
         }))
     }
 

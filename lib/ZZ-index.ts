@@ -306,3 +306,6 @@ if (settings.moreSearchOnCard) {
     })
 }
 
+if (settings.unpinLawsuit && isOnIndex) {
+    document.querySelector('[id="recentNews"]>[id="145369"]')?.remove()
+}
