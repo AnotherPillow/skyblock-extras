@@ -4,7 +4,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.0
+// @version     1.1.0
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -522,10 +522,11 @@ if (settings.fadeInReactions) {
 }
 if (settings.moreSearchOnCard) {
     patchClass(XenForo.OverlayLoader.prototype, 'createOverlay', (original, data) => {
-        console.log(data.templateHtml);
-        const userID = (data.templateHtml.match(/<a href="members\/.+\.([0-9]+)\/"\>Profile Page<\/a>/)?.[1]) ?? '1';
-        const threadsButtonHTML = `<dt>Threads: </dt><dd><a href="search/member?user_id=${userID}&content=thread" class="concealed" rel="nofollow">Search</a></dd>`;
-        data.templateHtml = insert(data.templateHtml, data.templateHtml.indexOf('<!-- slot: pre_likes'), threadsButtonHTML);
+        if (data.templateHtml.includes(`<div id="memberCard`)) {
+            const userID = (data.templateHtml.match(/<a href="members\/.+\.([0-9]+)\/"\>Profile Page<\/a>/)?.[1]) ?? '1';
+            const threadsButtonHTML = `<dt>Threads: </dt><dd><a href="search/member?user_id=${userID}&content=thread" class="concealed" rel="nofollow">Search</a></dd>`;
+            data.templateHtml = insert(data.templateHtml, data.templateHtml.indexOf('<!-- slot: pre_likes'), threadsButtonHTML);
+        }
         return original(data);
     });
 }
