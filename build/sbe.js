@@ -483,6 +483,15 @@ if (settings.postLinkButton && isOnThread) {
         a.onclick = () => window.navigator.clipboard.writeText(a.href);
         publicControls?.appendChild(a);
     });
+    patchClass(XenForo.SelectQuotable.prototype, 'createButton', function (original, _) {
+        const ret = original();
+        const button = this.$button[0];
+        const children = button.children;
+        if (children.length == 3) { // 3 includes copy link
+            button.removeChild(button.lastElementChild);
+        }
+        return ret;
+    });
 }
 if (settings.minotarNotCrafatar) {
     setTimeout(() => {

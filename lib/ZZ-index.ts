@@ -226,13 +226,33 @@ if (settings.postLinkButton && isOnThread) {
             
             const a= document.createElement('a')
             a.href = `https://skyblock.net/posts/${id}`
-                a.setAttribute('class', "ReplyQuote item control reply")
+            a.setAttribute('class', "ReplyQuote item control reply")
             a.title = "Copy link to this message."
             a.innerHTML = `<span></span>Copy Link`
             a.onclick = () => window.navigator.clipboard.writeText(a.href)
 
             publicControls?.appendChild(a)
-        })
+        });
+
+    // Fix copy link showing up in the selected text hover thing
+    patchClass(XenForo.SelectQuotable.prototype, 'createButton', function (this: {
+        $button: {
+            [key: number]: HTMLDivElement,
+            length: number,
+        },
+        processing: boolean,
+        messageTextContainer: any // idk jquery stuff is weird
+    }, original, _) {
+        const ret = original()
+        
+        const button = this.$button[0]
+        const children = button.children
+        if (children.length == 3) {  // 3 includes copy link
+            button.removeChild(button.lastElementChild as Node)
+        }
+        
+        return ret;
+    })
 }
 
 if (settings.minotarNotCrafatar) {
