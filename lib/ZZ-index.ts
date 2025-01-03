@@ -235,7 +235,7 @@ if (settings.postLinkButton && isOnThread) {
         });
 
     // Fix copy link showing up in the selected text hover thing
-    patchClass(XenForo.SelectQuotable.prototype, 'createButton', function (this: {
+    patchClass(XenForo.SelectQuotable?.prototype, 'createButton', function (this: {
         $button: {
             [key: number]: HTMLDivElement,
             length: number,
@@ -292,7 +292,7 @@ if (settings.fadeInReactions) {
 
 if (settings.moreSearchOnCard) {
     
-    patchClass(XenForo.OverlayLoader.prototype, 'createOverlay', (original: Function, data: {
+    patchClass(XenForo.OverlayLoader?.prototype, 'createOverlay', (original: Function, data: {
         templateHtml: string,
         _visitor_conversationsUnread: string,
         _visitor_alertsUnread: string

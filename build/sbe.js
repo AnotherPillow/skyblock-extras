@@ -67,10 +67,12 @@ const $import = (fn) => {
     alert('If you are seeing this, something has gone very wrong.');
     return '';
 };
-const xfToken = document.querySelector('[name="_xfToken"').value;
+const xfToken = XenForo._csrfToken;
 const ls = localStorage;
 GM_addStyle(/*$import*/`.sbe-pointer {    cursor: pointer;}#sbe-settings-modal {    width: 640px;    height: 560px;    border-radius: 1em;    border: medium;    outline: none;    text-align: center;    scrollbar-width: none;}.navTabs {    position: relative;}.navTabs::before {    content: "+";    position: absolute;    z-index: 20;    color: white;    top: -0.7rem;    left: 5px;    font-size: 3em;}.sbe-strikethrough {    text-decoration: line-through !important;    text-decoration-thickness: 2px !important;}.message .messageMeta {    width: 95%;}`);
 function patchClass(obj, method, newImplementation) {
+    if (typeof obj == 'undefined')
+        return console.log(`Cannot patch ${method} of ${obj}.`);
     const originalMethod = obj[method];
     console.log(`Patching ${method}`, originalMethod);
     obj[method] = function (...args) {
@@ -488,7 +490,7 @@ if (settings.postLinkButton && isOnThread) {
         publicControls?.appendChild(a);
     });
     // Fix copy link showing up in the selected text hover thing
-    patchClass(XenForo.SelectQuotable.prototype, 'createButton', function (original, _) {
+    patchClass(XenForo.SelectQuotable?.prototype, 'createButton', function (original, _) {
         const ret = original();
         const button = this.$button[0];
         const children = button.children;
@@ -521,7 +523,7 @@ if (settings.fadeInReactions) {
     GM_addStyle(`.dark_postrating_inputlist {transition: opacity 0.5s;}.dark_postrating_inputlist:not(:hover) {opacity: 0.1 !important;}`);
 }
 if (settings.moreSearchOnCard) {
-    patchClass(XenForo.OverlayLoader.prototype, 'createOverlay', (original, data) => {
+    patchClass(XenForo.OverlayLoader?.prototype, 'createOverlay', (original, data) => {
         if (data.templateHtml.includes(`<div id="memberCard`)) {
             const userID = (data.templateHtml.match(/<a href="members\/.+\.([0-9]+)\/"\>Profile Page<\/a>/)?.[1]) ?? '1';
             const threadsButtonHTML = `<dt>Threads: </dt><dd><a href="search/member?user_id=${userID}&content=thread" class="concealed" rel="nofollow">Search</a></dd>`;

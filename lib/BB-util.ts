@@ -70,13 +70,14 @@ const $import = (fn: string): string => {
     return ''
 }
 
-const xfToken = (document.querySelector('[name="_xfToken"') as HTMLInputElement).value
+const xfToken = XenForo._csrfToken
 
 const ls = localStorage
 
 GM_addStyle($import('default.css'))
 
 function patchClass(obj: any, method: string, newImplementation: (original: Function, ...args: any) => void) {
+    if (typeof obj == 'undefined') return console.log(`Cannot patch ${method} of ${obj}.`)
     const originalMethod = obj[method];
     console.log(`Patching ${method}`, originalMethod)
 
