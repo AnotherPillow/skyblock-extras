@@ -101,7 +101,9 @@ if (settings.movePoke && isOnUserProfile) {
     const pokeBtn = moderatorActions?.querySelector('li > a.OverlayTrigger[href^="pokes/"]')
     const clone = pokeBtn?.cloneNode(true)
     
-    pokeBtn?.parentElement?.remove()
+    if (moderatorActions?.childElementCount == 1) // remove the dropdown if there's only the one element in the dropdown
+        pokeBtn?.parentElement?.remove()
+    else pokeBtn?.remove() //otherwise only remove the poke option
 
     let linkElement = document.createElement('li')
     linkElement.appendChild(clone as Node)

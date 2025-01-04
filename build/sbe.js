@@ -4,7 +4,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.1.1
+// @version     1.1.2
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -394,7 +394,10 @@ if (settings.movePoke && isOnUserProfile) {
     const moderatorActions = document.querySelector('div[id^="XenForoUniq"].Menu > ul.secondaryContent.blockLinksList');
     const pokeBtn = moderatorActions?.querySelector('li > a.OverlayTrigger[href^="pokes/"]');
     const clone = pokeBtn?.cloneNode(true);
-    pokeBtn?.parentElement?.remove();
+    if (moderatorActions?.childElementCount == 1) // remove the dropdown if there's only the one element in the dropdown
+        pokeBtn?.parentElement?.remove();
+    else
+        pokeBtn?.remove(); //otherwise only remove the poke option
     let linkElement = document.createElement('li');
     linkElement.appendChild(clone);
     document.querySelector('.followBlock > ul')?.appendChild(linkElement);
