@@ -21,6 +21,12 @@ let themes: styleType[] = [
         basis: THEMES.OLD,
     },
     {
+        name: 'Nightblock',
+        description: 'A dark theme for Skyblock Forums',
+        css: $import('nightblock.css'),
+        basis: THEMES.OLD,
+    },
+    {
         name: 'Better New SB',
         description: 'A better version of the new Skyblock theme',
         css: $import('betternewsb.css'),
