@@ -313,3 +313,14 @@ if (settings.moreSearchOnCard) {
 if (settings.unpinLawsuit && isOnIndex) {
     document.querySelector('[id="recentNews"]>[id="145369"]')?.remove()
 }
+
+if (settings.fixOldLinks) {
+    document.querySelectorAll('a[href*="block.net"]').forEach((_a) => {
+        console.log
+        const a = _a as HTMLAnchorElement
+        a.href = a.href 
+            /* replace a http(s) (or no protocol) url with, or without www. on endblock.net, hellblock.net or skyblock.net to be https://skyblock.net */
+            .replace(/^((?:https?:\/\/)?(?:w{3})?\.(?:end|hell|sky)block\.net)/g, 'https://skyblock.net')
+            .replaceAll(`skyblock.net/index.php?threads`, `skyblock.net/threads`)
+    })
+}

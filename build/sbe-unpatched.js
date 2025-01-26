@@ -5,7 +5,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.1.3
+// @version     1.1.4
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -101,6 +101,7 @@ class _Settings {
     adBlocker = true;
     moreSearchOnCard = true;
     unpinLawsuit = true;
+    fixOldLinks = true;
     _modal;
     addSettingToModal(name, value) {
         const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`;
@@ -151,6 +152,7 @@ class _Settings {
         this.addSettingToModal("Block Ads", 'adBlocker');
         this.addSettingToModal("More search options on member card", 'moreSearchOnCard');
         this.addSettingToModal("Unpin Lawsuit", 'unpinLawsuit');
+        this.addSettingToModal("Fix old forum links", 'fixOldLinks');
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = 'Save';
         saveBtn.style.width = '6em';
@@ -222,6 +224,7 @@ class _Settings {
             'moreSearchOnCard': this.moreSearchOnCard,
             'adBlocker': this.adBlocker,
             'unpinLawsuit': this.unpinLawsuit,
+            'fixOldLinks': this.fixOldLinks,
         }));
     }
     deserialise() {
@@ -550,4 +553,14 @@ if (settings.moreSearchOnCard) {
 }
 if (settings.unpinLawsuit && isOnIndex) {
     document.querySelector('[id="recentNews"]>[id="145369"]')?.remove();
+}
+if (settings.fixOldLinks) {
+    document.querySelectorAll('a[href*="block.net"]').forEach((_a) => {
+        console.log;
+        const a = _a;
+        a.href = a.href
+            /* replace a http(s) (or no protocol) url with, or without www. on endblock.net, hellblock.net or skyblock.net to be https://skyblock.net */
+            .replace(/^((?:https?:\/\/)?(?:w{3})?\.(?:end|hell|sky)block\.net)/g, 'https://skyblock.net')
+            .replaceAll(`skyblock.net/index.php?threads`, `skyblock.net/threads`);
+    });
 }

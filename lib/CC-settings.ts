@@ -19,6 +19,7 @@ class _Settings {
     adBlocker = true;
     moreSearchOnCard = true;
     unpinLawsuit = true;
+    fixOldLinks = true;
 
     _modal: HTMLDialogElement | null;
 
@@ -82,6 +83,7 @@ class _Settings {
         this.addSettingToModal("Block Ads", 'adBlocker')
         this.addSettingToModal("More search options on member card", 'moreSearchOnCard')
         this.addSettingToModal("Unpin Lawsuit", 'unpinLawsuit')
+        this.addSettingToModal("Fix old forum links", 'fixOldLinks')
 
         const saveBtn = document.createElement('button')
 
@@ -175,6 +177,7 @@ class _Settings {
             'moreSearchOnCard': this.moreSearchOnCard,
             'adBlocker': this.adBlocker,
             'unpinLawsuit': this.unpinLawsuit,
+            'fixOldLinks': this.fixOldLinks,
         }))
     }
 
