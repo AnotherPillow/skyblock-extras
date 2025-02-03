@@ -136,3 +136,7 @@ a {
 {
     text-shadow: none !important;
 }
+
+#friends-mount>.friend {
+    background-color: inherit;
+}
