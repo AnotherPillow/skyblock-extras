@@ -44,7 +44,8 @@ a {
     .discussionList .sticky .pairsJustified dt,
     a.username.author,
     .postNumber,
-    .discussionList .sticky .DateTime 
+    .discussionList .sticky .DateTime,
+    .UnhiddenContent > .attribution.type
 {
     color: #03dac5 !important;
 }
@@ -139,4 +140,8 @@ a {
 
 #friends-mount>.friend {
     background-color: inherit;
+}
+
+.UnhiddenContent blockquote {
+    color: black;
 }
