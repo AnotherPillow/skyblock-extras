@@ -30,6 +30,7 @@ Each of thes ecan be indivually toggled in the settings menu now beside your use
 - Place birthday hats on birthday peoples' PFPs - self explanatory
 - Round friends' icons  on profile - rounds friends' icons on the friends tab.
 - Add button to copy link to post on posts - beside the reply button, there is now a copy link button.
+- Add button to copy link to post on profile posts - beside the like/comment button, there is now a copy link button.
 - Replace Craftar with Minotar - self explanatory
 - Remove Skyblock's image proxy - removes <https://camo.skyblock.net> **this should be off unless there is an issue**
 - Fade in reaction opacity on hover - when hovering on a message's reactions to react to it, it'll now transition in the opacity.
@@ -44,4 +45,5 @@ These can be accessed the normal way you change themes, at the bottom of the mai
 
 - Better New SB - An edit of the 2023/New theme that I personally prefer (also shows your inbox, details and alerts which aren't present by default).
 - Dark Mode (Pink Accent) - a custom dark mode theme with a pink accent (only over the **old theme**).
+- Nightblock - a dark mode theme, originally made by [Nightcat](https://skyblock.net/members/nightcat.79230/).
 - Custom ones & more to come soon.
