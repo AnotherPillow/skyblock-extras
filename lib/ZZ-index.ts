@@ -247,7 +247,7 @@ if (settings.postLinkButton && isOnThread) {
             length: number,
         },
         processing: boolean,
-        messageTextContainer: any // idk jquery stuff is weird
+        messageTextContainer: JQuery<HTMLElement>
     }, original, _) {
         const ret = original()
         
@@ -259,6 +259,27 @@ if (settings.postLinkButton && isOnThread) {
         
         return ret;
     })
+}
+
+if (settings.postLinkButton && isOnUserProfile) {
+    AF(document.querySelectorAll(`li[id^="profile-post-"].messageSimple[data-author] .publicControls`))
+        .forEach(post => {
+            /* self-comments won't have like, but for ones with like we still want to insert before like */
+            const target = post.querySelector('a.LikeLink.like') as HTMLAnchorElement | null 
+                ?? post.querySelector('a.CommentPoster.postComment') as HTMLAnchorElement
+            
+            const id = target.href.split('/')[1]
+            
+            const a = document.createElement('a')
+            a.classList.add('item', 'control', 'copylink')
+            a.href = `profile-posts/${id}`
+            
+            const span = document.createElement('span')
+            span.innerHTML = 'Copy Link'
+            a.appendChild(span)
+
+            target.insertAdjacentElement('beforebegin', a)
+        })
 }
 
 if (settings.minotarNotCrafatar) {

@@ -1,6 +1,6 @@
 {
   "name": "skyblock-extras",
-  "version": "1.1.7",
+  "version": "1.1.8",
   "description": "A userscript to improve the skyblock.net forums experience!",
   "main": "index.js",
   "scripts": {
