@@ -5,7 +5,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.1.6
+// @version     1.1.7
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -370,6 +370,9 @@ if (settings.actualDateOnFrontpage) {
         if (dtAttr !== null) {
             x.innerHTML = time(new Date(parseInt(dtAttr) * 1000));
         }
+    });
+    patchClass(XenForo.TimestampRefresh?.prototype, 'refresh', (original, _a, _b) => {
+        return undefined;
     });
 }
 if (settings.fixBedrockPlayersImages) {

@@ -60,6 +60,10 @@ if (settings.actualDateOnFrontpage) {
             x.innerHTML = time(new Date(parseInt(dtAttr) * 1000))
         }
     })
+
+    patchClass(XenForo.TimestampRefresh?.prototype, 'refresh', (original: Function, _a: JQuery<HTMLElement>, _b: boolean) => {
+        return undefined;
+    })
 }
 
 if (settings.fixBedrockPlayersImages) {
