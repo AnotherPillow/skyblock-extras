@@ -20,6 +20,7 @@ class _Settings {
     moreSearchOnCard = true;
     unpinLawsuit = true;
     fixOldLinks = true;
+    dontShare = true;
 
     _modal: HTMLDialogElement | null;
 
@@ -84,6 +85,7 @@ class _Settings {
         this.addSettingToModal("More search options on member card", 'moreSearchOnCard')
         this.addSettingToModal("Unpin Lawsuit", 'unpinLawsuit')
         this.addSettingToModal("Fix old forum links", 'fixOldLinks')
+        this.addSettingToModal("Remove share buttons", 'dontShare')
 
         const saveBtn = document.createElement('button')
 
@@ -178,6 +180,7 @@ class _Settings {
             'adBlocker': this.adBlocker,
             'unpinLawsuit': this.unpinLawsuit,
             'fixOldLinks': this.fixOldLinks,
+            'dontShare': this.dontShare,
         }))
     }
 

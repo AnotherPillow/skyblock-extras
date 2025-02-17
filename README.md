@@ -38,6 +38,7 @@ Each of thes ecan be indivually toggled in the settings menu now beside your use
 - Block ads - remove ads from your view.
 - More search options on member card - in the member info popup, add a button to search for threads.
 - Unpin lawsuit - unpin the trademark battle post from the home page.
+- Remove share buttons - removes the share buttons from the footer.
 
 ## Themes
 

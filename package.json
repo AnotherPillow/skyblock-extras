@@ -1,11 +1,11 @@
 {
   "name": "skyblock-extras",
-  "version": "1.1.8",
+  "version": "1.1.9",
   "description": "A userscript to improve the skyblock.net forums experience!",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "ugly": "uglifyjs build/sbe.js --comments all -c -m --mangle-props reserved=[threadTitleEnabled,hideShopTab,strikethroughBannedUsers,betterNewSB,SBonlIntegration,actualDateOnFrontpage,fixBedrockPlayersImages,responsiveModals,movePoke,ratingRatio,removeRatingCommas,avatarOnProfileStats,birthdayHatOnPFP,roundedFriendsOnProfile,postLinkButton,minotarNotCrafatar,noMoreCamo,fadeInReactions,name,description,css,basis,unpinLawsuit,moreSearchOnCard,adBlocker,templateHtml,fixOldLinks] > build/sbe.min.js",
+    "ugly": "uglifyjs build/sbe.js --comments all -c -m --mangle-props reserved=[threadTitleEnabled,hideShopTab,strikethroughBannedUsers,betterNewSB,SBonlIntegration,actualDateOnFrontpage,fixBedrockPlayersImages,responsiveModals,movePoke,ratingRatio,removeRatingCommas,avatarOnProfileStats,birthdayHatOnPFP,roundedFriendsOnProfile,postLinkButton,minotarNotCrafatar,noMoreCamo,fadeInReactions,name,description,css,basis,unpinLawsuit,moreSearchOnCard,adBlocker,templateHtml,fixOldLinks,dontShare] > build/sbe.min.js",
     "$builddir": "mkdir build || true",
     "$build": "npm run --silent builddir && tsc && babel _build -d lib && npm run ugly",
     "js-patches": "node patches.js",

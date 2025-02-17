@@ -5,7 +5,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.1.8
+// @version     1.1.9
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -102,6 +102,7 @@ class _Settings {
     moreSearchOnCard = true;
     unpinLawsuit = true;
     fixOldLinks = true;
+    dontShare = true;
     _modal;
     addSettingToModal(name, value) {
         const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`;
@@ -153,6 +154,7 @@ class _Settings {
         this.addSettingToModal("More search options on member card", 'moreSearchOnCard');
         this.addSettingToModal("Unpin Lawsuit", 'unpinLawsuit');
         this.addSettingToModal("Fix old forum links", 'fixOldLinks');
+        this.addSettingToModal("Remove share buttons", 'dontShare');
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = 'Save';
         saveBtn.style.width = '6em';
@@ -225,6 +227,7 @@ class _Settings {
             'adBlocker': this.adBlocker,
             'unpinLawsuit': this.unpinLawsuit,
             'fixOldLinks': this.fixOldLinks,
+            'dontShare': this.dontShare,
         }));
     }
     deserialise() {
@@ -582,4 +585,11 @@ if (settings.fixOldLinks) {
             .replace(/^((?:https?:\/\/)?(?:w{3})?\.(?:end|hell|sky)block\.net)/g, 'https://skyblock.net')
             .replaceAll(`skyblock.net/index.php?threads`, `skyblock.net/threads`);
     });
+}
+if (settings.dontShare) {
+    GM_addStyle(`
+        div.sharePage {
+            display: none;
+        }
+    `);
 }

@@ -349,3 +349,11 @@ if (settings.fixOldLinks) {
             .replaceAll(`skyblock.net/index.php?threads`, `skyblock.net/threads`)
     })
 }
+
+if (settings.dontShare) {
+    GM_addStyle(`
+        div.sharePage {
+            display: none;
+        }
+    `)
+}
