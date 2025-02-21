@@ -265,8 +265,8 @@ if (settings.postLinkButton && isOnUserProfile) {
     AF(document.querySelectorAll(`li[id^="profile-post-"].messageSimple[data-author] .publicControls`))
         .forEach(post => {
             /* self-comments won't have like, but for ones with like we still want to insert before like */
-            const target = post.querySelector('a.LikeLink.like') as HTMLAnchorElement | null 
-                ?? post.querySelector('a.CommentPoster.postComment') as HTMLAnchorElement
+            const target = post.querySelector('.publicControls a.LikeLink.like') as HTMLAnchorElement | null 
+                ?? post.querySelector('.publicControls a.CommentPoster.postComment') as HTMLAnchorElement
             
             const id = target.href.split('/')[1]
             
