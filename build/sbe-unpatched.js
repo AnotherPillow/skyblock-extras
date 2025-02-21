@@ -5,7 +5,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.1.10
+// @version     1.1.9
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -522,8 +522,8 @@ if (settings.postLinkButton && isOnUserProfile) {
     AF(document.querySelectorAll(`li[id^="profile-post-"].messageSimple[data-author] .publicControls`))
         .forEach(post => {
         /* self-comments won't have like, but for ones with like we still want to insert before like */
-        const target = post.querySelector('.publicControls a.LikeLink.like')
-            ?? post.querySelector('.publicControls a.CommentPoster.postComment');
+        const target = post.querySelector('a.LikeLink.like')
+            ?? post.querySelector('a.CommentPoster.postComment');
         const id = target.href.split('/')[1];
         const a = document.createElement('a');
         a.classList.add('item', 'control', 'copylink');
