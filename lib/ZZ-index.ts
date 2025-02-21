@@ -262,17 +262,19 @@ if (settings.postLinkButton && isOnThread) {
 }
 
 if (settings.postLinkButton && isOnUserProfile) {
-    AF(document.querySelectorAll(`li[id^="profile-post-"].messageSimple[data-author] .publicControls`))
+    AF(document.querySelectorAll(`li[id^="profile-post-"].messageSimple[data-author]>.messageInfo>.messageMeta>.publicControls`))
         .forEach(post => {
             /* self-comments won't have like, but for ones with like we still want to insert before like */
             const target = post.querySelector('a.LikeLink.like') as HTMLAnchorElement | null 
-                ?? post.querySelector('a.CommentPoster.postComment') as HTMLAnchorElement
+                ?? post.querySelector('a.CommentPoster.postComment') as HTMLAnchorElement;
             
-            const id = target.href.split('/')[1]
+            const id = target.href.replace('https://skyblock.net/', '').split('/')[1]
+            console.log(target, id)
             
             const a = document.createElement('a')
             a.classList.add('item', 'control', 'copylink')
             a.href = `profile-posts/${id}`
+            a.onclick = () => navigator.clipboard.writeText(a.href)
             
             const span = document.createElement('span')
             span.innerHTML = 'Copy Link'

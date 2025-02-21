@@ -5,7 +5,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.1.9
+// @version     1.1.10
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -519,15 +519,17 @@ if (settings.postLinkButton && isOnThread) {
     });
 }
 if (settings.postLinkButton && isOnUserProfile) {
-    AF(document.querySelectorAll(`li[id^="profile-post-"].messageSimple[data-author] .publicControls`))
+    AF(document.querySelectorAll(`li[id^="profile-post-"].messageSimple[data-author]>.messageInfo>.messageMeta>.publicControls`))
         .forEach(post => {
         /* self-comments won't have like, but for ones with like we still want to insert before like */
         const target = post.querySelector('a.LikeLink.like')
             ?? post.querySelector('a.CommentPoster.postComment');
-        const id = target.href.split('/')[1];
+        const id = target.href.replace('https://skyblock.net/', '').split('/')[1];
+        console.log(target, id);
         const a = document.createElement('a');
         a.classList.add('item', 'control', 'copylink');
         a.href = `profile-posts/${id}`;
+        a.onclick = () => navigator.clipboard.writeText(a.href);
         const span = document.createElement('span');
         span.innerHTML = 'Copy Link';
         a.appendChild(span);
