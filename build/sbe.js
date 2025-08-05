@@ -4,7 +4,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.1.10
+// @version     1.1.11
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -284,7 +284,7 @@ if (localStorage.getItem('customThemeMode') == 'true' && localStorage.getItem('c
         GM_addStyle(theme.css ?? '');
     else if (theme.addCSS)
         theme.addCSS();
-    document.querySelector('[title="Style Chooser"]')
+    document.querySelector('.pageContent>.choosers>dd>a[href*="misc/style?redirect"]')
         .innerHTML = theme.name;
 }
 waitForElm('.section.styleChooser').then((_overlay) => {

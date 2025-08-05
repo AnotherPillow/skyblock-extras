@@ -56,7 +56,7 @@ if (localStorage.getItem('customThemeMode') == 'true' && localStorage.getItem('c
     else if (theme.addCSS) theme.addCSS();
 
 
-    (document.querySelector('[title="Style Chooser"]') as HTMLElement)
+    (document.querySelector('.pageContent>.choosers>dd>a[href*="misc/style?redirect"]') as HTMLElement)
         .innerHTML = theme.name
 
 }
