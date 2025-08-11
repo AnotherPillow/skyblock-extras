@@ -322,15 +322,19 @@ if (settings.fadeInReactions) {
 if (settings.moreSearchOnCard) {
     
     patchClass(XenForo.OverlayLoader?.prototype, 'createOverlay', (original: Function, data: {
-        templateHtml: string,
+        templateHtml?: string,
         _visitor_conversationsUnread: string,
         _visitor_alertsUnread: string
     }) => {
-        if (data.templateHtml.includes(`<div id="memberCard`)) {
-            const userID = (data.templateHtml.match(/<a href="members\/.+\.([0-9]+)\/"\>Profile Page<\/a>/)?.[1]) ?? '1'
-            const threadsButtonHTML = `<dt>Threads: </dt><dd><a href="search/member?user_id=${userID}&content=thread" class="concealed" rel="nofollow">Search</a></dd>`
-            
-            data.templateHtml = insert(data.templateHtml, data.templateHtml.indexOf('<!-- slot: pre_likes'), threadsButtonHTML)
+        if (data.templateHtml) {
+            if (data.templateHtml.includes(`<div id="memberCard`)) {
+                const userID = (data.templateHtml.match(/<a href="members\/.+\.([0-9]+)\/"\>Profile Page<\/a>/)?.[1]) ?? '1'
+                const threadsButtonHTML = `<dt>Threads: </dt><dd><a href="search/member?user_id=${userID}&content=thread" class="concealed" rel="nofollow">Search</a></dd>`
+                
+                data.templateHtml = insert(data.templateHtml, data.templateHtml.indexOf('<!-- slot: pre_likes'), threadsButtonHTML)
+            }
+        } else {
+            console.log('createoverlay does not contain templatehtml: ' + data)
         }
         
         return original(data)
