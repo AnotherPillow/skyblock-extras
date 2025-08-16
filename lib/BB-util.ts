@@ -45,6 +45,7 @@ const getMonthFromString = (month: string) => new Date(Date.parse(month +" 1, 20
 const getHrefWithoutAnchor = () => window.location.href.replace(new RegExp(`${window.location.hash}$`), '')
 
 const isOnThread = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/threads\/.+\.\d+\/?/)
+const isInConversation = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/conversations\/.+\.\d+\/?/)
 
 const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false
 const isOnIndex = window.location.href == 'https://skyblock.net/'

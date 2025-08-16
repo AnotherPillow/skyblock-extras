@@ -363,3 +363,42 @@ if (settings.dontShare) {
         }
     `)
 }
+
+if (settings.copyMessageBBCodeButton && isOnThread) {
+    [...AF(document.querySelectorAll(`li[id^="post-"].message[data-author]`)), ...AF(document.querySelectorAll(`li[id^="message-"].message[data-author]`))] // #message- is conversations, although it doesn't work because there's a separate post count system for them ???
+        .forEach(post => {
+            const id = post.id.split('-')[1]
+
+            const publicControls = post.querySelector('.publicControls')
+            
+            const a = document.createElement('a')
+            a.href = `#`
+            a.setAttribute('class', "ReplyQuote item control reply")
+            a.title = "Copy message BBCode."
+            a.innerHTML = `<span></span>Copy BBCode`
+            a.onclick = async (ev: MouseEvent) => {
+                ev.preventDefault()
+                
+                const res = await fetch(`https://skyblock.net/posts/${id}/quote`, {
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
+                    },
+                    body: `_xfResponseType=json&_xfToken=${xfToken}`,
+                    method: 'POST',
+                })
+                const body = await res.json() as { quote?: string };
+                // strip quote element and just get the content
+                const quoteUnquoted = !body.quote ? '' : body.quote.trim().match(/^\[QUOTE="[^,]+, post: \d+, member: \d+"\](.+)\[\/QUOTE]$/s);
+
+                if (!body.quote || !quoteUnquoted) {
+                    console.log('body.quote', body.quote)
+                    console.log('quoteunquoted', quoteUnquoted)
+                    return window.navigator.clipboard.writeText('<failed to get content>')
+                }
+
+                window.navigator.clipboard.writeText(quoteUnquoted[1])
+            }
+
+            publicControls?.appendChild(a)
+        });   
+}

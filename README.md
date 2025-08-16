@@ -39,6 +39,7 @@ Each of thes ecan be indivually toggled in the settings menu now beside your use
 - More search options on member card - in the member info popup, add a button to search for threads.
 - Unpin lawsuit - unpin the trademark battle post from the home page.
 - Remove share buttons - removes the share buttons from the footer.
+- Copy message BBCode Button - adds a button next to the reply button that will copy the message's content (excluding hidden parts or quoted parts in it).
 
 ## Themes
 

@@ -5,7 +5,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.1.12
+// @version     1.2.0
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -52,6 +52,7 @@ const colonNumber = (array, number) => array.filter((_val, index) => index < num
 const getMonthFromString = (month) => new Date(Date.parse(month + " 1, 2012")).getMonth() + 1;
 const getHrefWithoutAnchor = () => window.location.href.replace(new RegExp(`${window.location.hash}$`), '');
 const isOnThread = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/threads\/.+\.\d+\/?/);
+const isInConversation = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/conversations\/.+\.\d+\/?/);
 const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false;
 const isOnIndex = window.location.href == 'https://skyblock.net/';
 const isOnOriginalTheme = (!document.querySelector('.social-row>[href="https://www.reddit.com/r/SkyBlock"]') &&
@@ -103,6 +104,7 @@ class _Settings {
     unpinLawsuit = true;
     fixOldLinks = true;
     dontShare = true;
+    copyMessageBBCodeButton = true;
     _modal;
     addSettingToModal(name, value) {
         const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`;
@@ -155,6 +157,7 @@ class _Settings {
         this.addSettingToModal("Unpin Lawsuit", 'unpinLawsuit');
         this.addSettingToModal("Fix old forum links", 'fixOldLinks');
         this.addSettingToModal("Remove share buttons", 'dontShare');
+        this.addSettingToModal("Add a button to copy message BBCode", 'copyMessageBBCodeButton');
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = 'Save';
         saveBtn.style.width = '6em';
@@ -228,6 +231,7 @@ class _Settings {
             'unpinLawsuit': this.unpinLawsuit,
             'fixOldLinks': this.fixOldLinks,
             'dontShare': this.dontShare,
+            'copyMessageBBCodeButton': this.copyMessageBBCodeButton,
         }));
     }
     deserialise() {
@@ -599,4 +603,36 @@ if (settings.dontShare) {
             display: none;
         }
     `);
+}
+if (settings.copyMessageBBCodeButton && isOnThread) {
+    [...AF(document.querySelectorAll(`li[id^="post-"].message[data-author]`)), ...AF(document.querySelectorAll(`li[id^="message-"].message[data-author]`))] // #message- is conversations, although it doesn't work because there's a separate post count system for them ???
+        .forEach(post => {
+        const id = post.id.split('-')[1];
+        const publicControls = post.querySelector('.publicControls');
+        const a = document.createElement('a');
+        a.href = `#`;
+        a.setAttribute('class', "ReplyQuote item control reply");
+        a.title = "Copy message BBCode.";
+        a.innerHTML = `<span></span>Copy BBCode`;
+        a.onclick = async (ev) => {
+            ev.preventDefault();
+            const res = await fetch(`https://skyblock.net/posts/${id}/quote`, {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `_xfResponseType=json&_xfToken=${xfToken}`,
+                method: 'POST',
+            });
+            const body = await res.json();
+            // strip quote element and just get the content
+            const quoteUnquoted = !body.quote ? '' : body.quote.trim().match(/^\[QUOTE="[^,]+, post: \d+, member: \d+"\](.+)\[\/QUOTE]$/s);
+            if (!body.quote || !quoteUnquoted) {
+                console.log('body.quote', body.quote);
+                console.log('quoteunquoted', quoteUnquoted);
+                return window.navigator.clipboard.writeText('<failed to get content>');
+            }
+            window.navigator.clipboard.writeText(quoteUnquoted[1]);
+        };
+        publicControls?.appendChild(a);
+    });
 }

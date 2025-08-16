@@ -21,6 +21,7 @@ class _Settings {
     unpinLawsuit = true;
     fixOldLinks = true;
     dontShare = true;
+    copyMessageBBCodeButton= true;
 
     _modal: HTMLDialogElement | null;
 
@@ -86,6 +87,7 @@ class _Settings {
         this.addSettingToModal("Unpin Lawsuit", 'unpinLawsuit')
         this.addSettingToModal("Fix old forum links", 'fixOldLinks')
         this.addSettingToModal("Remove share buttons", 'dontShare')
+        this.addSettingToModal("Add a button to copy message BBCode", 'copyMessageBBCodeButton')
 
         const saveBtn = document.createElement('button')
 
@@ -181,6 +183,7 @@ class _Settings {
             'unpinLawsuit': this.unpinLawsuit,
             'fixOldLinks': this.fixOldLinks,
             'dontShare': this.dontShare,
+            'copyMessageBBCodeButton': this.copyMessageBBCodeButton,
         }))
     }
 
