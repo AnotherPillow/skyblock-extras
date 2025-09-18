@@ -4,7 +4,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.2.1
+// @version     1.2.2
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -516,10 +516,8 @@ if (settings.postLinkButton && isOnThread) {
         const ret = original();
         const button = this.$button[0];
         const children = button.children;
-        if (children.length >= 3) { // 3 includes copy link, 4 includes copy bbcode
-            for (let i = 0; i < children.length - 1; i++) { // loop over higher than expected, delete all extra
-                button.removeChild(button.lastElementChild);
-            }
+        if (children.length == 3) { // 3 includes copy link
+            button.removeChild(button.lastElementChild);
         }
         return ret;
     });
