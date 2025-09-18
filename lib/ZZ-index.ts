@@ -253,10 +253,8 @@ if (settings.postLinkButton && isOnThread) {
         
         const button = this.$button[0]
         const children = button.children
-        if (children.length >= 3) { // 3 includes copy link, 4 includes copy bbcode
-            for (let i = 0; i < children.length - 1; i++) { // loop over higher than expected, delete all extra
-                button.removeChild(button.lastElementChild as Node);
-            }
+        if (children.length == 3) {  // 3 includes copy link
+            button.removeChild(button.lastElementChild as Node)
         }
         
         return ret;
