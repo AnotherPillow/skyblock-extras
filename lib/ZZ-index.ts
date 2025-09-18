@@ -232,7 +232,7 @@ if (settings.postLinkButton && isOnThread) {
             
             const a= document.createElement('a')
             a.href = `https://skyblock.net/posts/${id}`
-            a.setAttribute('class', "ReplyQuote item control reply")
+            a.setAttribute('class', "ReplyQuote item control reply sbe-msg-link")
             a.title = "Copy link to this message."
             a.innerHTML = `<span></span>Copy Link`
             a.onclick = () => window.navigator.clipboard.writeText(a.href)
@@ -240,7 +240,7 @@ if (settings.postLinkButton && isOnThread) {
             publicControls?.appendChild(a)
         });
 
-    // Fix copy link showing up in the selected text hover thing
+    // Fix copy link/copy bbcode showing up in the selected text hover thing
     patchClass(XenForo.SelectQuotable?.prototype, 'createButton', function (this: {
         $button: {
             [key: number]: HTMLDivElement,
@@ -253,8 +253,9 @@ if (settings.postLinkButton && isOnThread) {
         
         const button = this.$button[0]
         const children = button.children
-        if (children.length == 3) {  // 3 includes copy link
-            button.removeChild(button.lastElementChild as Node)
+        
+        for (const child of Array.from(children)) {
+            if (child.classList.contains('sbe-msg-link')) child.remove()
         }
         
         return ret;
@@ -272,7 +273,7 @@ if (settings.postLinkButton && isOnUserProfile) {
             console.log(target, id)
             
             const a = document.createElement('a')
-            a.classList.add('item', 'control', 'copylink')
+            a.classList.add('item', 'control', 'copylink', 'sbe-msg-link')
             a.href = `profile-posts/${id}`
             a.onclick = () => navigator.clipboard.writeText(a.href)
             
@@ -373,7 +374,7 @@ if (settings.copyMessageBBCodeButton && isOnThread) {
             
             const a = document.createElement('a')
             a.href = `#`
-            a.setAttribute('class', "ReplyQuote item control reply")
+            a.setAttribute('class', "ReplyQuote item control reply sbe-msg-link")
             a.title = "Copy message BBCode."
             a.innerHTML = `<span></span>Copy BBCode`
             a.onclick = async (ev: MouseEvent) => {

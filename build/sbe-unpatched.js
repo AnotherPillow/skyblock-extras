@@ -5,7 +5,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.2.2
+// @version     1.2.3
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -505,19 +505,20 @@ if (settings.postLinkButton && isOnThread) {
         const publicControls = post.querySelector('.publicControls');
         const a = document.createElement('a');
         a.href = `https://skyblock.net/posts/${id}`;
-        a.setAttribute('class', "ReplyQuote item control reply");
+        a.setAttribute('class', "ReplyQuote item control reply sbe-msg-link");
         a.title = "Copy link to this message.";
         a.innerHTML = `<span></span>Copy Link`;
         a.onclick = () => window.navigator.clipboard.writeText(a.href);
         publicControls?.appendChild(a);
     });
-    // Fix copy link showing up in the selected text hover thing
+    // Fix copy link/copy bbcode showing up in the selected text hover thing
     patchClass(XenForo.SelectQuotable?.prototype, 'createButton', function (original, _) {
         const ret = original();
         const button = this.$button[0];
         const children = button.children;
-        if (children.length == 3) { // 3 includes copy link
-            button.removeChild(button.lastElementChild);
+        for (const child of Array.from(children)) {
+            if (child.classList.contains('sbe-msg-link'))
+                child.remove();
         }
         return ret;
     });
@@ -531,7 +532,7 @@ if (settings.postLinkButton && isOnUserProfile) {
         const id = target.href.replace('https://skyblock.net/', '').split('/')[1];
         console.log(target, id);
         const a = document.createElement('a');
-        a.classList.add('item', 'control', 'copylink');
+        a.classList.add('item', 'control', 'copylink', 'sbe-msg-link');
         a.href = `profile-posts/${id}`;
         a.onclick = () => navigator.clipboard.writeText(a.href);
         const span = document.createElement('span');
@@ -611,7 +612,7 @@ if (settings.copyMessageBBCodeButton && isOnThread) {
         const publicControls = post.querySelector('.publicControls');
         const a = document.createElement('a');
         a.href = `#`;
-        a.setAttribute('class', "ReplyQuote item control reply");
+        a.setAttribute('class', "ReplyQuote item control reply sbe-msg-link");
         a.title = "Copy message BBCode.";
         a.innerHTML = `<span></span>Copy BBCode`;
         a.onclick = async (ev) => {
