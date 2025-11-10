@@ -31,6 +31,12 @@ let themes: styleType[] = [
         description: 'A better version of the new Skyblock theme',
         css: $import('betternewsb.css'),
         basis: THEMES.MIDDLE,
+    },
+    {
+        name: 'True Modern Dark Mode',
+        description: 'A true black and modern dark mode theme',
+        css: $import('truemoderndarkmode.css'),
+        basis: THEMES.NEW,
     }
 ]
 
