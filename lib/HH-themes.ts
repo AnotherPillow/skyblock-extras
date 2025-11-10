@@ -11,6 +11,7 @@ const THEMES = {
     OLD: 6,
     MIDDLE: 22,
     NEW: 30,
+    NEW_DARK: 31,
 }
 
 let themes: styleType[] = [
@@ -36,7 +37,7 @@ let themes: styleType[] = [
         name: 'True Modern Dark Mode',
         description: 'A true black and modern dark mode theme',
         css: $import('truemoderndarkmode.css'),
-        basis: THEMES.NEW,
+        basis: THEMES.NEW_DARK,
     }
 ]
 
@@ -122,7 +123,7 @@ waitForElm('.section.styleChooser').then((_overlay: any) => {
 })
 
 
-if (isOnNewTheme) {
+if (isOnNewTheme && !document.querySelector('.changeTheme:not(.sbe-change-theme)')) {
     const container = document.querySelector('div#footer>div.bottom>div.container') as HTMLElement
-    container.innerHTML += `<a href="misc/style?redirect${encodeURIComponent(location.pathname)}" class="changeTheme OverlayTrigger Tooltip" title="Style Chooser" rel="nofollow">Change Theme</a>`
+    container.innerHTML += `<a href="misc/style?redirect${encodeURIComponent(location.pathname)}" class="changeTheme OverlayTrigger Tooltip sbe-change-theme" title="Style Chooser" rel="nofollow">Change Theme</a>`
 }
