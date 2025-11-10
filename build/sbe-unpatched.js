@@ -5,7 +5,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.2.3
+// @version     1.2.4
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -265,6 +265,12 @@ let themes = [
         description: 'A better version of the new Skyblock theme',
         css: $import('betternewsb.css'),
         basis: THEMES.MIDDLE,
+    },
+    {
+        name: 'True Modern Dark Mode',
+        description: 'A true black and modern dark mode theme',
+        css: $import('truemoderndarkmode.css'),
+        basis: THEMES.NEW,
     }
 ];
 if (ls.getItem('customThemes')) {

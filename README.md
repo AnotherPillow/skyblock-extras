@@ -14,7 +14,7 @@ A userscript to improve the skyblock.net forums experience.
 
 ## Features
 
-Each of thes ecan be indivually toggled in the settings menu now beside your username in the navigation bar. Some are on by default, some off.
+Each of these can be indivually toggled in the settings menu now beside your username in the navigation bar. Some are on by default, some off.
 
 - Thread title as browser title - makes the tab title more respectful of what you're doing.
 - Remove the shop tab - self explanatory.
@@ -48,4 +48,5 @@ These can be accessed the normal way you change themes, at the bottom of the mai
 - Better New SB - An edit of the 2023/New theme that I personally prefer (also shows your inbox, details and alerts which aren't present by default).
 - Dark Mode (Pink Accent) - a custom dark mode theme with a pink accent (only over the **old theme**).
 - Nightblock - a dark mode theme, originally made by [Nightcat](https://skyblock.net/members/nightcat.79230/).
+- True Modern Dark Mode - A true black and modern dark mode theme (by athena).
 - Custom ones & more to come soon.
