@@ -5,7 +5,7 @@
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
 // @grant       none
-// @version     1.2.6
+// @version     1.2.7
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -68,7 +68,14 @@ const $import = (fn) => {
 };
 const xfToken = XenForo._csrfToken;
 const ls = localStorage;
-GM_addStyle($import('default.css'));
+// recent VM update undefined GM_addStyle even though docs still has it
+const addStyle = window.GM_addStyle || GM.addStyle || ((css) => {
+    const e = document.createElement('style');
+    e.id = `sbe-style-${Math.random()}`;
+    e.innerHTML = css;
+    document.head.appendChild(e);
+});
+addStyle($import('default.css'));
 function patchClass(obj, method, newImplementation) {
     if (typeof obj == 'undefined')
         return console.log(`Cannot patch ${method} of ${obj}.`);
@@ -282,7 +289,7 @@ if (ls.getItem('customThemes')) {
                 theme.basis = theme.basedOnOld ? THEMES.OLD : THEMES.MIDDLE;
                 delete theme.basedOnOld;
             }
-            theme.addCSS = () => GM_addStyle(theme.css ?? '');
+            theme.addCSS = () => addStyle(theme.css ?? '');
         });
         themes = [...themes, ...ct];
     }
@@ -290,7 +297,7 @@ if (ls.getItem('customThemes')) {
 if (localStorage.getItem('customThemeMode') == 'true' && localStorage.getItem('customTheme-SBE')) {
     const theme = JSON.parse(localStorage.getItem('customTheme-SBE') ?? '[]');
     if (theme.css)
-        GM_addStyle(theme.css ?? '');
+        addStyle(theme.css ?? '');
     else if (theme.addCSS)
         theme.addCSS();
     document.querySelector('.pageContent>.choosers>dd>a[href*="misc/style?redirect"]')
@@ -337,7 +344,7 @@ waitForElm('.section.styleChooser').then((_overlay) => {
 });
 if (isOnNewTheme && !document.querySelector('.changeTheme:not(.sbe-change-theme)')) {
     const container = document.querySelector('div#footer>div.bottom>div.container');
-    container.innerHTML += `<a href="misc/style?redirect${encodeURIComponent(location.pathname)}" class="changeTheme OverlayTrigger Tooltip sbe-change-theme" title="Style Chooser" rel="nofollow">Change Theme</a>`;
+    container.innerHTML += `<a href="misc/style?redirect=${encodeURIComponent(location.pathname)}" class="changeTheme OverlayTrigger Tooltip sbe-change-theme" title="Style Chooser" rel="nofollow">Change Theme</a>`;
 }
 console.log('skyblock extras loaded');
 if (settings.threadTitleEnabled) {
@@ -501,7 +508,7 @@ if (settings.birthdayHatOnPFP) {
     }
 }
 if (settings.roundedFriendsOnProfile && isOnUserProfile) {
-    GM_addStyle(`
+    addStyle(`
         .friend>.friend-head>img { border-radius: 7px; };
     `);
 }
@@ -568,7 +575,7 @@ if (settings.noMoreCamo) {
     }, 1000);
 }
 if (settings.fadeInReactions) {
-    GM_addStyle(`
+    addStyle(`
         .dark_postrating_inputlist {
             transition: opacity 0.5s;
         }
@@ -606,7 +613,7 @@ if (settings.fixOldLinks) {
     });
 }
 if (settings.dontShare) {
-    GM_addStyle(`
+    addStyle(`
         div.sharePage {
             display: none;
         }

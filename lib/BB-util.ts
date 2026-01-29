@@ -75,7 +75,14 @@ const xfToken = XenForo._csrfToken
 
 const ls = localStorage
 
-GM_addStyle($import('default.css'))
+// recent VM update undefined GM_addStyle even though docs still has it
+const addStyle = window.GM_addStyle || GM.addStyle || ((css: string) => {
+    const e = document.createElement('style')
+    e.id = `sbe-style-${Math.random()}`
+    e.innerHTML = css
+    document.head.appendChild(e)
+})
+addStyle($import('default.css'))
 
 function patchClass(obj: any, method: string, newImplementation: (original: Function, ...args: any) => void) {
     if (typeof obj == 'undefined') return console.log(`Cannot patch ${method} of ${obj}.`)

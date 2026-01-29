@@ -218,7 +218,7 @@ if (settings.birthdayHatOnPFP) {
 }
 
 if (settings.roundedFriendsOnProfile && isOnUserProfile) {
-    GM_addStyle(`
+    addStyle(`
         .friend>.friend-head>img { border-radius: 7px; };
     `)
 }
@@ -310,7 +310,7 @@ if (settings.noMoreCamo) {
 }
 
 if (settings.fadeInReactions) {
-    GM_addStyle(`
+    addStyle(`
         .dark_postrating_inputlist {
             transition: opacity 0.5s;
         }
@@ -358,7 +358,7 @@ if (settings.fixOldLinks) {
 }
 
 if (settings.dontShare) {
-    GM_addStyle(`
+    addStyle(`
         div.sharePage {
             display: none;
         }

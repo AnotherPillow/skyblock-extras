@@ -5,8 +5,8 @@ fs.writeFileSync('build/sbe.js', (
         .replace(/^"use strict";/, '')
         .replace(/(\/\/ ==\/UserScript==)/, '$1\n\n"use strict";\n')
         .replace(/^\n/, '')
-        .replace(/GM_addStyle\(`([^`]*)`\)/gm, (match, styleContent) => {
-            return `GM_addStyle(\`${styleContent.replace(/(\n|\s{4,})*/gm, '')}\`)`;
+        .replace(/(?:GM_)?addStyle\(`([^`]*)`\)/gm, (match, styleContent) => {
+            return `addStyle(\`${styleContent.replace(/(\n|\s{4,})*/gm, '')}\`)`;
         })
         .replace(/\$import\([`'"](.+)[`'"]\)/g, (match, src) => {
             let imported = fs.readFileSync(`./lib/${src}`).toString()

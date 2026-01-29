@@ -49,7 +49,7 @@ if (ls.getItem('customThemes')) {
                 theme.basis = theme.basedOnOld ? THEMES.OLD : THEMES.MIDDLE
                 delete theme.basedOnOld
             }
-            theme.addCSS = () => GM_addStyle(theme.css ?? '')
+            theme.addCSS = () => addStyle(theme.css ?? '')
         })
 
         themes = [...themes, ...ct]
@@ -59,7 +59,7 @@ if (ls.getItem('customThemes')) {
 if (localStorage.getItem('customThemeMode') == 'true' && localStorage.getItem('customTheme-SBE')) {
     const theme = JSON.parse(localStorage.getItem('customTheme-SBE') ?? '[]') as styleType
     
-    if (theme.css) GM_addStyle(theme.css ?? '')
+    if (theme.css) addStyle(theme.css ?? '')
     else if (theme.addCSS) theme.addCSS();
 
 
@@ -125,5 +125,5 @@ waitForElm('.section.styleChooser').then((_overlay: any) => {
 
 if (isOnNewTheme && !document.querySelector('.changeTheme:not(.sbe-change-theme)')) {
     const container = document.querySelector('div#footer>div.bottom>div.container') as HTMLElement
-    container.innerHTML += `<a href="misc/style?redirect${encodeURIComponent(location.pathname)}" class="changeTheme OverlayTrigger Tooltip sbe-change-theme" title="Style Chooser" rel="nofollow">Change Theme</a>`
+    container.innerHTML += `<a href="misc/style?redirect=${encodeURIComponent(location.pathname)}" class="changeTheme OverlayTrigger Tooltip sbe-change-theme" title="Style Chooser" rel="nofollow">Change Theme</a>`
 }
