@@ -47,7 +47,12 @@ const getHrefWithoutAnchor = () => window.location.href.replace(new RegExp(`${wi
 const isOnThread = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/threads\/.+\.\d+\/?/)
 const isInConversation = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/conversations\/.+\.\d+\/?/)
 
-const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false
+const isOnUserProfile = (window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false) && !window.location.search.startsWith('?card')
+/**
+ * @description null or [name, stringified id]
+ */
+const presentUserProfile: [string, string] | null = isOnUserProfile ? window.location.pathname.split('/').at(-1)!.split('.') as [string, string] : null 
+const isOnUserCard = (window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false) && window.location.search.startsWith('?card')
 const isOnIndex = window.location.href == 'https://skyblock.net/'
 
 const isOnOriginalTheme = (

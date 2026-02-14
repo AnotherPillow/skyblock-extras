@@ -40,7 +40,7 @@ if (settings.SBonlIntegration) {
     if (isOnUserProfile) {
         const quickNav = document.querySelector('[href="misc/quick-navigation-menu"]')
         const embedBtn = quickNav?.cloneNode(true);
-        const href = `http://skyblock.onl/@${isOnUserProfile[1]}`;
+        const href = `http://skyblock.onl/@${presentUserProfile![1]}`;
 
         (embedBtn as any).href = href;
         (embedBtn as any).style.background = `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAMUExURR4wUHzP/ycwUAAAABYcaeAAAAAEdFJOU////wBAKqn0AAAACXBIWXMAAA7CAAAOwgEVKEqAAAAAOElEQVQYV3VKSRIAIAii+P+fC7DtkKOyghqgMB9oW80k4acZLHE3D9j1ibukNXsy9kelollmBDkAflsBQjtoK8kAAAAASUVORK5CYII=')`;
@@ -103,19 +103,23 @@ if (settings.responsiveModals) {
 if (settings.movePoke && isOnUserProfile) {
     const moderatorActions = document.querySelector('div[id^="XenForoUniq"].Menu > ul.secondaryContent.blockLinksList')
     const pokeBtn = moderatorActions?.querySelector('li > a.OverlayTrigger[href^="pokes/"]')
-    const clone = pokeBtn?.cloneNode(true)
     
-    if (moderatorActions?.childElementCount == 1) // remove the dropdown if there's only the one element in the dropdown
-        pokeBtn?.parentElement?.remove()
-    else pokeBtn?.remove() //otherwise only remove the poke option
-
-    let linkElement = document.createElement('li')
-    linkElement.appendChild(clone as Node)
-
-    document.querySelector('.followBlock > ul')?.appendChild(linkElement)
+    // the better option was apparently to delete the ability to poke on profiles on the old theme and fix it on the new one instead of fixing it on both
+    if (moderatorActions && pokeBtn) {
+        const clone = pokeBtn?.cloneNode(true)
     
-    if (moderatorActions?.children.length === 0) {
-        document.querySelector('.Popup.moderatorToolsPopup')?.remove()
+        if (moderatorActions?.childElementCount == 1) // remove the dropdown if there's only the one element in the dropdown
+            pokeBtn?.parentElement?.remove()
+        else pokeBtn?.remove() //otherwise only remove the poke option
+
+        let linkElement = document.createElement('li')
+        linkElement.appendChild(clone as Node)
+
+        document.querySelector('.followBlock > ul')?.appendChild(linkElement)
+        
+        if (moderatorActions?.children.length === 0) {
+            document.querySelector('.Popup.moderatorToolsPopup')?.remove()
+        }
     }
 }
 
@@ -340,6 +344,26 @@ if (settings.moreSearchOnCard) {
         
         return original(data)
     })
+
+    if (isOnUserCard) {
+        const userinfo = document.querySelector('.userInfo')!
+        const userID = (userinfo.querySelector('.userLinks>a[href$="/"][href^="members/"]')! as HTMLAnchorElement).href.split('/').at(-2)?.split('.')[1]!
+        const userstats = userinfo.querySelector('.userStats')
+        
+        const newDt = document.createElement('dt')
+        newDt.innerHTML = 'Threads: '
+        
+        const newDd = document.createElement('dd')
+        const newA = document.createElement('a')
+        newA.href = `search/member?user_id=${userID}&content=thread`
+        newA.classList.add('concealed')
+        newA.rel = 'nofollow'
+        newA.innerHTML='Search'
+        newDd.appendChild(newA)
+
+        userstats?.insertBefore(newDd, userstats.childNodes[11])
+        userstats?.insertBefore(newDt, userstats.childNodes[11])
+    }
 }
 
 if (settings.unpinLawsuit && isOnIndex) {

@@ -3,7 +3,7 @@
 // @namespace   anotherpillow
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
-// @version     1.2.7
+// @version     1.2.8
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -54,7 +54,12 @@ const getMonthFromString = (month) => new Date(Date.parse(month + " 1, 2012")).g
 const getHrefWithoutAnchor = () => window.location.href.replace(new RegExp(`${window.location.hash}$`), '');
 const isOnThread = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/threads\/.+\.\d+\/?/);
 const isInConversation = getHrefWithoutAnchor().match(/https\:\/\/skyblock\.net\/conversations\/.+\.\d+\/?/);
-const isOnUserProfile = window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false;
+const isOnUserProfile = (window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false) && !window.location.search.startsWith('?card');
+/**
+ * @description null or [name, stringified id]
+ */
+const presentUserProfile = isOnUserProfile ? window.location.pathname.split('/').at(-1).split('.') : null;
+const isOnUserCard = (window.location.href.match(/https\:\/\/skyblock\.net\/members\/([a-zA-Z0-9_\.]+)\.\d+/) ?? false) && window.location.search.startsWith('?card');
 const isOnIndex = window.location.href == 'https://skyblock.net/';
 const isOnOriginalTheme = (!document.querySelector('.social-row>[href="https://www.reddit.com/r/SkyBlock"]') &&
     document.querySelector('.pageContent>span>a[href="http://blackcaffeine.com/"]'));
@@ -377,7 +382,7 @@ if (settings.SBonlIntegration) {
     if (isOnUserProfile) {
         const quickNav = document.querySelector('[href="misc/quick-navigation-menu"]');
         const embedBtn = quickNav?.cloneNode(true);
-        const href = `http://skyblock.onl/@${isOnUserProfile[1]}`;
+        const href = `http://skyblock.onl/@${presentUserProfile[1]}`;
         embedBtn.href = href;
         embedBtn.style.background = `url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA0AAAANCAMAAABFNRROAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAMUExURR4wUHzP/ycwUAAAABYcaeAAAAAEdFJOU////wBAKqn0AAAACXBIWXMAAA7CAAAOwgEVKEqAAAAAOElEQVQYV3VKSRIAIAii+P+fC7DtkKOyghqgMB9oW80k4acZLHE3D9j1ibukNXsy9kelollmBDkAflsBQjtoK8kAAAAASUVORK5CYII=')`;
         quickNav?.parentElement?.appendChild(embedBtn);
@@ -425,16 +430,19 @@ if (settings.responsiveModals) {
 if (settings.movePoke && isOnUserProfile) {
     const moderatorActions = document.querySelector('div[id^="XenForoUniq"].Menu > ul.secondaryContent.blockLinksList');
     const pokeBtn = moderatorActions?.querySelector('li > a.OverlayTrigger[href^="pokes/"]');
-    const clone = pokeBtn?.cloneNode(true);
-    if (moderatorActions?.childElementCount == 1) // remove the dropdown if there's only the one element in the dropdown
-        pokeBtn?.parentElement?.remove();
-    else
-        pokeBtn?.remove(); //otherwise only remove the poke option
-    let linkElement = document.createElement('li');
-    linkElement.appendChild(clone);
-    document.querySelector('.followBlock > ul')?.appendChild(linkElement);
-    if (moderatorActions?.children.length === 0) {
-        document.querySelector('.Popup.moderatorToolsPopup')?.remove();
+    // the better option was apparently to delete the ability to poke on profiles on the old theme and fix it on the new one instead of fixing it on both
+    if (moderatorActions && pokeBtn) {
+        const clone = pokeBtn?.cloneNode(true);
+        if (moderatorActions?.childElementCount == 1) // remove the dropdown if there's only the one element in the dropdown
+            pokeBtn?.parentElement?.remove();
+        else
+            pokeBtn?.remove(); //otherwise only remove the poke option
+        let linkElement = document.createElement('li');
+        linkElement.appendChild(clone);
+        document.querySelector('.followBlock > ul')?.appendChild(linkElement);
+        if (moderatorActions?.children.length === 0) {
+            document.querySelector('.Popup.moderatorToolsPopup')?.remove();
+        }
     }
 }
 if (settings.ratingRatio && isOnUserProfile) {
@@ -590,6 +598,22 @@ if (settings.moreSearchOnCard) {
         }
         return original(data);
     });
+    if (isOnUserCard) {
+        const userinfo = document.querySelector('.userInfo');
+        const userID = userinfo.querySelector('.userLinks>a[href$="/"][href^="members/"]').href.split('/').at(-2)?.split('.')[1];
+        const userstats = userinfo.querySelector('.userStats');
+        const newDt = document.createElement('dt');
+        newDt.innerHTML = 'Threads: ';
+        const newDd = document.createElement('dd');
+        const newA = document.createElement('a');
+        newA.href = `search/member?user_id=${userID}&content=thread`;
+        newA.classList.add('concealed');
+        newA.rel = 'nofollow';
+        newA.innerHTML = 'Search';
+        newDd.appendChild(newA);
+        userstats?.insertBefore(newDd, userstats.childNodes[11]);
+        userstats?.insertBefore(newDt, userstats.childNodes[11]);
+    }
 }
 if (settings.unpinLawsuit && isOnIndex) {
     document.querySelector('[id="recentNews"]>[id="145369"]')?.remove();
