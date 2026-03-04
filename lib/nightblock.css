@@ -142,6 +142,7 @@ a {
     background-color: inherit;
 }
 
-.UnhiddenContent blockquote {
+.UnhiddenContent blockquote,
+    .deletedNotice {
     color: black;
 }

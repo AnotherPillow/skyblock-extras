@@ -4,7 +4,7 @@
 // @namespace   anotherpillow
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
-// @version     1.2.8
+// @version     1.2.9
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
