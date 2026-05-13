@@ -13,13 +13,15 @@
         "target": "es2022",
 
         // "outDir": "_build/",
-        "outFile": "./build/sbe-unpatched.js",
+        "outFile": "./build/sbe-unpatched.js", // just.. ignore the error in the lsp
         "rootDir": "lib",
 
         "allowSyntheticDefaultImports": true,
         "strict": true,
         "skipLibCheck": true,
-        "forceConsistentCasingInFileNames": true
+        "forceConsistentCasingInFileNames": true,
+        // "ignoreDeprecations": "6.0",
+        "types": [ "jquery" ]
     },
 
     "exclude": [

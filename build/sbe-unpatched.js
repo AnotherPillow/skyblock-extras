@@ -4,7 +4,7 @@
 // @namespace   anotherpillow
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
-// @version     1.2.9
+// @version     1.3.0
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -116,6 +116,8 @@ class _Settings {
     fixOldLinks = true;
     dontShare = true;
     copyMessageBBCodeButton = true;
+    imgurProxyEnabled = false;
+    rimgoInstanceHost = 'https://ri.nadeko.net';
     _modal;
     addSettingToModal(name, value) {
         const id = `sbe-setting-${value.toString().replace(/\s/g, '_')}`;
@@ -125,13 +127,24 @@ class _Settings {
         const input = document.createElement('input');
         input.name = id;
         input.id = id;
-        input.type = 'checkbox';
-        input.checked = (this[value] ?? false);
-        input.addEventListener('click', (ev) => {
-            const checked = //@ts-ignore
-             ev.target.checked;
-            this[value] = checked;
-        });
+        if (typeof this[value] == "boolean") {
+            input.type = 'checkbox';
+            input.checked = (this[value] ?? false);
+            input.addEventListener('click', (ev) => {
+                const checked = //@ts-ignore
+                 ev.target.checked;
+                this[value] = checked;
+            });
+        }
+        else {
+            input.type = 'text';
+            input.defaultValue = (this[value] ?? '');
+            input.addEventListener('change', (ev) => {
+                const v = //@ts-ignore
+                 ev.target.value;
+                this[value] = v;
+            });
+        }
         this._modal?.appendChild(label);
         this._modal?.appendChild(input);
         this.br();
@@ -169,6 +182,8 @@ class _Settings {
         this.addSettingToModal("Fix old forum links", 'fixOldLinks');
         this.addSettingToModal("Remove share buttons", 'dontShare');
         this.addSettingToModal("Add a button to copy message BBCode", 'copyMessageBBCodeButton');
+        this.addSettingToModal("Circumvent imgur blocks", 'imgurProxyEnabled');
+        this.addSettingToModal("Rimgo instance host (for imgur access)", 'rimgoInstanceHost');
         const saveBtn = document.createElement('button');
         saveBtn.innerHTML = 'Save';
         saveBtn.style.width = '6em';
@@ -243,6 +258,8 @@ class _Settings {
             'fixOldLinks': this.fixOldLinks,
             'dontShare': this.dontShare,
             'copyMessageBBCodeButton': this.copyMessageBBCodeButton,
+            'imgurProxyEnabled': this.imgurProxyEnabled,
+            'rimgoInstanceHost': this.rimgoInstanceHost,
         }));
     }
     deserialise() {
@@ -599,6 +616,10 @@ if (settings.moreSearchOnCard) {
                 const threadsButtonHTML = `<dt>Threads: </dt><dd><a href="search/member?user_id=${userID}&content=thread" class="concealed" rel="nofollow">Search</a></dd>`;
                 data.templateHtml = insert(data.templateHtml, data.templateHtml.indexOf('<!-- slot: pre_likes'), threadsButtonHTML);
             }
+            if (settings.imgurProxyEnabled && data.templateHtml.includes('src="https://i.imgur.com')) {
+                console.log(`replacing imgur url(s) in overlay template html`);
+                data.templateHtml = data.templateHtml.replace(/src=(["'])https:\/\/i\.imgur\.com/g, 'src=$1' + (settings.rimgoInstanceHost.match(/^https?:\/\//) ? settings.rimgoInstanceHost : 'https://' + settings.rimgoInstanceHost));
+            }
         }
         else {
             console.log('createoverlay does not contain templatehtml: ' + data);
@@ -672,5 +693,10 @@ if (settings.copyMessageBBCodeButton && isOnThread) {
             window.navigator.clipboard.writeText(quoteUnquoted[1]);
         };
         publicControls?.appendChild(a);
+    });
+}
+if (settings.imgurProxyEnabled) {
+    AF(document.querySelectorAll(`img[src^="https://i.imgur.com"]`)).forEach((img) => {
+        img.src = img.src.replace(`https://i.imgur.com`, settings.rimgoInstanceHost.match(/^https?:\/\//) ? settings.rimgoInstanceHost : 'https://' + settings.rimgoInstanceHost);
     });
 }

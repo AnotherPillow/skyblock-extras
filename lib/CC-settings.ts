@@ -21,7 +21,9 @@ class _Settings {
     unpinLawsuit = true;
     fixOldLinks = true;
     dontShare = true;
-    copyMessageBBCodeButton= true;
+    copyMessageBBCodeButton = true;
+    imgurProxyEnabled = false;
+    rimgoInstanceHost = 'https://ri.nadeko.net';
 
     _modal: HTMLDialogElement | null;
 
@@ -35,15 +37,28 @@ class _Settings {
         const input = document.createElement('input')
         input.name = id
         input.id = id
-        input.type = 'checkbox'
-        input.checked = (this[value] ?? false) as boolean
         
-        input.addEventListener('click', (ev: Event) => {
-            const checked = //@ts-ignore
-                ev.target.checked
-            
-            this[value] = checked
-        })
+        if (typeof this[value] == "boolean") {
+            input.type = 'checkbox'
+            input.checked = (this[value] ?? false) as boolean
+
+            input.addEventListener('click', (ev: Event) => {
+                const checked = //@ts-ignore
+                    ev.target.checked
+                
+                this[value] = checked
+            })
+        } else {
+            input.type = 'text'
+            input.defaultValue = (this[value] ?? '') as string
+
+            input.addEventListener('change', (ev: Event) => {
+                const v = //@ts-ignore
+                    ev.target.value
+                
+                this[value] = v
+            })
+        }
 
         this._modal?.appendChild(label)
         this._modal?.appendChild(input)
@@ -88,6 +103,8 @@ class _Settings {
         this.addSettingToModal("Fix old forum links", 'fixOldLinks')
         this.addSettingToModal("Remove share buttons", 'dontShare')
         this.addSettingToModal("Add a button to copy message BBCode", 'copyMessageBBCodeButton')
+        this.addSettingToModal("Circumvent imgur blocks", 'imgurProxyEnabled')
+        this.addSettingToModal("Rimgo instance host (for imgur access)", 'rimgoInstanceHost')
 
         const saveBtn = document.createElement('button')
 
@@ -184,6 +201,8 @@ class _Settings {
             'fixOldLinks': this.fixOldLinks,
             'dontShare': this.dontShare,
             'copyMessageBBCodeButton': this.copyMessageBBCodeButton,
+            'imgurProxyEnabled': this.imgurProxyEnabled,
+            'rimgoInstanceHost': this.rimgoInstanceHost,
         }))
     }
 

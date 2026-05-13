@@ -338,6 +338,11 @@ if (settings.moreSearchOnCard) {
                 
                 data.templateHtml = insert(data.templateHtml, data.templateHtml.indexOf('<!-- slot: pre_likes'), threadsButtonHTML)
             }
+
+            if (settings.imgurProxyEnabled && data.templateHtml.includes('src="https://i.imgur.com')) {
+                console.log(`replacing imgur url(s) in overlay template html`)
+                data.templateHtml = data.templateHtml.replace(/src=(["'])https:\/\/i\.imgur\.com/g, 'src=$1' + (settings.rimgoInstanceHost.match(/^https?:\/\//) ? settings.rimgoInstanceHost : 'https://' + settings.rimgoInstanceHost))
+            }
         } else {
             console.log('createoverlay does not contain templatehtml: ' + data)
         }
@@ -426,4 +431,10 @@ if (settings.copyMessageBBCodeButton && isOnThread) {
 
             publicControls?.appendChild(a)
         });   
+}
+
+if (settings.imgurProxyEnabled) {
+    (AF(document.querySelectorAll(`img[src^="https://i.imgur.com"]`)) as HTMLImageElement[]).forEach((img: HTMLImageElement )=> {
+        img.src = img.src.replace(`https://i.imgur.com`, settings.rimgoInstanceHost.match(/^https?:\/\//) ? settings.rimgoInstanceHost : 'https://' + settings.rimgoInstanceHost)
+    })
 }
