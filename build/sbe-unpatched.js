@@ -4,7 +4,7 @@
 // @namespace   anotherpillow
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
-// @version     1.3.0
+// @version     1.3.1
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -271,10 +271,12 @@ class _Settings {
 }
 const settings = new _Settings();
 const THEMES = {
+    DEFAULT: 1,
     OLD: 6,
     MIDDLE: 22,
     NEW: 30,
     NEW_DARK: 31,
+    CLASSIC_DARK: 16,
 };
 let themes = [
     {
@@ -338,7 +340,7 @@ waitForElm('.section.styleChooser').then((_overlay) => {
     const ol = overlay.querySelector('ol.twoColumns.primaryContent.chooserColumns');
     for (const li of AF(ol.querySelectorAll('li'))) {
         const a = li.querySelector('a');
-        if (/style_id=(6|22|30)/.test(a?.href ?? ''))
+        if (/style_id=(1|6|22|30|31|16)/.test(a?.href ?? ''))
             a?.addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('customThemeMode', 'false');

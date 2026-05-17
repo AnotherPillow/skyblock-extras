@@ -8,10 +8,12 @@ type styleType = {
 }
 
 const THEMES = {
+    DEFAULT: 1,
     OLD: 6,
     MIDDLE: 22,
     NEW: 30,
     NEW_DARK: 31,
+    CLASSIC_DARK: 16,
 }
 
 let themes: styleType[] = [
@@ -86,7 +88,7 @@ waitForElm('.section.styleChooser').then((_overlay: any) => {
     for (const li of AF(ol.querySelectorAll('li'))) {
         const a = li.querySelector('a')
         
-        if (/style_id=(6|22|30)/.test(a?.href ?? ''))
+        if (/style_id=(1|6|22|30|31|16)/.test(a?.href ?? ''))
             a?.addEventListener('click', (e) => {
                 e.preventDefault();
                 localStorage.setItem('customThemeMode', 'false')
