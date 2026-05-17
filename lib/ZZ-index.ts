@@ -373,6 +373,7 @@ if (settings.moreSearchOnCard) {
 
 if (settings.unpinLawsuit && isOnIndex) {
     document.querySelector('[id="recentNews"]>[id="145369"]')?.remove()
+    document.querySelector('[id="recentNews"]>[id="147906"]')?.remove()
 }
 
 if (settings.fixOldLinks) {
