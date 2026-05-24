@@ -412,10 +412,11 @@ if (settings.copyMessageBBCodeButton && isOnThread) {
                 
                 const res = await fetch(`https://skyblock.net/posts/${id}/quote`, {
                     headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
+                        'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', // if this is text/plain, it'll be a security error
                     },
                     body: `_xfResponseType=json&_xfToken=${xfToken}`,
                     method: 'POST',
+                    credentials: 'include',
                 })
                 const body = await res.json() as { quote?: string };
                 // strip quote element and just get the content

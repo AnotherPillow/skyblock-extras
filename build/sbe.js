@@ -3,7 +3,7 @@
 // @namespace   anotherpillow
 // @description A userscript to improve the skyblock.net forums experience!
 // @match       https://skyblock.net/*
-// @version     1.3.1
+// @version     1.3.2
 // @author      AnotherPillow
 // @license     GNU GPLv3
 // @require     https://cdn.jsdelivr.net/npm/@violentmonkey/dom@2
@@ -640,6 +640,7 @@ if (settings.moreSearchOnCard) {
 }
 if (settings.unpinLawsuit && isOnIndex) {
     document.querySelector('[id="recentNews"]>[id="145369"]')?.remove();
+    document.querySelector('[id="recentNews"]>[id="147906"]')?.remove();
 }
 if (settings.fixOldLinks) {
     document.querySelectorAll('a[href*="block.net"]').forEach((_a) => {
@@ -668,10 +669,11 @@ if (settings.copyMessageBBCodeButton && isOnThread) {
             ev.preventDefault();
             const res = await fetch(`https://skyblock.net/posts/${id}/quote`, {
                 headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8', // if this is text/plain, it'll be a security error
                 },
                 body: `_xfResponseType=json&_xfToken=${xfToken}`,
                 method: 'POST',
+                credentials: 'include',
             });
             const body = await res.json();
             // strip quote element and just get the content
