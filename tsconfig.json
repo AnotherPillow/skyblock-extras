@@ -13,7 +13,7 @@
         "target": "es2022",
 
         // "outDir": "_build/",
-        "outFile": "./build/sbe-unpatched.js", // just.. ignore the error in the lsp
+        "outFile": "./build/sbe-unpatched.user.js", // just.. ignore the error in the lsp
         "rootDir": "lib",
 
         "allowSyntheticDefaultImports": true,
